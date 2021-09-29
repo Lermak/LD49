@@ -26,10 +26,9 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMinPos(Size/2*-1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
-            SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
+            SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
 
-            SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
+            SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
             Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
             Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");

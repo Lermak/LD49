@@ -21,10 +21,10 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadContent()
         {      
-            SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
+            SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
+            SoundManager.PlaySong("Melody");
 
-            SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
+            SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Test");
@@ -33,25 +33,10 @@ namespace MonoGame_Core.Scripts
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             GameObjects = new List<GameObject>();
-            //GameObjects.Add(new TestObject("Test", "testObj"));
-            GameObjects.Add(new TestStaticObject("Test", 1));
-            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, null));
+
+            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, Behaviors.LoadLevelOnClick));
             GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
             base.loadContent();
-        }
-
-        public override void Update(float gt)
-        {
-            if (SceneManager.SceneState == SceneManager.State.Running)
-            {
-                KeyboardState state = Keyboard.GetState();
-                if (state.GetPressedKeys().Length > 0)
-                {
-                    SceneManager.ChangeScene(new TestScene());
-                }
-            }
-
-            base.Update(gt);
         }
     }
 }

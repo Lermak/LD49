@@ -126,5 +126,14 @@ namespace MonoGame_Core.Scripts
                 t.ContainsPoint(v))
                 GameManager.Quit();
         }
+
+        public static void LoadLevelOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+                SceneManager.ChangeScene(new TestScene());
+        }
     }
 }

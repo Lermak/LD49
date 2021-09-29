@@ -28,7 +28,7 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(Content, new TestScene());
+            SceneManager.Initilize(Content, new MainMenu());
             
             base.Initialize();
         }

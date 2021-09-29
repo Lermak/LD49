@@ -15,11 +15,11 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// List of currently available songs
         /// </summary>
-        public static Dictionary<string, Song> SongChannels = new Dictionary<string, Song>();
+        public static Dictionary<string, Song> Songs = new Dictionary<string, Song>();
         /// <summary>
         /// List of currently available sound effects
         /// </summary>
-        public static Dictionary<string, SoundEffectInstance> SoundEffectChannels = new Dictionary<string, SoundEffectInstance>();
+        public static Dictionary<string, SoundEffectInstance> SoundEffects = new Dictionary<string, SoundEffectInstance>();
 
         public static void Initilize()
         {
@@ -28,13 +28,30 @@ namespace MonoGame_Core.Scripts
 
         public static void Clear()
         {
-            SongChannels.Clear();
-            SoundEffectChannels.Clear();
+            Songs.Clear();
+            SoundEffects.Clear();
         }
 
         public static void Update(float gt)
         {
 
+        }
+
+        public static void PlaySong(string name)
+        {
+            //Add logic to transition between songs
+            if(MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.Play(Songs[name]);
+            }
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(Songs[name]);
+        }
+
+        public static void PlaySoundEffect(string name)
+        {
+            SoundEffectInstance se = SoundEffects[name];
+            se.Play();
         }
     }
 }

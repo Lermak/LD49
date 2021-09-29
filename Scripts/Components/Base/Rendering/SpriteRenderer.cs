@@ -24,6 +24,7 @@ namespace MonoGame_Core.Scripts
         protected bool isHUD = false;
         protected bool visible = true;
         protected float addedRotation = 0;
+        protected byte animation = 0;
 
         public virtual string Texture { get { return texture; } 
             set {
@@ -51,6 +52,7 @@ namespace MonoGame_Core.Scripts
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
+        public byte Animation { get { return animation; } set { animation = value; } }
         public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, "spriteRenderer")
         {
             Texture = texID;
@@ -78,7 +80,7 @@ namespace MonoGame_Core.Scripts
 
         public Rectangle DrawRect()
         {
-            return new Rectangle(currentFrame * (int)DrawArea.X, 0, (int)DrawArea.X, (int)DrawArea.Y);
+            return new Rectangle(currentFrame * (int)DrawArea.X, animation * (int)DrawArea.Y, (int)DrawArea.X, (int)DrawArea.Y);
         }
 
         public override void OnDestroy()
