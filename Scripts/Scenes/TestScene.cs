@@ -76,10 +76,5 @@ namespace MonoGame_Core.Scripts
 
             base.loadContent();
         }
-
-        public override void SceneRunning(float gt)
-        {
-            base.SceneRunning(gt);
-        }
     }
 }

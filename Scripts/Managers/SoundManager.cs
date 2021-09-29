@@ -12,6 +12,8 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class SoundManager
     {
+
+        public static float volume = 100;
         /// <summary>
         /// List of currently available songs
         /// </summary>
@@ -34,7 +36,14 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
+            MediaPlayer.Volume = volume;   
+        }
 
+        public static void SetVolume(float v)
+        {
+            if (v < 0) v = 0;
+            if (v > 1) v = 1;
+            volume = v;
         }
 
         public static void PlaySong(string name)
@@ -51,6 +60,7 @@ namespace MonoGame_Core.Scripts
         public static void PlaySoundEffect(string name)
         {
             SoundEffectInstance se = SoundEffects[name];
+            se.Volume = volume;
             se.Play();
         }
     }

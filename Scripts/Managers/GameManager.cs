@@ -56,6 +56,8 @@ namespace MonoGame_Core.Scripts
 
             SceneManager.Update(TimeManager.DeltaTime);
 
+            SoundManager.Update(TimeManager.DeltaTime);
+
             CameraManager.Update(TimeManager.DeltaTime);
 
             CollisionManager.Update(TimeManager.DeltaTime);
