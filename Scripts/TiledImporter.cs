@@ -2,35 +2,52 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace MonoGame_Core.Scripts
 {
     public static class TiledImporter
     {
-        public static void LoadFromFile(Scene s, string file)
+        static XmlDocument myDoc;
+        public static void LoadFromFile(string file)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(file);
-            int width = int.Parse(doc.ChildNodes[1].Attributes[4].Value);
-            int height = int.Parse(doc.ChildNodes[1].Attributes[5].Value);
-            int layers = doc.ChildNodes[1].ChildNodes.Count - 1;
-            int imageWidth = int.Parse(doc.ChildNodes[1].Attributes[6].Value);
-            int imageHeight = int.Parse(doc.ChildNodes[1].Attributes[7].Value);
+            myDoc = new XmlDocument();
+            myDoc.Load(file);
+        }
+        public static void LoadFromContent(ContentManager c, string content)
+        {
+            myDoc = new XmlDocument();
+            myDoc = c.Load<XmlDocument>(content);
+        }
+        public static void LoadFromString(string s)
+        {
+            myDoc = new XmlDocument();
+            myDoc.LoadXml(s);
+        }
+
+        public static void BuildFromDoc()
+        { 
+            int width = int.Parse(myDoc.ChildNodes[1].Attributes[4].Value);
+            int height = int.Parse(myDoc.ChildNodes[1].Attributes[5].Value);
+            int layers = myDoc.ChildNodes[1].ChildNodes.Count - 1;
+            int imageWidth = int.Parse(myDoc.ChildNodes[1].Attributes[6].Value);
+            int imageHeight = int.Parse(myDoc.ChildNodes[1].Attributes[7].Value);
 
 
-            CollisionManager.TileMap = new bool[width, height, doc.ChildNodes[1].ChildNodes.Count - 1];
+            CollisionManager.TileMap = new bool[width, height, myDoc.ChildNodes[1].ChildNodes.Count - 1];
             CollisionManager.TileSize = new Vector2(imageWidth, imageHeight);
             //CollisionManager.CollisionDetection = CollisionManager.CollisionType.TileMapFree;
-            if (doc.ChildNodes[1].Attributes[2].Value == "orthogonal")
+            if (myDoc.ChildNodes[1].Attributes[2].Value == "orthogonal")
             {
                 for (int l = 0; l < layers; ++l)
                 {
-                    string map = doc.ChildNodes[1].ChildNodes[l + 1].ChildNodes[0].ChildNodes[0].Value;
+                    string map = myDoc.ChildNodes[1].ChildNodes[l + 1].ChildNodes[0].ChildNodes[0].Value;
                     int[,] mapArr = new int[width, height];
                     string[] rows = map.Trim().Split(new char[] { '\n' });
 

@@ -170,3 +170,6 @@
 /processorParam:Quality=Best
 /build:Sound/TestHit.wav
 
+#begin Tiled/Test.xml
+/copy:Tiled/Test.xml
+
