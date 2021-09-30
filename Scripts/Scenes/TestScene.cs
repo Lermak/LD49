@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -72,7 +71,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             CameraManager.Cameras[1].Shader = "CRT";
 
-            TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
+            TiledImporter.LoadFromFile(this, @".\Content\Tiled\Test.tmx");
 
             base.loadContent();
         }

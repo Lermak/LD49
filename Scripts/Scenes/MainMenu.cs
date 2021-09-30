@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
             Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Test");
+            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
             Textures["Base"] = Content.Load<Texture2D>("Images/Base");
 
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
@@ -36,6 +36,7 @@ namespace MonoGame_Core.Scripts
 
             GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, Behaviors.LoadLevelOnClick));
             GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
+            
             base.loadContent();
         }
     }

@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         {
             while (RenderingManager.GlobalFade > 0)
             {
-                RenderingManager.GlobalFade -= 128 * TimeManager.DeltaTime;
+                RenderingManager.GlobalFade -= 255 * TimeManager.DeltaTime;
                 SoundManager.SetVolume(1 - (RenderingManager.GlobalFade / 256));
                 if (RenderingManager.GlobalFade < 0)
                 {
@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
         {
             while (RenderingManager.GlobalFade < 255)
             {
-                RenderingManager.GlobalFade += 128 * TimeManager.DeltaTime;
+                RenderingManager.GlobalFade += 255 * TimeManager.DeltaTime;
                 SoundManager.SetVolume(1 - (RenderingManager.GlobalFade / 256));
                 if (RenderingManager.GlobalFade > 255)
                 {

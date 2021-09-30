@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
             else
                 ((WorldObject)a.GameObject).Transform.Move(new Vector2(p.X, 0));
         }
+
         public static void Reflect(Collider a, Collider b, Vector2 p)
         {
             UndoMinPen(a, b, p);
