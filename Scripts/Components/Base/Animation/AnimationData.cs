@@ -21,6 +21,14 @@ namespace MonoGame_Core.Scripts
             frames = (SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X)-1;
         }
 
+        /// <summary>
+        /// Swap to a different loaded texture from the current scene
+        /// reset animation and frame
+        /// </summary>
+        /// <param name="texID">the new texture name</param>
+        /// <param name="animSpeed">the speed in seconds between frames</param>
+        /// <param name="animation">the Y index animation for the spritesheet</param>
+        /// <param name="frame">the current X index for the animation on the spritesheet</param>
         public void ChangeSpriteSheet(string texID, float animSpeed, byte animation = 0, int frame = 0)
         {
             if (SceneManager.CurrentScene.Textures.ContainsKey(texID))
@@ -33,10 +41,14 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Change to a different animation on the same spritesheet
+        /// </summary>
+        /// <param name="anim">the Y index for the spritesheet animation</param>
         public void ChangeAnimation(byte anim)
         {
             if(anim >= 0 &&
-                anim < SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y)
+                anim < (SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
             {
                 spriteRenderer.Animation = anim;
                 spriteRenderer.CurrentFrame = 0;
@@ -44,11 +56,19 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Alter speed between animation frames
+        /// </summary>
+        /// <param name="speed">Time between frames in seconds</param>
         public void ChangeAnimationSpeed(float speed)
         {
             animationSpeed = speed;
         }
 
+        /// <summary>
+        /// Move the animation forward by one step based on gametime
+        /// </summary>
+        /// <param name="gt">GameTime since last gameloop</param>
         public void Animate(float gt)
         {
             timeSinceFrameChange += gt;
