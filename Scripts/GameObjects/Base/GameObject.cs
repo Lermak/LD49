@@ -35,7 +35,8 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                behaviorHandler.Update(gt);
+                if(SceneManager.SceneState == SceneManager.State.Running)
+                    behaviorHandler.Update(gt);
             }
         }
 

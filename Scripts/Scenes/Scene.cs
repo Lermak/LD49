@@ -55,6 +55,12 @@ namespace MonoGame_Core.Scripts
 
         public virtual void Update(float gt)
         {
+            if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Escape))
+                if (SceneManager.SceneState == SceneManager.State.Running)
+                    SceneManager.SceneState = SceneManager.State.Paused;
+                else
+                    SceneManager.SceneState = SceneManager.State.Running;
+
             if (SceneManager.SceneState == SceneManager.State.Running)
                 SceneRunning(gt);
             else if (SceneManager.SceneState == SceneManager.State.Paused)
@@ -85,7 +91,24 @@ namespace MonoGame_Core.Scripts
 
         public virtual void ScenePaused(float gt)
         {
-
+            List<GameObject> destroy = new List<GameObject>();
+            foreach (GameObject go in GameObjects)
+            {
+                go.Update(gt);
+                if (go.ToDestroy)
+                    destroy.Add(go);
+            }
+            foreach (GameObject go in destroy)
+            {
+                go.OnDestroy();
+                GameObjects.Remove(go);
+            }
+            foreach (GameObject go in ToAdd)
+            {
+                go.Initilize();
+                GameObjects.Add(go);
+            }
+            ToAdd.Clear();
         }
     }
 }

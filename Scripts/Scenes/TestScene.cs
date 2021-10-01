@@ -287,7 +287,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             CameraManager.Cameras[1].Shader = "CRT";
 
-            TiledImporter.LoadFromString(sceneMap);//(@".\Content\Tiled\Test.xml");
+            TiledImporter.LoadFromString(sceneMap);
             //TiledImporter.LoadFromContent(Content, "Tiled/Test.xml");
             TiledImporter.BuildFromDoc();
 
