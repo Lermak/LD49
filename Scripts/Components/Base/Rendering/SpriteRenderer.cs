@@ -18,12 +18,10 @@ namespace MonoGame_Core.Scripts
         protected string shader = "";
         protected List<Camera> cameras = new List<Camera>() { CameraManager.Cameras[0] };
         protected SpriteEffects flip = SpriteEffects.None;
-        protected int frames;
-        protected int currentFrame = 0;
-        protected float timeSinceFrameChange = 0;
         protected bool isHUD = false;
         protected bool visible = true;
         protected float addedRotation = 0;
+        protected int currentFrame = 0;
         protected byte animation = 0;
 
         public virtual string Texture { get { return texture; } 
