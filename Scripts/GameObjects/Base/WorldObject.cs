@@ -20,7 +20,6 @@ namespace MonoGame_Core.Scripts
                                             new Vector2(0, 0),
                                             size,
                                             0,
-                                            0,
                                             0));
         }
 

@@ -53,7 +53,9 @@ namespace MonoGame_Core.Scripts
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
         public byte Animation { get { return animation; } set { animation = value; } }
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, "spriteRenderer")
+        public int CurrentFrame { get { return currentFrame; } set { currentFrame = value; } }
+
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int uo) : base(go, uo, "spriteRenderer")
         {
             Texture = texID;
             transform = t;
@@ -61,11 +63,10 @@ namespace MonoGame_Core.Scripts
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = clr;
-            this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(go, uo, "spriteRenderer")
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int uo) : base(go, uo, "spriteRenderer")
         {
             Texture = texID;
             transform = t;
@@ -73,7 +74,6 @@ namespace MonoGame_Core.Scripts
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = Color.White;
-            this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
         }
