@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
 
 namespace MonoGame_Core.Scripts
 {
@@ -11,6 +12,7 @@ namespace MonoGame_Core.Scripts
     {
         private GraphicsDeviceManager _graphics;
         private static bool quit;
+        private GameWindow chatWindow;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
