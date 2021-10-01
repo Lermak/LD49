@@ -247,7 +247,6 @@ namespace MonoGame_Core.Scripts
 
             Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
             Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
-            Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
@@ -285,7 +284,6 @@ namespace MonoGame_Core.Scripts
 
 
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
-            CameraManager.Cameras[1].Shader = "CRT";
 
             TiledImporter.LoadFromString(sceneMap);
             //TiledImporter.LoadFromContent(Content, "Tiled/Test.xml");

@@ -140,12 +140,6 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/BlueShader.fx
 
-#begin Shaders/CRTShader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/CRTShader.fx
-
 #begin Shaders/TestShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
