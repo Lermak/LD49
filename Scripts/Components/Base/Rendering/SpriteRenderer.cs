@@ -53,7 +53,7 @@ namespace MonoGame_Core.Scripts
         public byte Animation { get { return animation; } set { animation = value; } }
         public int CurrentFrame { get { return currentFrame; } set { currentFrame = value; } }
 
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int uo) : base(go, uo, "spriteRenderer")
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, "spriteRenderer")
         {
             Texture = texID;
             transform = t;
@@ -64,7 +64,7 @@ namespace MonoGame_Core.Scripts
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int uo) : base(go, uo, "spriteRenderer")
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, "spriteRenderer")
         {
             Texture = texID;
             transform = t;

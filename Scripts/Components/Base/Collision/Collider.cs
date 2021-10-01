@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
         public abstract List<Vector2> Axies();
 
 
-        public Collider(GameObject go, Transform t, int uo, string name, bool isStatic) : base(go, uo, name)
+        public Collider(GameObject go, Transform t, string name, bool isStatic) : base(go, name)
         {
             transform = t;
             this.isStatic = isStatic;

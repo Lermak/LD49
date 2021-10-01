@@ -50,7 +50,6 @@ namespace MonoGame_Core.Scripts
 
         public void Initilize()
         {
-            components.OrderBy(c => c.UpdateOrder);
             foreach (Component c in components)
                 c.Initilize();
         }

@@ -38,7 +38,7 @@ namespace MonoGame_Core.Scripts
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }
-        public Transform(GameObject go, int uo, Vector2 pos, float w, float h, float r, byte l) : base(go, uo, "transform")
+        public Transform(GameObject go, Vector2 pos, float w, float h, float r, byte l) : base(go, "transform")
         {
             radians = r;
             position = pos;

@@ -14,7 +14,7 @@ namespace MonoGame_Core.Scripts
 
         public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
 
-        public AnimationData(GameObject go, int uo, string name, SpriteRenderer sr, float animSpeed) : base(go, uo, name)
+        public AnimationData(GameObject go, string name, SpriteRenderer sr, float animSpeed) : base(go, name)
         {
             spriteRenderer = sr;
             animationSpeed = animSpeed;
