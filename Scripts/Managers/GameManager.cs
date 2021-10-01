@@ -29,7 +29,7 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.Initilize();
             CameraManager.Initilize();
             SceneManager.Initilize(Content, new MainMenu());
-            
+
             base.Initialize();
         }
 
