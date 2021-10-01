@@ -24,22 +24,6 @@ namespace MonoGame_Core.Scripts
             height = myTrans.Height;
         }
 
-        public CollisionBox(WorldObject myObj, string name, bool isStatic) : base(myObj, myObj.Transform, name, isStatic)
-        {                       
-            checkCollision = true;
-            offset = new Vector2();
-            width = transform.Width;
-            height = transform.Height;
-        }
-
-        public CollisionBox(GameObject go, Transform trans, string name) : base(go, trans, name, true)
-        {
-            checkCollision = true;
-            offset = new Vector2();
-            width = transform.Width;
-            height = transform.Height;
-        }
-
         public override List<Vector2> Axies()
         {
             return new List<Vector2>() { hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians), 1, new Vector2()), 
