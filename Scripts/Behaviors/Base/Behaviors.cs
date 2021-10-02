@@ -131,17 +131,24 @@ namespace MonoGame_Core.Scripts
         }
         public static void NuclearRotate(float gt, Component[] c)
         {
+            Random r = new Random();
             Transform t = (Transform)c[0];
             //start at -135 degrees from straight up, then rotate to the right until +135 degrees
             float rot_start = MathHelper.ToRadians(135);
             float rot_end = MathHelper.ToRadians(-135);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
+            if (NuclearLevel.level > 0.0f)
+            {
+                float r1 = 10 * ((float)r.NextDouble() - 0.5f);
+                float r2 = 10 * ((float)r.NextDouble() - 0.5f);
+                t.Place(new Vector2(r1, r2));
+            }
         }
 
         public static void NuclearDeath(float gt, Component[] c)
         {
-            if (NuclearLevel.level >= 1.1)
-                GameManager.Quit(); //this is bad, make it into a game over screen
+            if (NuclearLevel.level >= 1.1) { }
+                //GameManager.Quit(); //TODO() this is bad, make it into a game over screen
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                 if (parent == null)
                     return position;
                 else
-                    return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position);
+                    return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position) + position;
             } }    
         public float Width { get { return width; } }
         public float Height { get { return height; } }

@@ -44,11 +44,10 @@
           <article class="sidebar-2">
             <section class="sidebar-user">
               <div class="sidebar-user-info">
-                <h4>John Idogun</h4>
+                <h4>FT Energy</h4>
                 <i class="fas fa-chevron-down"></i>
               </div>
               <p class="sidebar-user-info-additional">
-                <i class="fas fa-circle"></i>Sharon Robinson
               </p>
             </section>
 
@@ -111,20 +110,7 @@
               <h4 class="direct-messages-header">
                 <i class="fas fa-sort-down"></i> Direct Messages
               </h4>
-              <ul>
-                <li>
-                  <a href="#">
-                    <i class="fas fa-circle online"></i>John Idogun(You)</a
-                  >
-                </li>
-                <li>
-                  <a href="#"
-                    ><span class="make-white"
-                      ><i class="fas fa-circle offline"></i
-                    ></span>
-                    Isabel</a
-                  >
-                </li>
+              <ul id="dm_contacts">
               </ul>
             </section>
           </article>
@@ -133,11 +119,11 @@
           <section class="content">
             <section class="content-header">
               <article class="channel-content-header-details">
-                <section class="feeds-user-avatar">
-                    <img src="images/user2.jpg" alt="User 1" width="40" />
+                <section class="feeds-user-avatar" id="channel-avatar">
+                    <img src="images/default_icon.png" alt="User 1" width="40" />
                 </section>
-                <h4 class="channel-content-header-name">
-                  John Idogun (You) <i class="fas fa-star"></i>
+                <h4 class="channel-content-header-name" id="channel-name">
+                  
                 </h4>
               </article>
               <button
@@ -148,98 +134,7 @@
                 <i class="fas fa-info-circle"></i>
               </button>
             </section>
-            <section class="feeds">
-              <article class="feed">
-                <section class="feeds-user-avatar">
-                  <img src="images/user2.jpg" alt="User 1" width="40" />
-                  <span>Z</span>
-                </section>
-                <section class="feed-content">
-                  <section class="feed-user-info">
-                    <h4>Zeo Maxwell <span class="time-stamp">9:56am</span></h4>
-                  </section>
-                  <div>
-                    <p class="feed-text">
-                      No! It was my pleasure! Great to see the enthusiasm out
-                      there.
-                    </p>
-                  </div>
-                </section>
-              </article>
-              <article class="feed">
-                <section class="feeds-user-avatar">
-                  <img src="images/user3.jpg" alt="User 1" width="40" />
-                </section>
-                <section class="feed-content">
-                  <section class="feed-user-info">
-                    <h4>
-                      Acme Team <span class="tag">app</span>
-                      <span class="time-stamp">12:45pm</span>
-                    </h4>
-                  </section>
-
-                  <p class="feed-text">Events starting in 15 minutes:</p>
-                  <div class="quoted">
-                    <h5>Team status meeting</h5>
-                    <p class="quoted-text">Today from 1:00PM to 1:30PM</p>
-                  </div>
-                </section>
-              </article>
-              <article class="feed">
-                <section class="feeds-user-avatar">
-                  <img src="images/user4.jpg" alt="User 1" width="40" />
-                </section>
-                <section class="feed-content">
-                  <section class="feed-user-info">
-                    <h4>Hary Boone <span class="time-stamp">12:58pm</span></h4>
-                  </section>
-                  <div>
-                    <p class="feed-text">
-                      Quick note: today <span class="mention">@lisa</span> will
-                      join our team sync to provide updates on the launch, if
-                      you have questions, bring 'em. See you all later...er, in
-                      2 minutes.
-                    </p>
-                  </div>
-                </section>
-              </article>
-              <article class="feed">
-                <section class="feeds-user-avatar">
-                  <img src="images/user5.jpg" alt="User 1" width="40" />
-                </section>
-                <section class="feed-content">
-                  <section class="feed-user-info">
-                    <h4>Lee Hao <span class="time-stamp">1:48pm</span></h4>
-                  </section>
-                  <p class="feed-text">
-                    Meeting notes from our sync with<span class="mention"
-                      >@lisa</span
-                    >.
-                  </p>
-                  <div class="quoted-file">
-                    <div class="preparatory-text">
-                      <p>Post</p>
-                      <i class="fas fa-sort-down"></i>
-                    </div>
-                    <div class="file-figure">
-                      <i class="far fa-file-alt fa-2x"></i>
-                      <div class="file-detail">
-                        <h5>1/9 Meeting Notes</h5>
-                        <small>Last edited just now</small>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </article>
-              <article class="feed">
-                <section class="message-info">
-                  <article class="zenith-org">Z</article>
-                  <small
-                    ><strong>Zenith Marketing</strong> is in this
-                    channel.</small
-                  >
-                </section>
-              </article>
+            <section class="feeds" id="mainfeed">
             </section>
             <form action="." class="form" name="feedForm">
               <div class="input" id="textBox" contenteditable="true">
