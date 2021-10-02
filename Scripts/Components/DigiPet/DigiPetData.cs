@@ -16,6 +16,8 @@ namespace MonoGame_Core.Scripts
         public bool NeedsFood = false;
         public bool NeedsPlay = false;
         public bool NeedsWash = false;
+        public Queue<char> Code = new Queue<char>();
+        public bool CodeAccessed = false;
         public DigiPetData(GameObject go, string name) : base(go, name)
         {
 

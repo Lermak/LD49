@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.IO;
 
 namespace MonoGame_Core.Scripts
 {
@@ -16,7 +18,14 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (Globals.DigiPetAlive == true)
+                if(CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                {
+                    if (d.Code.Count > 5)
+                        d.Code.Dequeue();
+                    d.Code.Enqueue('p');
+                }
+
+                if (Globals.DigiPetAlive == false)
                 {
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
@@ -29,7 +38,7 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsPlay = false;
                     d.Playing = true;
-                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "PlayingAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastPlay = 0;
                 }
@@ -49,7 +58,13 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (Globals.DigiPetAlive == true)
+                if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                {
+                    if (d.Code.Count > 5)
+                        d.Code.Dequeue();
+                    d.Code.Enqueue('w');
+                }
+                if (Globals.DigiPetAlive == false)
                 {
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
@@ -62,7 +77,7 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsWash = false;
                     d.Washing = true;
-                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "WashingAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastWash = 0;
                 }
@@ -82,7 +97,14 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (Globals.DigiPetAlive == true)
+                if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                {
+                    if (d.Code.Count > 5)
+                        d.Code.Dequeue();
+                    d.Code.Enqueue('f');
+                }
+
+                if (Globals.DigiPetAlive == false)
                 {
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
@@ -110,14 +132,48 @@ namespace MonoGame_Core.Scripts
         public static void Running(float gt, Component[] c)
         {
             DigiPetData d = ((DigiPetData)c[0]);
-            if(d.NeedsFood)
+            AnimationData a = ((AnimationData)c[1]);
+            if (d.NeedsFood)
                 d.TimeSinceLastFeed += gt;
             if(d.NeedsPlay)
                 d.TimeSinceLastPlay += gt;
             if(d.NeedsWash)
                 d.TimeSinceLastWash += gt;
 
-            if(!d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
+            if(d.CodeAccessed == false && d.Code.ToList<char>() == new List<char>() { 'w','f','f','p','f' })
+            {
+                d.CodeAccessed = true;
+                d.NeedsFood = false;
+                d.NeedsPlay = false;
+                d.NeedsWash = false;
+                d.TimeSinceLastFeed = 0;
+                d.TimeSinceLastPlay = 0;
+                d.TimeSinceLastWash = 0;
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, a), "CodeAnimate", 0, true);
+                //SoundManager.PlaySoundEffect("CodeConfirmation");
+                string fileName = @".\OverrideCommands.txt";
+
+                try
+                {
+                    // Check if file already exists. If yes, delete it.     
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+
+                    // Create a new file     
+                    using (StreamWriter sw = File.CreateText(fileName))
+                    {
+                        sw.WriteLine("OVERRIDE CODE");
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine(Ex.ToString());
+                }
+
+            }
+            else if(!d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
             {
                 d.CheckNeedsTimer += gt;
                 if (d.CheckNeedsTimer > 5)
@@ -139,8 +195,7 @@ namespace MonoGame_Core.Scripts
                 d.TimeSinceLastWash > 15) &&
                 Globals.DigiPetAlive == true)
             {
-                Globals.DigiPetAlive = false;
-                AnimationData a = ((AnimationData)c[1]);
+                Globals.DigiPetAlive = false;              
                 a.ChangeAnimation(1);
             }
         }
