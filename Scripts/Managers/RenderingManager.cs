@@ -135,6 +135,8 @@ namespace MonoGame_Core.Scripts
            
             foreach (Camera c in cameras)
             {
+                if(c.Target == -1) continue;
+
                 foreach (SpriteRenderer sr in Sprites)
                 {
                     if (sr.Visible && sr.Cameras.Contains(c))
@@ -182,33 +184,84 @@ namespace MonoGame_Core.Scripts
             }
             spriteBatch.End();
 
-            if(Target != -1)
-            {
-                Target = -1;
-                SetTarget(-1);
-            }
-
-            SetTarget(-1);
-            graphicsDevice.SetRenderTarget(null);
-            graphicsDevice.Present();
-
+            IEnumerable<Camera> camerasBySwapChain = CameraManager.Cameras.OrderByDescending(s => s.SwapChain);
+            int currentSwapChain = -1;
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            CameraManager.Draw(spriteBatch);
+            foreach (Camera c in cameras)
+            {
+                if (c.SwapChain == -1) continue;
+
+                if(currentSwapChain != c.SwapChain)
+                {
+                    spriteBatch.End();
+                    currentSwapChain = c.SwapChain;
+                    graphicsDevice.SetRenderTarget(RenderingManager.WindowTargets[currentSwapChain]);
+
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                    c.Draw(spriteBatch);
+                }
+            }
             spriteBatch.End();
-
-            //foreach (var chain in RenderingManager.WindowTargets)
-            //{
-            //    graphicsDevice.SetRenderTarget(chain);
-            //    graphicsDevice.Clear(Color.Red);
-            //}
-
             graphicsDevice.SetRenderTarget(null);
 
             foreach (var chain in RenderingManager.WindowTargets)
             {
                 chain.Present();
             }
+
+            
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Clear(Color.Transparent);
+
+            Target = -1;
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            foreach (Camera c in cameras)
+            {
+                if (c.Target != -1) continue;
+
+                foreach (SpriteRenderer sr in Sprites)
+                {
+                    if (sr.Visible && sr.Cameras.Contains(c))
+                    {
+                        if (sr.Shader != prevShader)
+                        {
+                            prevShader = sr.Shader;
+                            spriteBatch.End();
+                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                        }
+
+                        if (sr.Shader != "")
+                        {
+                            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                            {
+                                foreach (EffectPass p in t.Passes)
+                                {
+                                    p.Apply();
+                                    sr.Draw(spriteBatch, c);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            sr.Draw(spriteBatch, c);
+                        }
+                    }
+                }
+            }
+            spriteBatch.End();
+            graphicsDevice.Present();
+
+
+            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            //CameraManager.Draw(spriteBatch);
+            //spriteBatch.End();
+
+            //foreach (var chain in RenderingManager.WindowTargets)
+            //{
+            //    graphicsDevice.SetRenderTarget(chain);
+            //    graphicsDevice.Clear(Color.Red);
+            //}
         }
 
         /// <summary>
