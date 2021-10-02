@@ -53,7 +53,11 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Transform.Layer = 0;
 
-            GameObjects.Add(new Button("CoolantButtonUp", "CoolantButtonDown", "NuclearButton", new Vector2(512, 512), new Vector2(-400, -200), 1, Behaviors.ReduceNuclearOnClick));
+            GameObjects.Add(new Button("CoolantButtonUp", "CoolantButtonDown", "NuclearButton", new Vector2(512, 512), new Vector2(-400, -200), 1, () => {
+                NuclearLevel.level -= NuclearLevel.reduceAmount;
+                if (NuclearLevel.level < 0.0f)
+                    NuclearLevel.level = 0.0f;
+            }));
 
 
 

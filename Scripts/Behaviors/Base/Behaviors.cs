@@ -125,32 +125,6 @@ namespace MonoGame_Core.Scripts
                 ((AnimationData)c[0]).Animate(gt);
         }
 
-        public static void QuitOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                GameManager.Quit();
-        }
-
-        public static void LoadLevelOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                SceneManager.ChangeScene(new TestScene());
-        }
-
-        public static void LoadNuclearLevelOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                SceneManager.ChangeScene(new NuclearScene());
-        }
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
         {
             NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
@@ -164,21 +138,5 @@ namespace MonoGame_Core.Scripts
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
         }
 
-        public static void ReduceNuclearOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                NuclearLevel.level -= NuclearLevel.reduceAmount;
-            if (NuclearLevel.level < 0.0f)
-                NuclearLevel.level = 0.0f;
-        }
-
-        public static void NuclearDeath(float gt, Component[] c)
-        {
-            if (NuclearLevel.level >= 1.1)
-                GameManager.Quit(); //this is bad, make it into a game over screen
-        }
     }
 }

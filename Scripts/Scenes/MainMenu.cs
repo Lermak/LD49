@@ -34,9 +34,9 @@ namespace MonoGame_Core.Scripts
 
             GameObjects = new List<GameObject>();
 
-            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, Behaviors.LoadLevelOnClick));
-            GameObjects.Add(new Button("Test", "Base", "NuclearButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.LoadNuclearLevelOnClick));
-            GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, -20), 1, Behaviors.QuitOnClick));
+            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, () => { SceneManager.ChangeScene(new TestScene()); }));
+            GameObjects.Add(new Button("Test", "Base", "NuclearButton", new Vector2(40, 40), new Vector2(500, 40), 1, () => { SceneManager.ChangeScene(new NuclearScene()); }));
+            GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, -20), 1, () => { GameManager.Quit(); }));
             
             base.loadContent();
         }
