@@ -142,5 +142,43 @@ namespace MonoGame_Core.Scripts
                 t.ContainsPoint(v))
                 SceneManager.ChangeScene(new TestScene());
         }
+
+        public static void LoadNuclearLevelOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+                SceneManager.ChangeScene(new NuclearScene());
+        }
+        public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
+        {
+            NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
+        }
+        public static void NuclearRotate(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            //start at -135 degrees from straight up, then rotate to the right until +135 degrees
+            float rot_start = MathHelper.ToRadians(135);
+            float rot_end = MathHelper.ToRadians(-135);
+            t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
+        }
+
+        public static void ReduceNuclearOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+                NuclearLevel.level -= NuclearLevel.reduceAmount;
+            if (NuclearLevel.level < 0.0f)
+                NuclearLevel.level = 0.0f;
+        }
+
+        public static void NuclearDeath(float gt, Component[] c)
+        {
+            if (NuclearLevel.level >= 1.1)
+                GameManager.Quit(); //this is bad, make it into a game over screen
+        }
     }
 }
