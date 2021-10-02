@@ -16,9 +16,17 @@ namespace MonoGame_Core.Scripts
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
 
-        public GameObject(string tag, SceneManager sm)
+        public GameObject(string tag)
         {
-            sceneManager = sm;
+            sceneManager = CurrentWindow.sceneManager;
+            this.tag = tag;
+            behaviorHandler = new BehaviorHandler(this);
+            componentHandler = new ComponentHandler(this);
+        }
+
+        public GameObject(string tag, SceneManager manager)
+        {
+            sceneManager = manager;
             this.tag = tag;
             behaviorHandler = new BehaviorHandler(this);
             componentHandler = new ComponentHandler(this);

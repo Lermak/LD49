@@ -254,17 +254,17 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new TestObject(sceneManager, c, "PeaShooter", "testObj"));
-            GameObjects.Add(new TestStaticObject(sceneManager, c, "Base", 1));
+            GameObjects.Add(new TestObject("PeaShooter", "testObj"));
+            GameObjects.Add(new TestStaticObject("Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(200, 200));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(sceneManager.Cameras[0]);
 
-            GameObjects.Add(new TestStaticObject(sceneManager, c, "Base", 1));
+            GameObjects.Add(new TestStaticObject("Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(-200, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
 
-            GameObjects.Add(new WorldObject(sceneManager, c, "BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
+            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
             //((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 

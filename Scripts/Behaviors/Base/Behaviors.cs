@@ -13,13 +13,13 @@ namespace MonoGame_Core.Scripts
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             Movement m = (Movement)c[1];
-            if (InputManager.IsKeyPressed(Keys.Up))
+            if (CurrentWindow.inputManager.IsKeyPressed(Keys.Up))
                 v.Y = -m.Speed * gt;
-            else if (InputManager.IsKeyPressed(Keys.Down))
+            else if (CurrentWindow.inputManager.IsKeyPressed(Keys.Down))
                 v.Y = m.Speed * gt;
-            if (InputManager.IsKeyPressed(Keys.Left))
+            if (CurrentWindow.inputManager.IsKeyPressed(Keys.Left))
                 v.X = -m.Speed * gt;
-            else if (InputManager.IsKeyPressed(Keys.Right))
+            else if (CurrentWindow.inputManager.IsKeyPressed(Keys.Right))
                 v.X = m.Speed * gt;
 
             ((Transform)c[0]).Move(v);
@@ -55,9 +55,9 @@ namespace MonoGame_Core.Scripts
         public static void ManualScale(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Add) && t.Scale.X < 5)
+            if (CurrentWindow.inputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Add) && t.Scale.X < 5)
             { t.SetScale(t.Scale.X + .1f, t.Scale.Y + .1f); }
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && t.Scale.X > 0)
+            if (CurrentWindow.inputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && t.Scale.X > 0)
             { t.SetScale(t.Scale.X - .1f, t.Scale.Y - .1f); }
 
         }
@@ -66,14 +66,14 @@ namespace MonoGame_Core.Scripts
         {
             Transform t = (Transform)c[0];
 
-            if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
+            if (CurrentWindow.inputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
         public static void PointAtMouse(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            t.Radians = hf_Math.getAngle(InputManager.MousePos, t.Position) + 90 * (float)Math.PI / 180;
+            t.Radians = hf_Math.getAngle(CurrentWindow.inputManager.MousePos, t.Position) + 90 * (float)Math.PI / 180;
             if (t.Parent != null)
                 t.Rotate(t.Radians - t.Parent.Radians);
         }
@@ -100,10 +100,10 @@ namespace MonoGame_Core.Scripts
         public static void ScreenShakeOnClick(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
         }
 
         public static void ButtonSwapImagesOnHover(float gt, Component[] c)
@@ -111,7 +111,7 @@ namespace MonoGame_Core.Scripts
             Transform t = (Transform)c[0];
             ButtonData b = (ButtonData)c[1];
             AnimationData ad = (AnimationData)c[2];
-            Vector2 v = InputManager.MousePos;
+            Vector2 v = CurrentWindow.inputManager.MousePos;
 
             if (t.ContainsPoint(v))
                 ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
@@ -125,32 +125,6 @@ namespace MonoGame_Core.Scripts
                 ((AnimationData)c[0]).Animate(gt);
         }
 
-        public static void QuitOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                GameManager.Quit();
-        }
-
-        public static void LoadLevelOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                t.GameObject.SceneManager.ChangeScene(new TestScene());
-        }
-
-        public static void LoadNuclearLevelOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                t.GameObject.SceneManager.ChangeScene(new NuclearScene());
-        }
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
         {
             NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
@@ -162,17 +136,6 @@ namespace MonoGame_Core.Scripts
             float rot_start = MathHelper.ToRadians(135);
             float rot_end = MathHelper.ToRadians(-135);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
-        }
-
-        public static void ReduceNuclearOnClick(float gt, Component[] c)
-        {
-            Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                NuclearLevel.level -= NuclearLevel.reduceAmount;
-            if (NuclearLevel.level < 0.0f)
-                NuclearLevel.level = 0.0f;
         }
 
         public static void NuclearDeath(float gt, Component[] c)

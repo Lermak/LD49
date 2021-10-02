@@ -37,17 +37,17 @@ namespace MonoGame_Core.Scripts
 
         public virtual void OnLoad()
         {
-            CoroutineManager.AddCoroutine(Coroutines.FadeInSceneTransision(sceneManager), "FadeIn", 0, true);
+            CurrentWindow.coroutineManager.AddCoroutine(Coroutines.FadeInSceneTransision(sceneManager), "FadeIn", 0, true);
         }
 
         public virtual void OnExit()
         {
-            CoroutineManager.AddCoroutine(Coroutines.FadeOutSceneTransision(sceneManager), "FadeOut", 0, true);
+            CurrentWindow.coroutineManager.AddCoroutine(Coroutines.FadeOutSceneTransision(sceneManager), "FadeOut", 0, true);
         }
 
         public virtual void Update(float gt)
         {
-            if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Escape))
+            if (CurrentWindow.inputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Escape))
                 if (sceneManager.SceneState == SceneManager.State.Running)
                     sceneManager.SceneState = SceneManager.State.Paused;
                 else

@@ -9,25 +9,27 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// A wrapper class to help manage user input functions
     /// </summary>
-    public static class InputManager
+    public class InputManager
     {
+        WindowData parentWindow;
+
         const float DOUBLE_CLICK_DELAY = 1f;
-        static float timeSinceLastLeftClick = 0;
-        static Vector2 mousePos;
-        static bool firstClick = false;
-        public static bool IsDoubleClick = false;
+        float timeSinceLastLeftClick = 0;
+        Vector2 mousePos;
+        bool firstClick = false;
+        public bool IsDoubleClick = false;
         public enum MouseKeys { LeftButton, RightButton, MiddleButton }
         
         static KeyboardState currentKeyboardState;
 
-        public static Vector2 MousePos { get { return mousePos; } }
+        public Vector2 MousePos { get { return mousePos; } }
 
-        static KeyboardState previousKeyboardState;
+        KeyboardState previousKeyboardState;
 
-        static MouseState currentMouseState;
-        static MouseState previousMouseState;
+        MouseState currentMouseState;
+        MouseState previousMouseState;
 
-        public static bool IsKeyPressed(Keys k)
+        public bool IsKeyPressed(Keys k)
         {
             return currentKeyboardState.IsKeyDown(k);
         }
@@ -37,12 +39,12 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         /// <param name="k">The key to check</param>
         /// <returns>true if the key was pressed this loop</returns>
-        public static bool IsKeyTriggered(Keys k)
+        public bool IsKeyTriggered(Keys k)
         {
             return currentKeyboardState.IsKeyDown(k) && !previousKeyboardState.IsKeyDown(k);
         }
 
-        public static bool IsMouseDown(MouseKeys b)
+        public bool IsMouseDown(MouseKeys b)
         {
             if (b == MouseKeys.LeftButton)
             {
@@ -64,7 +66,7 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         /// <param name="k">The mouse button to check</param>
         /// <returns>true if the mouse button was pressed this loop</returns>
-        public static bool IsMouseTriggered(MouseKeys b)
+        public bool IsMouseTriggered(MouseKeys b)
         {
             if (b == MouseKeys.LeftButton)
             {
@@ -82,8 +84,9 @@ namespace MonoGame_Core.Scripts
             return false;
         }
 
-        public static void Initilize()
+        public InputManager(WindowData parentWindow)
         {
+            this.parentWindow = parentWindow;
             currentKeyboardState = new KeyboardState();
             currentMouseState = new MouseState();
         }
@@ -92,7 +95,7 @@ namespace MonoGame_Core.Scripts
         /// Check if a double click has occured, and change the double click flag to true if it has.
         /// </summary>
         /// <param name="gt">Game Time</param>
-        private static void checkDoubleClick(float gt)
+        private void checkDoubleClick(float gt)
         {
             if (IsDoubleClick)
                 IsDoubleClick = false;
@@ -128,10 +131,11 @@ namespace MonoGame_Core.Scripts
         /// Get the current state of they keyboard, and move the current state to the previous
         /// </summary>
         /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        public void Update(float gt)
         {
             Point p = Mouse.GetState().Position;
             mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, -RenderingManager.HEIGHT / 2);
+            mousePos += (new Vector2(GameManager.Instance.Window.ClientBounds.X, GameManager.Instance.Window.ClientBounds.Y) - new Vector2(parentWindow.X, parentWindow.Y));
 
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();

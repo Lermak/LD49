@@ -9,13 +9,13 @@ namespace MonoGame_Core.Scripts
     {
         public static IEnumerator<bool> FadeInSceneTransision(SceneManager sm)
         {
-            while (RenderingManager.GlobalFade > 0)
+            while (CurrentWindow.GlobalFade > 0)
             {
-                RenderingManager.GlobalFade -= 255 * TimeManager.DeltaTime;
-                SoundManager.SetVolume(1 - (RenderingManager.GlobalFade / 256));
-                if (RenderingManager.GlobalFade < 0)
+                CurrentWindow.GlobalFade -= 255 * TimeManager.DeltaTime;
+                SoundManager.SetVolume(1 - (CurrentWindow.GlobalFade / 256));
+                if (CurrentWindow.GlobalFade < 0)
                 {
-                    RenderingManager.GlobalFade = 0;
+                    CurrentWindow.GlobalFade = 0;
                     sm.SceneState = SceneManager.State.Running;
                 }
                 yield return false;
@@ -24,18 +24,13 @@ namespace MonoGame_Core.Scripts
         }
         public static IEnumerator<bool> FadeOutSceneTransision(SceneManager sm)
         {
-            while (RenderingManager.GlobalFade < 255)
+            while (CurrentWindow.GlobalFade < 255)
             {
-                RenderingManager.GlobalFade += 255 * TimeManager.DeltaTime;
-                SoundManager.SetVolume(1 - (RenderingManager.GlobalFade / 256));
-                if (RenderingManager.GlobalFade > 255)
+                CurrentWindow.GlobalFade += 255 * TimeManager.DeltaTime;
+                SoundManager.SetVolume(1 - (CurrentWindow.GlobalFade / 256));
+                if (CurrentWindow.GlobalFade > 255)
                 {
-                    RenderingManager.GlobalFade = 255;
-                    foreach (GameObject o in sm.CurrentScene.GameObjects)
-                    {
-                        o.Destroy();
-                        o.OnDestroy();
-                    }
+                    CurrentWindow.GlobalFade = 255;
                     sm.CurrentScene = null;
                 }
                 yield return false;

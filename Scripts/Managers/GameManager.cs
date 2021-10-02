@@ -11,6 +11,8 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
+        public static GameManager Instance;
+
         private GraphicsDeviceManager _graphics;
         private static bool quit;
 
@@ -20,21 +22,30 @@ namespace MonoGame_Core.Scripts
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
+            Instance = this;
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             ResourceManager.Initilize();
-            InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
             //CollisionManager.Initilize();
-            CoroutineManager.Initilize();
-            CameraManager.Initilize();
-            WindowManager.Initilize(Content, new MainMenu()); 
-            WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
-            //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
+            CameraManager.Initilize(); 
+
+            try
+            {
+                var c = new ChatForm();
+                c.Show();
+            }
+            catch {
+                var a = "sd";
+            }
+            
+            WindowManager.Initilize(Content, new TestScene()); 
+            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
             //SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
@@ -56,10 +67,6 @@ namespace MonoGame_Core.Scripts
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
-
-            InputManager.Update(TimeManager.DeltaTime);
-
-            CoroutineManager.Update(TimeManager.DeltaTime);
             
             WindowManager.Update(TimeManager.DeltaTime);
 
@@ -70,7 +77,6 @@ namespace MonoGame_Core.Scripts
             CameraManager.Update(TimeManager.DeltaTime);
 
             //CollisionManager.Update(TimeManager.DeltaTime);
-
 
             base.Update(gameTime);
         }

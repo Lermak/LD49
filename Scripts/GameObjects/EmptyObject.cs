@@ -4,7 +4,7 @@ namespace MonoGame_Core.Scripts
 {
     public class EmptyObject : GameObject
     {
-        public EmptyObject(SceneManager sm, string tag) : base(tag, sm)
+        public EmptyObject(string tag) : base(tag)
         {
 
         }

@@ -47,13 +47,17 @@ namespace MonoGame_Core.Scripts
 
             int dialSize = 512;
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new NuclearDial(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "nd", "NuclearDial", new Vector2(dialSize, dialSize), new Vector2(400, -200)));
-            GameObjects.Add(new WorldObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "dialBG", "DialBG", new Vector2(dialSize, dialSize), new Vector2(400, -200), 1));
+            GameObjects.Add(new NuclearDial("nd", "NuclearDial", new Vector2(dialSize, dialSize), new Vector2(400, -200)));
+            GameObjects.Add(new WorldObject("dialBG", "DialBG", new Vector2(dialSize, dialSize), new Vector2(400, -200), 1));
 
-            GameObjects.Add(new WorldObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "BG", "Background", new Vector2(1920, 1080), new Vector2(), 0));
+            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Transform.Layer = 0;
 
-            GameObjects.Add(new Button(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "CoolantButtonUp", "CoolantButtonDown", "NuclearButton", new Vector2(512, 512), new Vector2(-400, -200), 1, Behaviors.ReduceNuclearOnClick));
+            GameObjects.Add(new Button("CoolantButtonUp", "CoolantButtonDown", "NuclearButton", new Vector2(512, 512), new Vector2(-400, -200), 1, () => {
+                NuclearLevel.level -= NuclearLevel.reduceAmount;
+                if (NuclearLevel.level < 0.0f)
+                    NuclearLevel.level = 0.0f;
+            }));
 
             base.loadContent(c);
         }

@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                     texture = null;
             }
         }
-        public FontRenderer(GameObject go, List<Camera> cam, string text, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, cam, texID, t, off, drawArea, orderInLayer, clr)
+        public FontRenderer(GameObject go, string text, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, texID, t, off, drawArea, orderInLayer, clr)
         {
             name = "fontRenderer";
             this.text = text;
@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
                 sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
                     RenderingManager.WindowScale * Transform.Scale * textScale,
@@ -49,7 +49,7 @@ namespace MonoGame_Core.Scripts
                 sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
                     RenderingManager.GameScale * Transform.Scale * textScale,

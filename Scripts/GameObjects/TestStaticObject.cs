@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class TestStaticObject : WorldObject
     {
-        public TestStaticObject(SceneManager sm, List<Camera> cam, string texID, byte layer) : base(sm, cam, texID, "StaticTest", new Vector2(40,40), new Vector2(100, 100), layer)
+        public TestStaticObject(string texID, byte layer) : base(texID, "StaticTest", new Vector2(40,40), new Vector2(100, 100), layer)
         {
             ComponentHandler.AddComponent(new CollisionBox(this, "myBox", true));
             //SpriteRenderer.Shader = "BlueShader";

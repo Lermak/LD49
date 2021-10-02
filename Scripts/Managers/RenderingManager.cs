@@ -39,10 +39,6 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public static Vector2 WindowScale = new Vector2(1, 1);
         /// <summary>
-        /// Global color value applied to produce a fade effect between scenes
-        /// </summary>
-        public static float GlobalFade = 255;
-        /// <summary>
         /// Set the rendering order
         /// </summary>
         public static RenderOrder RenderingOrder = RenderOrder.SideScrolling;

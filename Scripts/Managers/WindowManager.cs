@@ -9,18 +9,101 @@ using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
-    public class Window
-    {
-        public Form Viewport;
-        public SceneManager SceneManager;
 
-        public Window(Form f, SceneManager sm)
-        {
-            Viewport = f;
-            SceneManager = sm;
-        }
+    public interface WindowData
+    {
+        public int X { get; }
+        public int Y { get; }
+        public int Width { get; }
+        public int Height { get; }
     }
 
+    public class WindowDataForm : WindowData
+    {
+        public Form f;
+        public WindowDataForm(Form form)
+        {
+            this.f = form;
+        }
+
+        public int X => f.DesktopLocation.X;
+
+        public int Y => f.DesktopLocation.Y;
+
+        public int Width => f.Width;
+
+        public int Height => f.Height;
+    }
+
+    public class WindowDataMain : WindowData
+    {
+        public int X => GameManager.Instance.Window.ClientBounds.X;
+
+        public int Y => GameManager.Instance.Window.ClientBounds.Y;
+
+        public int Width => GameManager.Instance.Window.ClientBounds.Width;
+
+        public int Height => GameManager.Instance.Window.ClientBounds.Height;
+    }
+
+    public class Window
+    {
+        public Form form;
+        public WindowData data;
+        public KeyboardDispatcher keyboardDispatcher;
+        public InputManager inputManager;
+        public SceneManager sceneManager;
+        public CoroutineManager coroutineManager;
+
+        /// <summary>
+        /// Global color value applied to produce a fade effect between scenes
+        /// </summary>
+        public float GlobalFade = 255;
+
+        public Window(Form f)
+        {
+            //Main Window
+            if(f == null)
+            {
+                data = new WindowDataMain();
+                keyboardDispatcher = new KeyboardDispatcher(GameManager.Instance.Window.Handle);
+            }
+            //All other windows
+            else
+            {
+               form = f;
+               data = new WindowDataForm(form);
+               keyboardDispatcher = new KeyboardDispatcher(f.Handle);
+            }
+
+            inputManager = new InputManager(data);
+            sceneManager = new SceneManager();
+            coroutineManager = new CoroutineManager();
+        }
+    };
+
+    public static class CurrentWindow {
+        public static Window _window;
+
+        public static Window windowData { set { _window = value; } private get { return _window; } }
+        public static InputManager inputManager { get { return windowData.inputManager; } }
+        public static SceneManager sceneManager { get { return windowData.sceneManager; } }
+        public static KeyboardDispatcher keyboardDispatcher { get { return windowData.keyboardDispatcher; } }
+        public static CoroutineManager coroutineManager { get { return windowData.coroutineManager; } }
+        public static float GlobalFade { get { return windowData.GlobalFade; } set { windowData.GlobalFade = value; } }
+    }
+
+        //public static Window AddWindow(Vector2 size)
+        //{
+        //    Form f = new NoCloseForm();
+        //    Window w = new Window();
+        //    w.form = f;
+        //    w.keyboardDispatcher = new KeyboardDispatcher(f.Handle);
+        //    w.inputManager = new InputManager(w);
+        //    Windows.Add(w);
+//
+        //    f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
+        //    f.Show();
     public static class WindowManager
     {
         public static List<Window> Windows;
@@ -29,17 +112,20 @@ namespace MonoGame_Core.Scripts
         {
             contentManager = cm;
             Windows = new List<Window>();
-            Windows.Add(new Window(null, new SceneManager()));
-            Windows[0].SceneManager.Initilize(cm, s, new List<Camera>() { CameraManager.Cameras[0] });
+
+            Windows.Add(new Window(null));
+
+            CurrentWindow._window = Windows[0];
+            Windows[0].sceneManager.Initilize(cm, s, new List<Camera>() { CameraManager.Cameras[0] });
         }
 
-        public static void AddWindow(Form f, Scene s, Vector2 size)
+        public static Window AddWindow(Form f, Scene s, Vector2 size)
         {
-            SceneManager sm = new SceneManager();
-            
-            Windows.Add(new Window(f, sm));
+            Window w = new Window(f);
+            Windows.Add(w);
             f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
-            Windows[Windows.Count - 1].Viewport.Show();
+            Windows[Windows.Count - 1].form.Show();
+
             RenderingManager.WindowTargets.Add(new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
                 f.Handle,
                 (int)size.X,
@@ -73,20 +159,26 @@ namespace MonoGame_Core.Scripts
             Camera c = CameraManager.Cameras[CameraManager.Cameras.Count - 1];
             c.SwapChain = RenderingManager.WindowTargets.Count-1;
 
-            sm.Initilize(contentManager, s, new List<Camera>() { c });
+            CurrentWindow._window = w;
+            w.sceneManager.Initilize(contentManager, s, new List<Camera>() { c });
+
+            return w;
         }
 
         public static void RemoveWindow(Form f)
         {
-            Window x = Windows.Where(s => s.Viewport == f).First();
-            Windows.Remove(x);
+            Windows.Remove(w);
+            w.form.Dispose();
         }
 
         public static void Update(float gt)
         {
-            for(int i = 0; i < Windows.Count; ++i)//foreach(Window w in Windows)
+            foreach(Window w in WindowManager.Windows)
             {
-                Windows[i].SceneManager.Update(gt);
+                CurrentWindow._window = w;
+                w.inputManager.Update(gt);
+                w.coroutineManager.Update(gt);
+                w.sceneManager.Update(gt);
             }
         }
     }
