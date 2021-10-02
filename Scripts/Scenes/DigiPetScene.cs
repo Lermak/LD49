@@ -18,8 +18,8 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(300, 300), new Vector2(-760, 390), 1));
             DigiPet d = (DigiPet)GameObjects[GameObjects.Count - 1];
             GameObjects.Add(new FeedButton("ButtonUp", "ButtonUp", "FeedButton", new Vector2(75, 75), new Vector2(-860, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
-            GameObjects.Add(new WashButton("ButtonUp", "ButtonUp", "FeedButton", new Vector2(75, 75), new Vector2(-760, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
-            GameObjects.Add(new PlayButton("ButtonUp", "ButtonUp", "FeedButton", new Vector2(75, 75), new Vector2(-660, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
+            GameObjects.Add(new WashButton("ButtonUp", "ButtonUp", "WashButton", new Vector2(75, 75), new Vector2(-760, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
+            GameObjects.Add(new PlayButton("ButtonUp", "ButtonUp", "PlayButton", new Vector2(75, 75), new Vector2(-660, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
 
         }
     }

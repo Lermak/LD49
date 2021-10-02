@@ -27,6 +27,10 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.PreferredBackBufferWidth = 800;
+
+            _graphics.ApplyChanges();
             // TODO: Add your initialization logic here
             ResourceManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
