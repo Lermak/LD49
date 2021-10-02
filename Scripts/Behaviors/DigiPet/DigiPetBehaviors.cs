@@ -20,7 +20,7 @@ namespace MonoGame_Core.Scripts
             {
                 if(CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
                 {
-                    if (d.Code.Count > 5)
+                    if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('p');
                 }
@@ -57,7 +57,7 @@ namespace MonoGame_Core.Scripts
 
                 if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
                 {
-                    if (d.Code.Count > 5)
+                    if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('w');
                 }
@@ -93,7 +93,7 @@ namespace MonoGame_Core.Scripts
             {
                 if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
                 {
-                    if (d.Code.Count > 5)
+                    if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('f');
                 }
@@ -130,7 +130,17 @@ namespace MonoGame_Core.Scripts
             if(d.NeedsWash)
                 d.TimeSinceLastWash += gt;
 
-            if(d.CodeAccessed == false && d.Code.ToList<char>() == new List<char>() { 'w','f','f','p','f' })
+            List<char> code = d.Code.ToList<char>();
+            List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
+            bool flag = true;
+            if(code.Count == 5)
+                for(int i = 0; i < 5; ++i)
+                    if(code[i] != sequence[i])
+                    {
+                        flag = false;
+                        break;
+                    }
+            if (d.CodeAccessed == false && flag)
             {
                 d.CodeAccessed = true;
                 d.NeedsFood = false;
