@@ -87,7 +87,7 @@ namespace MonoGame_Core.Scripts
                 graphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
                 0,
-                RenderTargetUsage.PreserveContents));
+                RenderTargetUsage.PlatformContents));
 
             WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
                 GameManager.chatWindow.Handle,
@@ -96,7 +96,7 @@ namespace MonoGame_Core.Scripts
                 false,
                 SurfaceFormat.Color,
                 DepthFormat.Depth24Stencil8,
-                1,
+                0,
                 RenderTargetUsage.PlatformContents,
                 PresentInterval.Default));
         }
@@ -188,13 +188,27 @@ namespace MonoGame_Core.Scripts
                 SetTarget(-1);
             }
 
+            SetTarget(-1);
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Present();
+
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
 
-            
+            //foreach (var chain in RenderingManager.WindowTargets)
+            //{
+            //    graphicsDevice.SetRenderTarget(chain);
+            //    graphicsDevice.Clear(Color.Red);
+            //}
 
-            SetTarget(-1);
+            graphicsDevice.SetRenderTarget(null);
+
+            foreach (var chain in RenderingManager.WindowTargets)
+            {
+                chain.Present();
+            }
         }
 
         /// <summary>

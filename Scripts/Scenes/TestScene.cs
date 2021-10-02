@@ -242,7 +242,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
             SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
-            SoundManager.PlaySong("Melody");
+            //SoundManager.PlaySong("Melody");
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
             Textures = new Dictionary<string, Texture2D>();

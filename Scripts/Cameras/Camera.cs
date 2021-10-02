@@ -130,6 +130,7 @@ namespace MonoGame_Core.Scripts
                 if (swapChain >= 0)
                 {
                     sb.End();
+
                     RenderingManager.SetWindow(swapChain);                                   
                     sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
@@ -142,8 +143,6 @@ namespace MonoGame_Core.Scripts
                         new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
                         SpriteEffects.None,
                         Layer / 256);
-                    
-                    RenderingManager.WindowTargets[swapChain].Present();
                     sb.End();
 
                     RenderingManager.SetTarget(-1);
