@@ -56,42 +56,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/Bullet.png
 
-#begin Images/CoolantButton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/CoolantButton.png
-
-#begin Images/CoolantButtonPressed.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/CoolantButtonPressed.png
-
-#begin Images/DialBG.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/DialBG.png
-
 #begin Images/Enemy.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -115,18 +79,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/MainMenuBG.png
-
-#begin Images/NuclearDial.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/NuclearDial.png
 
 #begin Images/PeaShooter.png
 /importer:TextureImporter
@@ -181,30 +133,6 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/TestSong.mp3
-
-#begin Shaders/BlueShader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/BlueShader.fx
-
-#begin Shaders/TestShader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/TestShader.fx
-
-#begin Shaders/TintShaderExample.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/TintShaderExample.fx
-
-#begin Shaders/tutorial.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/tutorial.fx
 
 #begin Sound/TestHit.wav
 /importer:WavImporter

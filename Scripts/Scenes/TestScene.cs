@@ -242,11 +242,8 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
             SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
-
+            SoundManager.PlaySong("Melody");
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
-
-            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
-            Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
@@ -256,14 +253,7 @@ namespace MonoGame_Core.Scripts
 
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
-            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
-                480, 
-                270,
-                new Vector2(480, 270),
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
             GameObjects = new List<GameObject>();
             GameObjects.Add(new TestObject("PeaShooter", "testObj"));
@@ -278,12 +268,6 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-
-
-            //((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
-
-
-            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
 
             TiledImporter.LoadFromString(sceneMap);
             //TiledImporter.LoadFromContent(Content, "Tiled/Test.xml");

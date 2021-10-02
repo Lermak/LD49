@@ -19,6 +19,8 @@ namespace MonoGame_Core.Scripts
             behaviorHandler.AddBehavior("MoveForward", Behaviors.MoveTowardRotation, new Component[] { Transform, RigidBody });
             BehaviorHandler.AddBehavior("Scaler", Behaviors.ManualScale, new Component[] { Transform });
 
+            SpriteRenderer.Cameras.Add(CameraManager.Cameras[2]);
+
             //SpriteRenderer.Shader = "TestShader";
             ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox", "TileWall", "tile" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }

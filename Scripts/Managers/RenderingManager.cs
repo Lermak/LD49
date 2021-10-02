@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Content;
-
+using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
@@ -51,6 +51,7 @@ namespace MonoGame_Core.Scripts
         /// Render targets are what Cameras use to store image data
         /// </summary>
         public static List<RenderTarget2D> RenderTargets;
+        public static List<SwapChainRenderTarget> WindowTargets;
         /// <summary>
         /// The list of all game sprites
         /// </summary>
@@ -64,7 +65,7 @@ namespace MonoGame_Core.Scripts
         /// MonoGame's object for handling communication with the graphics card
         /// </summary>
         private static GraphicsDevice graphicsDevice;
-        
+        public static GraphicsDevice GraphicsDevice { get { return graphicsDevice; } }
 
         /// <summary>
         /// Setup the current state of the rendering manager.
@@ -77,15 +78,7 @@ namespace MonoGame_Core.Scripts
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
-
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1920,
-                (int)1080,
-                false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PreserveContents));
+            WindowTargets = new List<SwapChainRenderTarget>();
         }
 
         /// <summary>
@@ -98,6 +91,45 @@ namespace MonoGame_Core.Scripts
             Sprites = new List<SpriteRenderer>();
         }
 
+        class RenderState
+        {
+            public string prevShader = "";
+            public SpriteBatch batch;
+        };
+
+        static void RenderCamera(Camera c, RenderState state)
+        {
+            foreach (SpriteRenderer sr in Sprites)
+            {
+                if (sr.Visible && sr.Cameras.Contains(c))
+                {
+                    if (sr.Shader != state.prevShader)
+                    {
+                        state.batch.End();
+                        state.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+                        state.prevShader = sr.Shader;
+                    }
+
+                    if (sr.Shader != "")
+                    {
+                        foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                        {
+                            foreach (EffectPass p in t.Passes)
+                            {
+                                p.Apply();
+                                sr.Draw(state.batch, c);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sr.Draw(state.batch, c);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Update the window scale to reperesent the current window size
         /// Set the target, then sort all items by their camera
@@ -108,76 +140,97 @@ namespace MonoGame_Core.Scripts
         public static void Draw(float gt)
         {
             var x = graphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(1, 1);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
-            string prevShader = "";
-            int Target = -1;
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Clear(Color.Transparent);
 
-            SetTarget(Target);
+            Dictionary<int, List<Camera>> rtBucket = new Dictionary<int, List<Camera>>();
 
-            graphicsDevice.Clear(Color.Black);
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
-           
-            foreach (Camera c in cameras)
+            //Create buckets for all the cameras that render to a render target
+            foreach (Camera c in CameraManager.Cameras)
             {
-                foreach (SpriteRenderer sr in Sprites)
+                if (c.Target == -1) continue;
+                if(!rtBucket.ContainsKey(c.Target))
                 {
-                    if (sr.Visible && sr.Cameras.Contains(c))
-                    {
-                        if (sr.Shader != prevShader)
-                        {
-                            if (c.Target == Target)
-                            {
-                                spriteBatch.End();
-                                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-                            }
-
-                            prevShader = sr.Shader;
-                        }
-
-                        if (c.Target != Target)
-                        {
-                            spriteBatch.End();
-
-                            SetTarget(c.Target);
-                            graphicsDevice.Clear(Color.Transparent);
-
-                            Target = c.Target;
-
-                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-                        }
-
-                        if (sr.Shader != "")
-                        {
-                            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
-                            {
-                                foreach (EffectPass p in t.Passes)
-                                {
-                                    p.Apply();
-                                    sr.Draw(spriteBatch, c);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            sr.Draw(spriteBatch, c);
-                        }
-                    }
+                    rtBucket.Add(c.Target, new List<Camera>());
                 }
-            }
-            spriteBatch.End();
 
-            if(Target != -1)
+                rtBucket[c.Target].Add(c);
+            }
+
+            //Render all the cameras to their targets
+            foreach(var p in rtBucket)
             {
-                Target = -1;
-                SetTarget(-1);
+                RenderState renderState = new RenderState();
+                renderState.batch = spriteBatch;
+
+                graphicsDevice.SetRenderTarget(RenderingManager.RenderTargets[p.Key]);
+                graphicsDevice.Clear(Color.Transparent);
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+                foreach (Camera c in p.Value)
+                {
+                    RenderCamera(c, renderState);
+                }
+
+                spriteBatch.End();
             }
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            CameraManager.Draw(spriteBatch);
-            spriteBatch.End();
+            graphicsDevice.SetRenderTarget(null);
+
+            //Next, get all the cameras that render to a swap chain
+            Dictionary<int, List<Camera>> scBucket = new Dictionary<int, List<Camera>>();
+            foreach (Camera c in CameraManager.Cameras)
+            {
+                if (c.SwapChain == -1) continue;
+                if (!scBucket.ContainsKey(c.SwapChain))
+                {
+                    scBucket.Add(c.SwapChain, new List<Camera>());
+                }
+
+                scBucket[c.SwapChain].Add(c);
+            }
+
+            //Render all the cameras to their targets
+            foreach (var p in scBucket)
+            {
+                graphicsDevice.SetRenderTarget(RenderingManager.WindowTargets[p.Key]);
+                graphicsDevice.Clear(Color.Black);
+
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+                foreach (Camera c in p.Value)
+                {
+                    c.Draw(spriteBatch);
+                }
+
+                spriteBatch.End();
+            }
+
+            graphicsDevice.SetRenderTarget(null);
+
+            //Present all the swap chains
+            foreach (var chain in RenderingManager.WindowTargets)
+            {
+                chain.Present();
+            }
+
+
+            //Finally, we draw all of the things to the main window
+            foreach (Camera c in CameraManager.Cameras)
+            {
+                if (c.Target != -1) continue;
+
+                RenderState renderState = new RenderState();
+                renderState.batch = spriteBatch;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                RenderCamera(c, renderState);
+                spriteBatch.End();
+            }
+
+            graphicsDevice.Present();
         }
 
         /// <summary>
@@ -218,12 +271,19 @@ namespace MonoGame_Core.Scripts
         /// Changes the current Render Target
         /// </summary>
         /// <param name="Target">new target id</param>
-        private static void SetTarget(int Target)
+        public static void SetTarget(int Target)
         {
-            if (Target == -1)
+            if (Target < 0 || Target >= RenderTargets.Count)
                 graphicsDevice.SetRenderTarget(null);
             else
                 graphicsDevice.SetRenderTarget(RenderTargets[Target]);
+        }
+        public static void SetWindow(int Target)
+        {
+            if (Target < 0 || Target >= WindowTargets.Count)
+                graphicsDevice.SetRenderTarget(null);
+            else
+                graphicsDevice.SetRenderTarget(WindowTargets[Target]);
         }
     }
 }

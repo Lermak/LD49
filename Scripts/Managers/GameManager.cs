@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
+using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
@@ -13,6 +15,7 @@ namespace MonoGame_Core.Scripts
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
+
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -32,7 +35,10 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(Content, new MainMenu());
+            WindowManager.Initilize(); 
+            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920, 1080) / 4);
+            SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }
@@ -65,6 +71,8 @@ namespace MonoGame_Core.Scripts
             CameraManager.Update(TimeManager.DeltaTime);
 
             CollisionManager.Update(TimeManager.DeltaTime);
+
+            WindowManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }
