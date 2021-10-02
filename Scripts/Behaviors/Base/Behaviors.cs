@@ -138,5 +138,10 @@ namespace MonoGame_Core.Scripts
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
         }
 
+        public static void NuclearDeath(float gt, Component[] c)
+        {
+            if (NuclearLevel.level >= 1.1)
+                GameManager.Quit(); //this is bad, make it into a game over screen
+        }
     }
 }
