@@ -35,7 +35,7 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public static Vector2 BaseScale = new Vector2(1, 1);
         /// <summary>
-        /// The scale of the window compaired to the target size
+        /// The scale of the window compared to the target size
         /// </summary>
         public static Vector2 WindowScale = new Vector2(1, 1);
         /// <summary>

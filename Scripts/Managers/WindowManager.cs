@@ -49,6 +49,10 @@ namespace MonoGame_Core.Scripts
     public class Window
     {
         public Form form;
+
+        public RenderTarget2D renderTarget;
+        public SwapChainRenderTarget swapChainTarget;
+
         public WindowData data;
         public KeyboardDispatcher keyboardDispatcher;
         public InputManager inputManager;
@@ -93,17 +97,6 @@ namespace MonoGame_Core.Scripts
         public static float GlobalFade { get { return windowData.GlobalFade; } set { windowData.GlobalFade = value; } }
     }
 
-        //public static Window AddWindow(Vector2 size)
-        //{
-        //    Form f = new NoCloseForm();
-        //    Window w = new Window();
-        //    w.form = f;
-        //    w.keyboardDispatcher = new KeyboardDispatcher(f.Handle);
-        //    w.inputManager = new InputManager(w);
-        //    Windows.Add(w);
-//
-        //    f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
-        //    f.Show();
     public static class WindowManager
     {
         public static List<Window> Windows;
@@ -126,7 +119,7 @@ namespace MonoGame_Core.Scripts
             f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
             Windows[Windows.Count - 1].form.Show();
 
-            RenderingManager.WindowTargets.Add(new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
+            w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
                 f.Handle,
                 (int)size.X,
                 (int)size.Y,
@@ -135,16 +128,19 @@ namespace MonoGame_Core.Scripts
                 DepthFormat.Depth24Stencil8,
                 0,
                 RenderTargetUsage.PlatformContents,
-                PresentInterval.Default));
+                PresentInterval.Default);
 
-            RenderingManager.RenderTargets.Add(new RenderTarget2D(RenderingManager.GraphicsDevice,
+            w.renderTarget = new RenderTarget2D(RenderingManager.GraphicsDevice,
                 (int)1920,
                 (int)1080,
                 false,
                 RenderingManager.GraphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
                 0,
-                RenderTargetUsage.PlatformContents));
+                RenderTargetUsage.PlatformContents);
+
+            RenderingManager.WindowTargets.Add(w.swapChainTarget);
+            RenderingManager.RenderTargets.Add(w.renderTarget);
 
             CameraManager.AddCamera(new Camera("Camera" + CameraManager.Cameras.Count,
                 RenderingManager.RenderTargets.Count - 1,
@@ -155,6 +151,24 @@ namespace MonoGame_Core.Scripts
                 RenderingManager.HEIGHT),
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT)));
+
+            w.form.ResizeEnd += (object sender, EventArgs e) =>
+            {
+                var size = w.form.Size;
+                int idx = RenderingManager.WindowTargets.FindIndex(0, (sc) => { return sc == w.swapChainTarget; });
+                w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
+                   f.Handle,
+                   (int)size.Width,
+                   (int)size.Height,
+                   false,
+                   SurfaceFormat.Color,
+                   DepthFormat.Depth24Stencil8,
+                   0,
+                   RenderTargetUsage.PlatformContents,
+                   PresentInterval.Default);
+
+                RenderingManager.WindowTargets[idx] = w.swapChainTarget;
+            };
 
             Camera c = CameraManager.Cameras[CameraManager.Cameras.Count - 1];
             c.SwapChain = RenderingManager.WindowTargets.Count-1;
