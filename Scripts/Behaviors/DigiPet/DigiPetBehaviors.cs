@@ -27,7 +27,11 @@ namespace MonoGame_Core.Scripts
 
                 ad.ChangeSpriteSheet("ButtonDown", 0);
 
-                if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
+                if (!Globals.DigiPetAlive)
+                {
+
+                }
+                else if (!d.NeedsPlay && ad.SpriteRenderer.Animation == 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -63,8 +67,11 @@ namespace MonoGame_Core.Scripts
                 }
 
                 ad.ChangeSpriteSheet("ButtonDown", 0);
+                if (!Globals.DigiPetAlive)
+                {
 
-                if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
+                }
+                else if (!d.NeedsWash && ad.SpriteRenderer.Animation == 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -99,8 +106,11 @@ namespace MonoGame_Core.Scripts
                 }
 
                 ad.ChangeSpriteSheet("ButtonDown", 0);
+                if(!Globals.DigiPetAlive)
+                {
 
-                 if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
+                }
+                else if (!d.NeedsFood && ad.SpriteRenderer.Animation == 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -133,13 +143,18 @@ namespace MonoGame_Core.Scripts
             List<char> code = d.Code.ToList<char>();
             List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
             bool flag = true;
-            if(code.Count == 5)
-                for(int i = 0; i < 5; ++i)
-                    if(code[i] != sequence[i])
+            if (code.Count == 5)
+            {
+                for (int i = 0; i < 5; ++i)
+                    if (code[i] != sequence[i])
                     {
                         flag = false;
                         break;
                     }
+            }
+            else
+                flag = false;
+
             if (d.CodeAccessed == false && flag)
             {
                 d.CodeAccessed = true;

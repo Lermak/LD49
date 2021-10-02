@@ -27,6 +27,10 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.PreferredBackBufferWidth = 800;
+
+            _graphics.ApplyChanges();
             // TODO: Add your initialization logic here
             ResourceManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
@@ -43,7 +47,7 @@ namespace MonoGame_Core.Scripts
                 var a = "sd";
             }
             
-            WindowManager.Initilize(Content, new TestScene()); 
+            WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
             //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
             //SceneManager.Initilize(Content, new TestScene());
