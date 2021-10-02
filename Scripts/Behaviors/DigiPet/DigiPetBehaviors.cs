@@ -14,10 +14,13 @@ namespace MonoGame_Core.Scripts
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v) &&
-                Globals.DigiPetAlive == true)
+                t.ContainsPoint(v))
             {
-                if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
+                if (Globals.DigiPetAlive == true)
+                {
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
+                }
+                else if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
@@ -44,10 +47,13 @@ namespace MonoGame_Core.Scripts
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v) &&
-                Globals.DigiPetAlive == true)
+                t.ContainsPoint(v))
             {
-                if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
+                if (Globals.DigiPetAlive == true)
+                {
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
+                }
+                else if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
@@ -74,10 +80,13 @@ namespace MonoGame_Core.Scripts
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v) &&
-                Globals.DigiPetAlive == true)
+                t.ContainsPoint(v))
             {
-                if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
+                if (Globals.DigiPetAlive == true)
+                {
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
+                }
+                else if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
