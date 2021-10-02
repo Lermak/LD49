@@ -92,7 +92,7 @@ namespace MonoGame_Core.Scripts
         }
 
         /// <summary>
-        /// Check if a double click has occured, and change the double click flag to true if it has.
+        /// Check if a double click has occurred, and change the double click flag to true if it has.
         /// </summary>
         /// <param name="gt">Game Time</param>
         private void checkDoubleClick(float gt)
@@ -133,9 +133,8 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt">Game Time</param>
         public void Update(float gt)
         {
-            Point p = Mouse.GetState().Position;
+            Vector2 p = parentWindow.getRelativeCursorPos();
             mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, -RenderingManager.HEIGHT / 2);
-            mousePos += (new Vector2(GameManager.Instance.Window.ClientBounds.X, GameManager.Instance.Window.ClientBounds.Y) - new Vector2(parentWindow.X, parentWindow.Y));
 
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
