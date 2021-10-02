@@ -13,12 +13,15 @@ namespace MonoGame_Core.Scripts
         private int frames;
 
         public SpriteRenderer SpriteRenderer { get { return spriteRenderer; } }
-
+        public int CurrentFrame { get { return currentFrame; } }
+        public int Frames { get { return frames; } }
+        public float AnimationSpeed { get { return animationSpeed; } }
+        public float TimeSinceFrameChange { get { return timeSinceFrameChange; } }
         public AnimationData(GameObject go, string name, SpriteRenderer sr, float animSpeed) : base(go, name)
         {
             spriteRenderer = sr;
             animationSpeed = animSpeed;
-            frames = (ResourceManager.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X)-1;
+            frames = (ResourceManager.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X) - 1;
         }
 
         /// <summary>
@@ -47,8 +50,8 @@ namespace MonoGame_Core.Scripts
         /// <param name="anim">the Y index for the spritesheet animation</param>
         public void ChangeAnimation(byte anim)
         {
-            if(anim >= 0 &&
-                anim < (ResourceManager.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
+            if (anim >= 0 &&
+                anim <= (ResourceManager.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
             {
                 spriteRenderer.Animation = anim;
                 spriteRenderer.CurrentFrame = 0;
@@ -71,15 +74,18 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt">GameTime since last gameloop</param>
         public void Animate(float gt)
         {
-            timeSinceFrameChange += gt;
-            if(timeSinceFrameChange >= animationSpeed)
+            if (frames > 0)
             {
-                timeSinceFrameChange = 0;
-                currentFrame++;
-                if (currentFrame > frames)
-                    currentFrame = 0;
+                timeSinceFrameChange += gt;
+                if (timeSinceFrameChange >= animationSpeed)
+                {
+                    timeSinceFrameChange = 0;
+                    currentFrame++;
+                    if (currentFrame > frames)
+                        currentFrame = 0;
 
-                spriteRenderer.CurrentFrame = currentFrame;
+                    spriteRenderer.CurrentFrame = currentFrame;
+                }
             }
         }
     }

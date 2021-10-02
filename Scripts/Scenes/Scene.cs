@@ -53,10 +53,10 @@ namespace MonoGame_Core.Scripts
                 else
                     sceneManager.SceneState = SceneManager.State.Running;
 
-            if (sceneManager.SceneState == SceneManager.State.Running)
+            //if (sceneManager.SceneState == SceneManager.State.Running)
                 SceneRunning(gt);
-            else if (sceneManager.SceneState == SceneManager.State.Paused)
-                ScenePaused(gt);
+            //else if (sceneManager.SceneState == SceneManager.State.Paused)
+                //ScenePaused(gt);
         }
 
         public virtual void SceneRunning(float gt)

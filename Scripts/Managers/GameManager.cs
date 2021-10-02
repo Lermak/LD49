@@ -33,7 +33,7 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.Initilize();
             CameraManager.Initilize();
             WindowManager.Initilize(Content, new MainMenu()); 
-            //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
             //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
             //SceneManager.Initilize(Content, new TestScene());
 

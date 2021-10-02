@@ -149,7 +149,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt"></param>
         public static void Draw(float gt)
         {
-            WindowScale = new Vector2(.25f, .25f);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(1, 1);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);

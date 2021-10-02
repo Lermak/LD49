@@ -61,5 +61,16 @@ namespace MonoGame_Core.Scripts
             t.Place(origonalPos);
             yield return true;
         }
+
+        public static IEnumerator<bool> RunAnimation(byte animToRun, byte animAfterRun, AnimationData ad)
+        {
+            ad.ChangeAnimation(animToRun);
+            while (ad.CurrentFrame < ad.Frames && ad.TimeSinceFrameChange < ad.AnimationSpeed)
+            {
+                yield return false;
+            }
+            ad.ChangeAnimation(animAfterRun);
+            yield return true;
+        }
     }
 }

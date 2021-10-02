@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Content;
+using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
@@ -75,16 +76,17 @@ namespace MonoGame_Core.Scripts
             sm.Initilize(contentManager, s, new List<Camera>() { c });
         }
 
-        public static void RemoveWindow(Window w)
+        public static void RemoveWindow(Form f)
         {
-            Windows.Remove(w);
+            Window x = Windows.Where(s => s.Viewport == f).First();
+            Windows.Remove(x);
         }
 
         public static void Update(float gt)
         {
-            foreach(Window w in Windows)
+            for(int i = 0; i < Windows.Count; ++i)//foreach(Window w in Windows)
             {
-                w.SceneManager.Update(gt);
+                Windows[i].SceneManager.Update(gt);
             }
         }
     }
