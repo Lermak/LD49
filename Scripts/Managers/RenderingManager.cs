@@ -65,7 +65,7 @@ namespace MonoGame_Core.Scripts
         /// MonoGame's object for handling communication with the graphics card
         /// </summary>
         private static GraphicsDevice graphicsDevice;
-        
+        public static GraphicsDevice GraphicsDevice { get { return graphicsDevice; } }
 
         /// <summary>
         /// Setup the current state of the rendering manager.
@@ -79,64 +79,6 @@ namespace MonoGame_Core.Scripts
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
             WindowTargets = new List<SwapChainRenderTarget>();
-
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1920,
-                (int)1080,
-                false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PlatformContents));
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1920,
-                (int)1080,
-                false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PlatformContents));
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1920,
-                (int)1080,
-                false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PlatformContents));
-
-            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
-                GameManager.chatWindow.Handle,
-                GameManager.chatWindow.Width,
-                GameManager.chatWindow.Height,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8,
-                0,
-                RenderTargetUsage.PlatformContents,
-                PresentInterval.Default));
-
-            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
-                GameManager.miniGame.Handle,
-                GameManager.miniGame.Width,
-                GameManager.miniGame.Height,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8,
-                0,
-                RenderTargetUsage.PlatformContents,
-                PresentInterval.Default));
-
-            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
-                GameManager.miniGameTwo.Handle,
-                GameManager.miniGameTwo.Width,
-                GameManager.miniGameTwo.Height,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8,
-                0,
-                RenderTargetUsage.PlatformContents,
-                PresentInterval.Default));
         }
 
         /// <summary>
@@ -198,7 +140,7 @@ namespace MonoGame_Core.Scripts
         public static void Draw(float gt)
         {
             var x = graphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            //WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);
@@ -261,6 +203,8 @@ namespace MonoGame_Core.Scripts
 
                 foreach (Camera c in p.Value)
                 {
+                    WindowScale = new Vector2(WindowTargets[c.SwapChain].Width / WIDTH, WindowTargets[c.SwapChain].Height / HEIGHT);
+
                     c.Draw(spriteBatch);
                 }
 
@@ -283,7 +227,7 @@ namespace MonoGame_Core.Scripts
 
                 RenderState renderState = new RenderState();
                 renderState.batch = spriteBatch;
-
+                WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                 RenderCamera(c, renderState);
                 spriteBatch.End();

@@ -242,7 +242,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
             SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
-            //SoundManager.PlaySong("Melody");
+            SoundManager.PlaySong("Melody");
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
             Textures = new Dictionary<string, Texture2D>();
@@ -253,35 +253,7 @@ namespace MonoGame_Core.Scripts
 
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
-            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
-                480, 
-                270,
-                new Vector2(480, 270),
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].SwapChain = 0;
-            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
-            
-            CameraManager.Cameras.Add(new Camera("miniGame", 1, 0,
-                480,
-                270,
-                new Vector2(480, 270),
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
-
-            CameraManager.Cameras[2].SwapChain = 1;
-            CameraManager.Cameras[2].ScreenPosition = new Vector2(480, 270) / 2;
-
-            CameraManager.Cameras.Add(new Camera("miniGameTwo", 2, 0,
-                480,
-                270,
-                new Vector2(480, 270),
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
-
-            CameraManager.Cameras[3].SwapChain = 2;
-            CameraManager.Cameras[3].ScreenPosition = new Vector2(480, 270) / 2;
 
             GameObjects = new List<GameObject>();
             GameObjects.Add(new TestObject("PeaShooter", "testObj"));

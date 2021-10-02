@@ -13,9 +13,7 @@ namespace MonoGame_Core.Scripts
     {
         private GraphicsDeviceManager _graphics;
         private static bool quit;
-        public static NoCloseForm chatWindow;
-        public static NoCloseForm miniGame;
-        public static NoCloseForm miniGameTwo;
+
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,13 +24,6 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
-            chatWindow = new NoCloseForm();
-            chatWindow.Show();
-            miniGame = new NoCloseForm();
-            miniGame.Show();
-            miniGameTwo = new NoCloseForm();
-            miniGameTwo.Show();
-
             // TODO: Add your initialization logic here
             InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
@@ -40,8 +31,10 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
+            WindowManager.Initilize(); 
+            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920, 1080) / 4);
             SceneManager.Initilize(Content, new TestScene());
-
 
             base.Initialize();
         }
@@ -74,6 +67,8 @@ namespace MonoGame_Core.Scripts
             CameraManager.Update(TimeManager.DeltaTime);
 
             CollisionManager.Update(TimeManager.DeltaTime);
+
+            WindowManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }
