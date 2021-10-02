@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class DigiPet : WorldObject
     {
-        public DigiPet(SceneManager sm, List<Camera> cam, string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(sm, cam, texID, tag, size, pos, layer)
+        public DigiPet(string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(texID, tag, size, pos, layer)
         {
             Component c = componentHandler.AddComponent(new DigiPetData(this, "DigiPetData"));
             Component anim = componentHandler.AddComponent(new AnimationData(this, "AnimationData", SpriteRenderer, 2));

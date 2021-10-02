@@ -10,22 +10,22 @@ namespace MonoGame_Core.Scripts
         public static void Play(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
+            Vector2 v = CurrentWindow.inputManager.MousePos;
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
-            if (InputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v) &&
                 Globals.DigiPetAlive == true)
             {
                 if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
                 {
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
                 else if (!d.Playing)
                 {
                     d.NeedsPlay = false;
                     d.Playing = true;
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastPlay = 0;
                 }
@@ -39,22 +39,22 @@ namespace MonoGame_Core.Scripts
         public static void Wash(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
+            Vector2 v = CurrentWindow.inputManager.MousePos;
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
-            if (InputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v) &&
                 Globals.DigiPetAlive == true)
             {
                 if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
                 {
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
                 else if (!d.Washing)
                 {
                     d.NeedsWash = false;
                     d.Washing = true;
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastWash = 0;
                 }
@@ -68,22 +68,22 @@ namespace MonoGame_Core.Scripts
         public static void Feed(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            Vector2 v = InputManager.MousePos;
+            Vector2 v = CurrentWindow.inputManager.MousePos;
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
-            if (InputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v) &&
                 Globals.DigiPetAlive == true)
             {
                 if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
                 {
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
                 else if (!d.Feeding)
                 {
                     d.NeedsFood = false;
                     d.Feeding = true;
-                    CoroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "FeedingAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "FeedingAnimate", 0, true);
                     ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastFeed = 0;
                 }

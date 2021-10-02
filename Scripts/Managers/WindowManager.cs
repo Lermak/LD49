@@ -165,7 +165,7 @@ namespace MonoGame_Core.Scripts
             return w;
         }
 
-        public static void RemoveWindow(Form f)
+        public static void RemoveWindow(Window w)
         {
             Windows.Remove(w);
             w.form.Dispose();
