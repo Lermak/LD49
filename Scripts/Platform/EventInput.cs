@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace EventInput
 {
@@ -101,27 +102,55 @@ namespace EventInput
 
     public static class EventInput
     {
-        /// <summary>
-        /// Event raised when a character has been entered.
-        /// </summary>
-        public static event CharEnteredHandler CharEntered;
+        public delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
-        /// <summary>
-        /// Event raised when a key has been pressed down. May fire multiple times due to keyboard repeat.
-        /// </summary>
-        public static event KeyEventHandler KeyDown;
+        public class WindowData
+        {
+            public IntPtr prevWndProc;
+            public WndProc hookProcDelegate;
+            public IntPtr hIMC;
 
-        /// <summary>
-        /// Event raised when a key has been released.
-        /// </summary>
-        public static event KeyEventHandler KeyUp;
+            /// <summary>
+            /// Event raised when a character has been entered.
+            /// </summary>
+            public event CharEnteredHandler CharEntered;
 
-        delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+            /// <summary>
+            /// Event raised when a key has been pressed down. May fire multiple times due to keyboard repeat.
+            /// </summary>
+            public event KeyEventHandler KeyDown;
 
-        static bool initialized;
-        static IntPtr prevWndProc;
-        static WndProc hookProcDelegate;
-        static IntPtr hIMC;
+            /// <summary>
+            /// Event raised when a key has been released.
+            /// </summary>
+            public event KeyEventHandler KeyUp;
+
+            public void OnKeyUp(KeyEventArgs args)
+            {
+                if(KeyUp != null)
+                {
+                    KeyUp(null, args);
+                }
+            }
+
+            public void OnKeyDown(KeyEventArgs args)
+            {
+                if (KeyDown != null)
+                {
+                    KeyDown(null, args);
+                }
+            }
+
+            public void OnCharEntered(CharacterEventArgs args)
+            {
+                if (CharEntered != null)
+                {
+                    CharEntered(null, args);
+                }
+            }
+        }
+
+        static Dictionary<IntPtr, WindowData> WindowHooks = new Dictionary<IntPtr, WindowData>();
 
         //various Win32 constants that we need
         const int GWL_WNDPROC = -4;
@@ -144,30 +173,35 @@ namespace EventInput
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtrW")]
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
 
         /// <summary>
         /// Initialize the TextInput with the given GameWindow.
         /// </summary>
         /// <param name="window">The XNA window to which text input should be linked.</param>
-        public static void Initialize(GameWindow window)
+        public static WindowData AddWindow(IntPtr WindowHandle)
         {
-            if (initialized)
-                throw new InvalidOperationException("TextInput.Initialize can only be called once!");
+            if (WindowHooks.ContainsKey(WindowHandle))
+                return WindowHooks[WindowHandle];
 
-            hookProcDelegate = new WndProc(HookProc);
-            prevWndProc = (IntPtr)SetWindowLong(window.Handle, GWL_WNDPROC,
-                (int)Marshal.GetFunctionPointerForDelegate(hookProcDelegate));
+            WindowData d = new WindowData();
+            d.hookProcDelegate = new WndProc(HookProc);
+            var ptr = Marshal.GetFunctionPointerForDelegate(d.hookProcDelegate);
+            d.prevWndProc = (IntPtr)SetWindowLongPtr64(WindowHandle, GWL_WNDPROC, ptr);
 
-            hIMC = ImmGetContext(window.Handle);
-            initialized = true;
+            d.hIMC = ImmGetContext(WindowHandle);
+
+            WindowHooks.Add(WindowHandle, d);
+
+            return d;
         }
 
         static IntPtr HookProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            IntPtr returnCode = CallWindowProc(prevWndProc, hWnd, msg, wParam, lParam);
+            WindowData data = WindowHooks[hWnd];
+            IntPtr returnCode = CallWindowProc(data.prevWndProc, hWnd, msg, wParam, lParam);
 
             switch (msg)
             {
@@ -176,27 +210,24 @@ namespace EventInput
                     break;
 
                 case WM_KEYDOWN:
-                    if (KeyDown != null)
-                        KeyDown(null, new KeyEventArgs((Keys)wParam));
+                    data.OnKeyDown(new KeyEventArgs((Keys)wParam));
                     break;
 
                 case WM_KEYUP:
-                    if (KeyUp != null)
-                        KeyUp(null, new KeyEventArgs((Keys)wParam));
+                    data.OnKeyUp(new KeyEventArgs((Keys)wParam));
                     break;
 
                 case WM_CHAR:
-                    if (CharEntered != null)
-                        CharEntered(null, new CharacterEventArgs((char)wParam, lParam.ToInt32()));
+                    data.OnCharEntered(new CharacterEventArgs((char)wParam, lParam.ToInt32()));
                     break;
 
                 case WM_IME_SETCONTEXT:
                     if (wParam.ToInt32() == 1)
-                        ImmAssociateContext(hWnd, hIMC);
+                        ImmAssociateContext(hWnd, data.hIMC);
                     break;
 
                 case WM_INPUTLANGCHANGE:
-                    ImmAssociateContext(hWnd, hIMC);
+                    ImmAssociateContext(hWnd, data.hIMC);
                     returnCode = (IntPtr)1;
                     break;
             }

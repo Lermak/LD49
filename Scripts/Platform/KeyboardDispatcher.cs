@@ -15,11 +15,11 @@ public interface IKeyboardSubscriber
 
 public class KeyboardDispatcher
 {
-    public KeyboardDispatcher(GameWindow window)
+    public KeyboardDispatcher(IntPtr windowHandle)
     {
-        EventInput.EventInput.Initialize(window);
-        EventInput.EventInput.CharEntered += new EventInput.CharEnteredHandler(EventInput_CharEntered);
-        EventInput.EventInput.KeyDown += new EventInput.KeyEventHandler(EventInput_KeyDown);
+        var window = EventInput.EventInput.AddWindow(windowHandle);
+        window.CharEntered += new EventInput.CharEnteredHandler(EventInput_CharEntered);
+        window.KeyDown += new EventInput.KeyEventHandler(EventInput_KeyDown);
     }
 
     void EventInput_KeyDown(object sender, EventInput.KeyEventArgs e)

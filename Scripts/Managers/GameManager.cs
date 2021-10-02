@@ -9,6 +9,8 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
+        public KeyboardDispatcher MainWindowKeyDispatcher;
+
         private GraphicsDeviceManager _graphics;
         private static bool quit;
         public GameManager()
@@ -29,6 +31,8 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.Initilize();
             CameraManager.Initilize();
             SceneManager.Initilize(Content, new ChatWindowScene());
+
+            MainWindowKeyDispatcher = new KeyboardDispatcher(Window.Handle);
 
             base.Initialize();
         }
