@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
 {
-
     public interface WindowData
     {
         public int X { get; }
@@ -105,7 +104,7 @@ namespace MonoGame_Core.Scripts
     public static class CurrentWindow {
         public static Window _window;
 
-        public static Window windowData { set { _window = value; } private get { return _window; } }
+        public static Window windowData { set { _window = value; }  get { return _window; } }
         public static InputManager inputManager { get { return windowData.inputManager; } }
         public static SceneManager sceneManager { get { return windowData.sceneManager; } }
         public static KeyboardDispatcher keyboardDispatcher { get { return windowData.keyboardDispatcher; } }

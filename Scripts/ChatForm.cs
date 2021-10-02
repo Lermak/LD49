@@ -1,11 +1,7 @@
 ﻿using CefSharp;
 using CefSharp.SchemeHandler;
 using CefSharp.WinForms;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {

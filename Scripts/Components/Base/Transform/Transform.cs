@@ -90,10 +90,10 @@ namespace MonoGame_Core.Scripts
 
         public bool ContainsPoint(Vector2 v)
         {
-            return v.X > Position.X - Width / 2 &&
-                    v.X < Position.X + Width / 2 &&
-                    v.Y > Position.Y - Height / 2 &&
-                    v.Y < Position.Y + Height / 2;
+            return v.X > Position.X - Width * scale.X / 2 &&
+                    v.X < Position.X + Width * scale.X / 2 &&
+                    v.Y > Position.Y - Height * scale.Y / 2 &&
+                    v.Y < Position.Y + Height  * scale.Y / 2;
         }
 
         public void DetachFromParent()

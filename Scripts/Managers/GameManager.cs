@@ -49,7 +49,7 @@ namespace MonoGame_Core.Scripts
             
             WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
-            //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new RoboTestchaScene(), new Vector2(300, 300));
             //SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
