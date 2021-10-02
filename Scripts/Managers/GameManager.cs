@@ -12,7 +12,7 @@ namespace MonoGame_Core.Scripts
     {
         private GraphicsDeviceManager _graphics;
         private static bool quit;
-        private GameWindow chatWindow;
+        public static GameWindow chatWindow;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,7 +30,9 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(Content, new MainMenu());
+            SceneManager.Initilize(Content, new TestScene());
+            
+            chatWindow = GameWindow.Create(this, 500, 542);
 
             base.Initialize();
         }

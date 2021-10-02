@@ -178,6 +178,25 @@ namespace MonoGame_Core.Scripts
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
+
+            var swapChain = new SwapChainRenderTarget(graphicsDevice,
+                                                  GameManager.chatWindow.Handle,
+                                                  GameManager.chatWindow.ClientBounds.Width,
+                                                  GameManager.chatWindow.ClientBounds.Height,
+                                                  false,
+                                                  SurfaceFormat.Color,
+                                                  DepthFormat.Depth24Stencil8,
+                                                  1,
+                                                  RenderTargetUsage.PlatformContents,
+                                                  PresentInterval.Default);
+
+            //graphicsDevice.SetRenderTarget(swapChain);
+
+            swapChain.Present();
+            GameManager.chatWindow.Title = "Test";
+            SetTarget(-1);
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Present();
         }
 
         /// <summary>
