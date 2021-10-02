@@ -48,9 +48,12 @@ namespace MonoGame_Core.Scripts
             Vector2 cooldownButtonSize = new Vector2(49, 49);
             Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, new Vector2(-560, 140), 1, () =>
             {
-                NuclearLevel.level -= NuclearLevel.reduceAmount;
-                if (NuclearLevel.level < 0.0f)
-                    NuclearLevel.level = 0.0f;
+                if (!NuclearLevel.Locked)
+                {
+                    NuclearLevel.level -= NuclearLevel.reduceAmount;
+                    if (NuclearLevel.level < 0.0f)
+                        NuclearLevel.level = 0.0f;
+                }
             });
             cooldownButton.Transform.SetScale(3, 3);
             GameObjects.Add(cooldownButton);
