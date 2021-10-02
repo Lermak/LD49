@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -40,11 +40,6 @@
     <WebItems Include="Content\Web\**\*.*" />
   </ItemGroup>
   <Target Name="CopyWebFiles" AfterTargets="AfterBuild">
-    <Copy 
-      SourceFiles="@(WebItems)" 
-      DestinationFolder="$(OutputPath)\Content\Web\%(RecursiveDir)"
-      SkipUnchangedFiles="true"
-      OverwriteReadOnlyFiles="true"
-    />
+    <Copy SourceFiles="@(WebItems)" DestinationFolder="$(OutputPath)\Content\Web\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>
