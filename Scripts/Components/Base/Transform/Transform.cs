@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                 if (parent == null)
                     return position;
                 else
-                    return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position);
+                    return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position) + position;
             } }    
         public float Width { get { return width; } }
         public float Height { get { return height; } }
@@ -90,10 +90,10 @@ namespace MonoGame_Core.Scripts
 
         public bool ContainsPoint(Vector2 v)
         {
-            return v.X > Position.X - Width / 2 &&
-                    v.X < Position.X + Width / 2 &&
-                    v.Y > Position.Y - Height / 2 &&
-                    v.Y < Position.Y + Height / 2;
+            return v.X > Position.X - (Width * scale.X) / 2 &&
+                    v.X < Position.X + (Width * scale.X) / 2 &&
+                    v.Y > Position.Y - (Height * scale.Y) / 2 &&
+                    v.Y < Position.Y + (Height * scale.Y) / 2;
         }
 
         public void DetachFromParent()
