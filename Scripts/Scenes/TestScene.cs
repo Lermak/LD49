@@ -245,9 +245,6 @@ namespace MonoGame_Core.Scripts
             SoundManager.PlaySong("Melody");
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
-            Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
-
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
             Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
