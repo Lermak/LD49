@@ -139,9 +139,9 @@ namespace MonoGame_Core.Scripts
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
             if (NuclearLevel.level > 0.0f)
             {
-                float r1 = 100 * ((float)r.NextDouble() - 0.5f);
-                float r2 = 100 * ((float)r.NextDouble() - 0.5f);
-                t.Move(new Vector2(r1, r2));
+                float r1 = 10 * ((float)r.NextDouble() - 0.5f);
+                float r2 = 10 * ((float)r.NextDouble() - 0.5f);
+                t.Place(new Vector2(r1, r2));
             }
         }
 
