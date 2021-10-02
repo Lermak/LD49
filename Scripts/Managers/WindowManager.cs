@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
+using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
 {
@@ -16,6 +17,8 @@ namespace MonoGame_Core.Scripts
         public int Y { get; }
         public int Width { get; }
         public int Height { get; }
+
+        public Vector2 getRelativeCursorPos();
     }
 
     public class WindowDataForm : WindowData
@@ -33,6 +36,13 @@ namespace MonoGame_Core.Scripts
         public int Width => f.Width;
 
         public int Height => f.Height;
+
+        public Vector2 getRelativeCursorPos()
+        {
+            var cursorPt = Cursor.Position;
+            var pt = f.PointToClient(cursorPt);
+            return new Vector2(pt.X, pt.Y);
+        }
     }
 
     public class WindowDataMain : WindowData
@@ -44,6 +54,12 @@ namespace MonoGame_Core.Scripts
         public int Width => GameManager.Instance.Window.ClientBounds.Width;
 
         public int Height => GameManager.Instance.Window.ClientBounds.Height;
+
+        public Vector2 getRelativeCursorPos()
+        {
+            Point pt = Mouse.GetState().Position;
+            return new Vector2(pt.X, pt.Y);
+        }
     }
 
     public class Window
@@ -131,8 +147,8 @@ namespace MonoGame_Core.Scripts
                 PresentInterval.Default);
 
             w.renderTarget = new RenderTarget2D(RenderingManager.GraphicsDevice,
-                (int)1920,
-                (int)1080,
+                (int)RenderingManager.WIDTH,
+                (int)RenderingManager.HEIGHT,
                 false,
                 RenderingManager.GraphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
