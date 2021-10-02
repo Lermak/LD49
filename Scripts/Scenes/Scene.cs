@@ -18,7 +18,6 @@ namespace MonoGame_Core.Scripts
         public List<GameObject> ToAdd = new List<GameObject>();
         public List<GameObject> GameObjects = new List<GameObject>();
 
-
         public virtual void Initilize(ContentManager c, SceneManager sm)
         {
             sceneManager = sm;

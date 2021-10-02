@@ -32,8 +32,8 @@ namespace MonoGame_Core.Scripts
             //CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            WindowManager.Initilize(Content, new TestScene()); 
-            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
+            WindowManager.Initilize(Content, new MainMenu()); 
+            //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
             //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
             //SceneManager.Initilize(Content, new TestScene());
 

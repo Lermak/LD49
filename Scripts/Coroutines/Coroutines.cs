@@ -31,6 +31,11 @@ namespace MonoGame_Core.Scripts
                 if (RenderingManager.GlobalFade > 255)
                 {
                     RenderingManager.GlobalFade = 255;
+                    foreach (GameObject o in sm.CurrentScene.GameObjects)
+                    {
+                        o.Destroy();
+                        o.OnDestroy();
+                    }
                     sm.CurrentScene = null;
                 }
                 yield return false;
