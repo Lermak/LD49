@@ -29,10 +29,6 @@ namespace MonoGame_Core.Scripts
 
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
-            Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
-            Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
-
             Textures = new Dictionary<string, Texture2D>();
             //Button things
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
