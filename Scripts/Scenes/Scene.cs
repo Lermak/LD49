@@ -24,11 +24,6 @@ namespace MonoGame_Core.Scripts
             sceneManager = sm;
             size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
             Content = c;
-            //CollisionManager.Initilize();
-            RenderingManager.Clear();
-            SoundManager.Initilize();
-            CoroutineManager.Initilize();   
-
             loadContent(sceneManager.Cameras);
         }
 
@@ -39,8 +34,6 @@ namespace MonoGame_Core.Scripts
             {
                 go.Initilize();
             }
-
-            RenderingManager.Sort();//Sort the items in the renderingManager, this should only be done when new items are added
         }
 
         public virtual void OnLoad()

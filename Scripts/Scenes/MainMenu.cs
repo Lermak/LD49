@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {      
             SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
-            SoundManager.PlaySong("Melody");
+            //SoundManager.PlaySong("Melody");
 
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
