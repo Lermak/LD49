@@ -140,7 +140,7 @@ namespace MonoGame_Core.Scripts
         public static void Draw(float gt)
         {
             var x = graphicsDevice.GetRenderTargets();
-            //WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(1, 1);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);
@@ -203,8 +203,6 @@ namespace MonoGame_Core.Scripts
 
                 foreach (Camera c in p.Value)
                 {
-                    WindowScale = new Vector2(WindowTargets[c.SwapChain].Width / WIDTH, WindowTargets[c.SwapChain].Height / HEIGHT);
-
                     c.Draw(spriteBatch);
                 }
 
@@ -227,7 +225,6 @@ namespace MonoGame_Core.Scripts
 
                 RenderState renderState = new RenderState();
                 renderState.batch = spriteBatch;
-                WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                 RenderCamera(c, renderState);
                 spriteBatch.End();
