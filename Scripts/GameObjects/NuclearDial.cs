@@ -4,8 +4,9 @@ namespace MonoGame_Core.Scripts
 {
     public class NuclearDial : WorldObject
     {
-        public static int dialSize = 128;
-        public NuclearDial(string texID, string tag) : base(texID, tag, new Vector2(dialSize, dialSize), new Vector2(0, 0), 1) {
+        public NuclearDial(string texID, string tag, Vector2 size, Vector2 pos) : base(texID, tag, size, pos, 2) {
+
+            Transform.Radians = MathHelper.ToRadians(135);
 
             BehaviorHandler.AddBehavior("increasingNuclear", Behaviors.IncreaseNuclearLevelOverTime, new Component[] {  });
             BehaviorHandler.AddBehavior("NuclearRotate", Behaviors.NuclearRotate, new Component[] { Transform });
