@@ -271,9 +271,9 @@ namespace MonoGame_Core.Scripts
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
-            CameraManager.Cameras[1].SwapChain = 1;
-            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
+            CameraManager.Cameras[2].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
+            CameraManager.Cameras[2].SwapChain = 1;
+            CameraManager.Cameras[2].ScreenPosition = new Vector2(480, 270) / 2;
 
             GameObjects = new List<GameObject>();
             GameObjects.Add(new TestObject("PeaShooter", "testObj"));
