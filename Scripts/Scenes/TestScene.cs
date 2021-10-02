@@ -261,6 +261,8 @@ namespace MonoGame_Core.Scripts
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
             CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
+            CameraManager.Cameras[1].SwapChain = 0;
+            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
 
             GameObjects = new List<GameObject>();
             GameObjects.Add(new TestObject("PeaShooter", "testObj"));
@@ -275,12 +277,6 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-
-
-            //((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
-
-
-            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
 
             TiledImporter.LoadFromString(sceneMap);
             //TiledImporter.LoadFromContent(Content, "Tiled/Test.xml");

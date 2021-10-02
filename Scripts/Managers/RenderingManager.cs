@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Content;
-
+using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
@@ -51,6 +51,7 @@ namespace MonoGame_Core.Scripts
         /// Render targets are what Cameras use to store image data
         /// </summary>
         public static List<RenderTarget2D> RenderTargets;
+        public static List<SwapChainRenderTarget> WindowTargets;
         /// <summary>
         /// The list of all game sprites
         /// </summary>
@@ -77,6 +78,7 @@ namespace MonoGame_Core.Scripts
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
+            WindowTargets = new List<SwapChainRenderTarget>();
 
             RenderTargets.Add(new RenderTarget2D(graphicsDevice,
                 (int)1920,
@@ -86,6 +88,17 @@ namespace MonoGame_Core.Scripts
                 DepthFormat.Depth24,
                 0,
                 RenderTargetUsage.PreserveContents));
+
+            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
+                GameManager.chatWindow.Handle,
+                GameManager.chatWindow.Width,
+                GameManager.chatWindow.Height,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.Depth24Stencil8,
+                1,
+                RenderTargetUsage.PlatformContents,
+                PresentInterval.Default));
         }
 
         /// <summary>
@@ -179,24 +192,9 @@ namespace MonoGame_Core.Scripts
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
 
-            var swapChain = new SwapChainRenderTarget(graphicsDevice,
-                                                  GameManager.chatWindow.Handle,
-                                                  GameManager.chatWindow.ClientBounds.Width,
-                                                  GameManager.chatWindow.ClientBounds.Height,
-                                                  false,
-                                                  SurfaceFormat.Color,
-                                                  DepthFormat.Depth24Stencil8,
-                                                  1,
-                                                  RenderTargetUsage.PlatformContents,
-                                                  PresentInterval.Default);
+            
 
-            //graphicsDevice.SetRenderTarget(swapChain);
-
-            swapChain.Present();
-            GameManager.chatWindow.Title = "Test";
             SetTarget(-1);
-            graphicsDevice.SetRenderTarget(null);
-            graphicsDevice.Present();
         }
 
         /// <summary>
@@ -237,12 +235,19 @@ namespace MonoGame_Core.Scripts
         /// Changes the current Render Target
         /// </summary>
         /// <param name="Target">new target id</param>
-        private static void SetTarget(int Target)
+        public static void SetTarget(int Target)
         {
-            if (Target == -1)
+            if (Target < 0 || Target >= RenderTargets.Count)
                 graphicsDevice.SetRenderTarget(null);
             else
                 graphicsDevice.SetRenderTarget(RenderTargets[Target]);
+        }
+        public static void SetWindow(int Target)
+        {
+            if (Target < 0 || Target >= WindowTargets.Count)
+                graphicsDevice.SetRenderTarget(null);
+            else
+                graphicsDevice.SetRenderTarget(WindowTargets[Target]);
         }
     }
 }

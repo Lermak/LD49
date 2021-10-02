@@ -16,6 +16,8 @@ namespace MonoGame_Core.Scripts
         string shader = "";
         Vector2 screenPosition;
         byte layer;
+        int swapChain = -1;
+
         public int Target
         {
             get { return target; }
@@ -38,7 +40,16 @@ namespace MonoGame_Core.Scripts
                     shader = "";
             }
         }
-
+        public int SwapChain { 
+            get { return swapChain; }
+            set
+            {
+                if (RenderingManager.WindowTargets.Count > value)
+                    swapChain = value;
+                else
+                    swapChain = -1;
+            }
+        }
         public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
         public Vector2 Position { get { return Transform.Position * RenderingManager.WindowScale; } }
         public Vector2 MinPos { get { return minPos; } }
@@ -96,7 +107,13 @@ namespace MonoGame_Core.Scripts
                     foreach (EffectPass p in t.Passes)
                     {
                         p.Apply();
-                        sb.Draw(RenderingManager.RenderTargets[Target],
+                        if (swapChain >= 0)
+                        {
+
+                        }
+                        else
+                        {
+                            sb.Draw(RenderingManager.RenderTargets[Target],
                                 (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
                                 new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
                                 Color.White,
@@ -105,10 +122,18 @@ namespace MonoGame_Core.Scripts
                                 new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
                                 SpriteEffects.None,
                                 Layer / 256);
+                        }
                     }
                 }
             else
-                sb.Draw(RenderingManager.RenderTargets[Target],
+            {
+                if (swapChain >= 0)
+                {
+                    sb.End();
+                    RenderingManager.SetWindow(swapChain);                                   
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+                    sb.Draw(RenderingManager.RenderTargets[Target],
                         (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
                         new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
                         Color.White,
@@ -117,6 +142,26 @@ namespace MonoGame_Core.Scripts
                         new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
                         SpriteEffects.None,
                         Layer / 256);
+                    
+                    RenderingManager.WindowTargets[swapChain].Present();
+                    sb.End();
+
+                    RenderingManager.SetTarget(-1);
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                }
+                else
+                {
+                    sb.Draw(RenderingManager.RenderTargets[Target],
+                        (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
+                        new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
+                        Color.White,
+                        Transform.Radians,
+                        new Vector2(),
+                        new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
+                        SpriteEffects.None,
+                        Layer / 256);
+                }
+            }
         
         }
     }
