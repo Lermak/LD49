@@ -67,7 +67,7 @@ namespace MonoGame_Core.Scripts
             Transform t = (Transform)c[0];
 
             if (CurrentWindow.inputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
         public static void PointAtMouse(float gt, Component[] c)
@@ -103,7 +103,7 @@ namespace MonoGame_Core.Scripts
             Vector2 v = CurrentWindow.inputManager.MousePos;
             if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
         }
 
         public static void ButtonSwapImagesOnHover(float gt, Component[] c)
@@ -121,7 +121,7 @@ namespace MonoGame_Core.Scripts
 
         public static void RunAnimation(float gt, Component[] c)
         {
-            if(SceneManager.SceneState == SceneManager.State.Running)
+            //if(SceneManager.SceneState == SceneManager.State.Running)
                 ((AnimationData)c[0]).Animate(gt);
         }
 

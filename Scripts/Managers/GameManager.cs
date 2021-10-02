@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
-        public static KeyboardDispatcher MainWindowKeyDispatcher;
+        public static GameManager Instance;
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
@@ -22,22 +22,17 @@ namespace MonoGame_Core.Scripts
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
+            Instance = this;
         }
 
         protected override void Initialize()
         {
-            MainWindowKeyDispatcher = new KeyboardDispatcher(Window.Handle);
-
             // TODO: Add your initialization logic here
+            ResourceManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
-            CollisionManager.Initilize();
-            CoroutineManager.Initilize();
-            CameraManager.Initilize();
-            WindowManager.Initilize(); 
-            WindowManager.AddWindow(new Vector2(1920,1080) / 4);
-            WindowManager.AddWindow(new Vector2(1920, 1080) / 4);
-            SceneManager.Initilize(Content, new ChatWindowScene());
+            //CollisionManager.Initilize();
+            CameraManager.Initilize(); 
 
             try
             {
@@ -47,6 +42,11 @@ namespace MonoGame_Core.Scripts
             catch {
                 var a = "sd";
             }
+            
+            WindowManager.Initilize(Content, new TestScene()); 
+            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
+            //SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }
@@ -67,18 +67,16 @@ namespace MonoGame_Core.Scripts
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
-
-            CoroutineManager.Update(TimeManager.DeltaTime);
-
+            
             WindowManager.Update(TimeManager.DeltaTime);
 
-            SceneManager.Update(TimeManager.DeltaTime);
+            //SceneManager.Update(TimeManager.DeltaTime);
 
             SoundManager.Update(TimeManager.DeltaTime);
 
             CameraManager.Update(TimeManager.DeltaTime);
 
-            CollisionManager.Update(TimeManager.DeltaTime);
+            //CollisionManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }

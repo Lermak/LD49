@@ -39,10 +39,6 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public static Vector2 WindowScale = new Vector2(1, 1);
         /// <summary>
-        /// Global color value applied to produce a fade effect between scenes
-        /// </summary>
-        public static float GlobalFade = 255;
-        /// <summary>
         /// Set the rendering order
         /// </summary>
         public static RenderOrder RenderingOrder = RenderOrder.SideScrolling;
@@ -99,33 +95,43 @@ namespace MonoGame_Core.Scripts
 
         static void RenderCamera(Camera c, RenderState state)
         {
-            foreach (SpriteRenderer sr in Sprites)
+            IEnumerable<SpriteRenderer> visibleContainedSpritesInRange = Sprites.Where(s => s.Visible && s.Cameras.Contains(c) && Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
+            IEnumerable<SpriteRenderer> sortedSprites = visibleContainedSpritesInRange;
+
+            if (RenderingOrder == RenderOrder.SideScrolling)
+                sortedSprites = visibleContainedSpritesInRange.OrderBy(s => s.Shader)
+                            .ThenBy(s => s.Transform.Layer)
+                            .ThenBy(s => s.OrderInLayer);
+            else if (RenderingOrder == RenderOrder.TopDown)
+                sortedSprites = visibleContainedSpritesInRange.OrderBy(s => s.Shader)
+                            .ThenBy(s => s.Transform.Layer)
+                            .ThenBy(s => s.Transform.Position.Y)
+                            .ThenBy(s => s.OrderInLayer);
+
+            foreach (SpriteRenderer sr in sortedSprites)
             {
-                if (sr.Visible && sr.Cameras.Contains(c))
+                if (sr.Shader != state.prevShader)
                 {
-                    if (sr.Shader != state.prevShader)
-                    {
-                        state.batch.End();
-                        state.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                    state.batch.End();
+                    state.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                        state.prevShader = sr.Shader;
-                    }
+                    state.prevShader = sr.Shader;
+                }
 
-                    if (sr.Shader != "")
+                if (sr.Shader != "")
+                {
+                    foreach (EffectTechnique t in ResourceManager.Effects[sr.Shader].Techniques)
                     {
-                        foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                        foreach (EffectPass p in t.Passes)
                         {
-                            foreach (EffectPass p in t.Passes)
-                            {
-                                p.Apply();
-                                sr.Draw(state.batch, c);
-                            }
+                            p.Apply();
+                            sr.Draw(state.batch, c);
                         }
                     }
-                    else
-                    {
-                        sr.Draw(state.batch, c);
-                    }
+                }
+                else
+                {
+                    sr.Draw(state.batch, c);
                 }
             }
         }
@@ -139,8 +145,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt"></param>
         public static void Draw(float gt)
         {
-            var x = graphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(1, 1);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(.25f, .25f);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);
@@ -231,40 +236,6 @@ namespace MonoGame_Core.Scripts
             }
 
             graphicsDevice.Present();
-        }
-
-        /// <summary>
-        /// Sort the sprite list based on the current sort type
-        /// </summary>
-        public static void Sort()
-        {
-            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
-
-            IEnumerable<SpriteRenderer> s = Sprites;
-
-            foreach (Camera c in cameras)
-            {
-                if (RenderingOrder == RenderOrder.SideScrolling)
-                    s = Sprites.OrderBy(s => s.Shader)
-                                .ThenBy(s => s.Transform.Layer)
-                                .ThenBy(s => s.OrderInLayer)
-                                .Where(s => s.Cameras.Contains(c))
-                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
-                else if (RenderingOrder == RenderOrder.TopDown)
-                    s = Sprites.OrderBy(s => s.Shader)
-                                .ThenBy(s => s.Transform.Layer)
-                                .ThenBy(s => s.Transform.Position.Y)
-                                .ThenBy(s => s.OrderInLayer)
-                                .Where(s => s.Cameras.Contains(c))
-                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
-
-                else if (RenderingOrder == RenderOrder.Isometric)
-                {
-
-                }
-            }
-
-            Sprites = s.ToList();
         }
 
         /// <summary>

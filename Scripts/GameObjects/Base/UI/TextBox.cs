@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
 
         public TextBox(string textBoxTexture, string font, string tag, Vector2 size, Vector2 pos, byte layer) : base(tag)
         {
-            _font = SceneManager.CurrentScene.Fonts[font];
+            _font = ResourceManager.Fonts[font];
 
             componentHandler.AddComponent(new Transform(this, pos, size.X, size.Y, 0, layer));
             componentHandler.AddComponent(new TextBoxRenderer(this,
@@ -70,7 +70,7 @@ namespace MonoGame_Core.Scripts
 
             behaviorHandler.AddBehavior("Update", OnUpdate, new Component[] {});
 
-            GameManager.MainWindowKeyDispatcher.Subscriber = this;
+            CurrentWindow.keyboardDispatcher.Subscriber = this;
         }
 
         MouseState _previousMouse;

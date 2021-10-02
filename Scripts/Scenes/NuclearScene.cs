@@ -17,10 +17,10 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        protected override void loadContent()
+        protected override void loadContent(List<Camera> c)
         {
             size = new Vector2(2100, 1080);
-            CollisionManager.Initilize();
+            //CollisionManager.Initilize();
 
             CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
@@ -29,20 +29,20 @@ namespace MonoGame_Core.Scripts
 
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Textures = new Dictionary<string, Texture2D>();
             //Button things
-            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            Textures["Base"] = Content.Load<Texture2D>("Images/Base");  
+            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Images/Test");
+            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
             //NuclearButton!
-            Textures["CoolantButtonUp"] = Content.Load<Texture2D>("Images/CoolantButton");
-            Textures["CoolantButtonDown"] = Content.Load<Texture2D>("Images/CoolantButtonPressed");
+            ResourceManager.Textures["CoolantButtonUp"] = Content.Load<Texture2D>("Images/CoolantButton");
+            ResourceManager.Textures["CoolantButtonDown"] = Content.Load<Texture2D>("Images/CoolantButtonPressed");
             //Dial
-            Textures["nd"] = Content.Load<Texture2D>("Images/NuclearDial");
-            Textures["dialBG"] = Content.Load<Texture2D>("Images/DialBG");
+            ResourceManager.Textures["nd"] = Content.Load<Texture2D>("Images/NuclearDial");
+            ResourceManager.Textures["dialBG"] = Content.Load<Texture2D>("Images/DialBG");
             //Scene background
-            Textures["BG"] = Content.Load<Texture2D>("Images/Background");
+            ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
-            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
 
             int dialSize = 512;
@@ -59,11 +59,7 @@ namespace MonoGame_Core.Scripts
                     NuclearLevel.level = 0.0f;
             }));
 
-
-
-
-
-            base.loadContent();
+            base.loadContent(c);
         }
     }
 }

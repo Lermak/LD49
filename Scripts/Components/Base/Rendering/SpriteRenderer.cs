@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
         protected Vector2 offSet;
         protected Vector2 drawArea;
         protected string shader = "";
-        protected List<Camera> cameras = new List<Camera>() { CameraManager.Cameras[0] };
+        protected List<Camera> cameras;
         protected SpriteEffects flip = SpriteEffects.None;
         protected bool isHUD = false;
         protected bool visible = true;
@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
 
         public virtual string Texture { get { return texture; } 
             set {
-                if (SceneManager.CurrentScene.Textures.ContainsKey(value))
+                if (ResourceManager.Textures.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
         public Vector2 DrawArea { get { return drawArea; } }
         public string Shader { get { return shader; } 
             set {
-                if (SceneManager.CurrentScene.Effects.ContainsKey(value))
+                if (ResourceManager.Effects.ContainsKey(value))
                     shader = value;
                 else
                     shader = "";
@@ -55,6 +55,7 @@ namespace MonoGame_Core.Scripts
 
         public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, "spriteRenderer")
         {
+            cameras = new List<Camera>() { CurrentWindow.sceneManager.Cameras[0] };
             Texture = texID;
             transform = t;
             offSet = off;
@@ -66,6 +67,7 @@ namespace MonoGame_Core.Scripts
         }
         public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, "spriteRenderer")
         {
+            cameras = new List<Camera>() { CurrentWindow.sceneManager.Cameras[0] };
             Texture = texID;
             transform = t;
             offSet = off;
@@ -97,10 +99,10 @@ namespace MonoGame_Core.Scripts
         {
             if (isHUD)
             {
-                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                sb.Draw(ResourceManager.Textures[Texture],
                     ScreenPosition(c),
                     DrawRect(),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.WindowScale * Transform.Scale,
@@ -109,10 +111,10 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                sb.Draw(ResourceManager.Textures[Texture],
                     ScreenPosition(c),
                     DrawRect(),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.GameScale * Transform.Scale,

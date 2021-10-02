@@ -24,7 +24,7 @@ namespace MonoGame_Core.Scripts
             get { return texture; }
             set
             {
-                if (SceneManager.CurrentScene.Textures.ContainsKey(value))
+                if (ResourceManager.Textures.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
@@ -40,9 +40,9 @@ namespace MonoGame_Core.Scripts
 
         public override void Draw(SpriteBatch spriteBatch, Camera c)
         {
-            var font = SceneManager.CurrentScene.Fonts[fontId];
-            var caretTexture = SceneManager.CurrentScene.Textures["CarretTexture"];
-            var textboxTexture = SceneManager.CurrentScene.Textures[Texture];
+            var font = ResourceManager.Fonts[fontId];
+            var caretTexture = ResourceManager.Textures["CarretTexture"];
+            var textboxTexture = ResourceManager.Textures[Texture];
 
             bool caretVisible = true;
 

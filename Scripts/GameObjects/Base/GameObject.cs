@@ -8,7 +8,9 @@ namespace MonoGame_Core.Scripts
         protected BehaviorHandler behaviorHandler;
         protected string tag;
         protected bool destroy = false;
+        protected SceneManager sceneManager;
 
+        public SceneManager SceneManager { get { return sceneManager; } }
         public bool ToDestroy { get { return destroy; } }
         public string Tag { get { return tag; } }
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
@@ -16,6 +18,15 @@ namespace MonoGame_Core.Scripts
 
         public GameObject(string tag)
         {
+            sceneManager = CurrentWindow.sceneManager;
+            this.tag = tag;
+            behaviorHandler = new BehaviorHandler(this);
+            componentHandler = new ComponentHandler(this);
+        }
+
+        public GameObject(string tag, SceneManager manager)
+        {
+            sceneManager = manager;
             this.tag = tag;
             behaviorHandler = new BehaviorHandler(this);
             componentHandler = new ComponentHandler(this);
@@ -35,7 +46,7 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                if(SceneManager.SceneState == SceneManager.State.Running)
+                //if(SceneManager.SceneState == SceneManager.State.Running)
                     behaviorHandler.Update(gt);
             }
         }

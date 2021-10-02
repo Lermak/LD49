@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
             get { return texture; }
             set
             {
-                if (SceneManager.CurrentScene.Fonts.ContainsKey(value))
+                if (ResourceManager.Fonts.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
@@ -30,14 +30,14 @@ namespace MonoGame_Core.Scripts
 
         public override void Draw(SpriteBatch sb, Camera c)
         {
-            Vector2 stringSize = SceneManager.CurrentScene.Fonts[Texture].MeasureString(text) * 0.5f;
+            Vector2 stringSize = ResourceManager.Fonts[Texture].MeasureString(text) * 0.5f;
 
             if (isHUD)
             {
-                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
                     RenderingManager.WindowScale * Transform.Scale * textScale,
@@ -46,10 +46,10 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)CurrentWindow.GlobalFade, Color.G - (int)CurrentWindow.GlobalFade, Color.B - (int)CurrentWindow.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
                     RenderingManager.GameScale * Transform.Scale * textScale,

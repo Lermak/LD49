@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public class InputManager
     {
-        Window parentWindow;
+        WindowData parentWindow;
 
         const float DOUBLE_CLICK_DELAY = 1f;
         float timeSinceLastLeftClick = 0;
@@ -84,8 +84,9 @@ namespace MonoGame_Core.Scripts
             return false;
         }
 
-        public InputManager(Window parentWindow)
+        public InputManager(WindowData parentWindow)
         {
+            this.parentWindow = parentWindow;
             currentKeyboardState = new KeyboardState();
             currentMouseState = new MouseState();
         }
@@ -133,7 +134,8 @@ namespace MonoGame_Core.Scripts
         public void Update(float gt)
         {
             Point p = Mouse.GetState().Position;
-            mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(parentWindow.form.Width / 2, -parentWindow.form.Width / 2);
+            mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, -RenderingManager.HEIGHT / 2);
+            mousePos += (new Vector2(GameManager.Instance.Window.ClientBounds.X, GameManager.Instance.Window.ClientBounds.Y) - new Vector2(parentWindow.X, parentWindow.Y));
 
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();

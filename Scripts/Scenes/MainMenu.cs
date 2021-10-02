@@ -19,26 +19,26 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        protected override void loadContent()
+        protected override void loadContent(List<Camera> c)
         {      
             SoundManager.Songs["Melody"] = Content.Load<Song>("Music/TestSong");
-            SoundManager.PlaySong("Melody");
+            //SoundManager.PlaySong("Melody");
 
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+            ResourceManager.Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Images/Test");
+            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
 
-            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             GameObjects = new List<GameObject>();
 
-            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, () => { SceneManager.ChangeScene(new TestScene()); }));
-            GameObjects.Add(new Button("Test", "Base", "NuclearButton", new Vector2(40, 40), new Vector2(500, 40), 1, () => { SceneManager.ChangeScene(new NuclearScene()); }));
+            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, () => { CurrentWindow.sceneManager.ChangeScene(new TestScene()); }));
+            GameObjects.Add(new Button("Test", "Base", "NuclearButton", new Vector2(40, 40), new Vector2(500, 40), 1, () => { CurrentWindow.sceneManager.ChangeScene(new NuclearScene()); }));
             GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, -20), 1, () => { GameManager.Quit(); }));
             
-            base.loadContent();
+            base.loadContent(c);
         }
     }
 }
