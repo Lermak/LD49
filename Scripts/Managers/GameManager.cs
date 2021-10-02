@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
+using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
@@ -11,6 +13,8 @@ namespace MonoGame_Core.Scripts
     {
         private GraphicsDeviceManager _graphics;
         private static bool quit;
+        public static Form chatWindow;
+        public static Form miniGame;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -21,6 +25,11 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            chatWindow = new Form();
+            chatWindow.Show();
+            miniGame = new Form();
+            miniGame.Show();
+
             // TODO: Add your initialization logic here
             InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
@@ -28,7 +37,8 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(Content, new MainMenu());
+            SceneManager.Initilize(Content, new TestScene());
+
 
             base.Initialize();
         }
