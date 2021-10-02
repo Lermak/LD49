@@ -14,6 +14,7 @@ namespace MonoGame_Core.Scripts
         private GraphicsDeviceManager _graphics;
         private static bool quit;
         public static Form chatWindow;
+        public static Form miniGame;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,6 +27,8 @@ namespace MonoGame_Core.Scripts
         {
             chatWindow = new Form();
             chatWindow.Show();
+            miniGame = new Form();
+            miniGame.Show();
 
             // TODO: Add your initialization logic here
             InputManager.Initilize();

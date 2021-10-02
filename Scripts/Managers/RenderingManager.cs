@@ -203,19 +203,19 @@ namespace MonoGame_Core.Scripts
                 }
             }
             spriteBatch.End();
-            graphicsDevice.SetRenderTarget(null);
+            SetTarget(-1);
 
             foreach (var chain in RenderingManager.WindowTargets)
             {
                 chain.Present();
             }
 
-            
-            graphicsDevice.SetRenderTarget(null);
+            SetTarget(-1);
             graphicsDevice.Clear(Color.Transparent);
 
             Target = -1;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            
             foreach (Camera c in cameras)
             {
                 if (c.Target != -1) continue;
@@ -251,17 +251,6 @@ namespace MonoGame_Core.Scripts
             }
             spriteBatch.End();
             graphicsDevice.Present();
-
-
-            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            //CameraManager.Draw(spriteBatch);
-            //spriteBatch.End();
-
-            //foreach (var chain in RenderingManager.WindowTargets)
-            //{
-            //    graphicsDevice.SetRenderTarget(chain);
-            //    graphicsDevice.Clear(Color.Red);
-            //}
         }
 
         /// <summary>
