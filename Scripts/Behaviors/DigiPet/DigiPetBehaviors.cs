@@ -25,21 +25,17 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('p');
                 }
 
-                if (Globals.DigiPetAlive == false)
-                {
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
-                }
-                else if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
+                ad.ChangeSpriteSheet("ButtonDown", 0);
+
+                if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Playing)
                 {
                     d.NeedsPlay = false;
                     d.Playing = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "PlayingAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastPlay = 0;
                 }
             }
@@ -58,27 +54,25 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
+
                 if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
                 {
                     if (d.Code.Count > 5)
                         d.Code.Dequeue();
                     d.Code.Enqueue('w');
                 }
-                if (Globals.DigiPetAlive == false)
-                {
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
-                }
-                else if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
+
+                ad.ChangeSpriteSheet("ButtonDown", 0);
+
+                if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Washing)
                 {
                     d.NeedsWash = false;
                     d.Washing = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "WashingAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastWash = 0;
                 }
             }
@@ -104,21 +98,17 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('f');
                 }
 
-                if (Globals.DigiPetAlive == false)
-                {
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
-                }
-                else if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
+                ad.ChangeSpriteSheet("ButtonDown", 0);
+
+                 if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Feeding)
                 {
                     d.NeedsFood = false;
                     d.Feeding = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "FeedingAnimate", 0, true);
-                    ad.ChangeSpriteSheet("ButtonDown", 0);
                     d.TimeSinceLastFeed = 0;
                 }
             }
