@@ -18,7 +18,7 @@ namespace MonoGame_Core.Scripts
         {
             spriteRenderer = sr;
             animationSpeed = animSpeed;
-            frames = (SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X)-1;
+            frames = (ResourceManager.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X)-1;
         }
 
         /// <summary>
@@ -31,13 +31,13 @@ namespace MonoGame_Core.Scripts
         /// <param name="frame">the current X index for the animation on the spritesheet</param>
         public void ChangeSpriteSheet(string texID, float animSpeed, byte animation = 0, int frame = 0)
         {
-            if (SceneManager.CurrentScene.Textures.ContainsKey(texID))
+            if (ResourceManager.Textures.ContainsKey(texID))
             {
                 currentFrame = frame;
                 spriteRenderer.Animation = animation;
                 spriteRenderer.Texture = texID;
                 animationSpeed = animSpeed;
-                frames = (SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X) - 1;
+                frames = (ResourceManager.Textures[spriteRenderer.Texture].Width / (int)spriteRenderer.DrawArea.X) - 1;
             }
         }
 
@@ -48,7 +48,7 @@ namespace MonoGame_Core.Scripts
         public void ChangeAnimation(byte anim)
         {
             if(anim >= 0 &&
-                anim < (SceneManager.CurrentScene.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
+                anim < (ResourceManager.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
             {
                 spriteRenderer.Animation = anim;
                 spriteRenderer.CurrentFrame = 0;

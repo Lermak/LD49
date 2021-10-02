@@ -25,16 +25,17 @@ namespace MonoGame_Core.Scripts
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            ResourceManager.Initilize();
             InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
-            CollisionManager.Initilize();
+            //CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            WindowManager.Initilize(); 
-            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920,1080) / 4);
-            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920, 1080) / 4);
-            SceneManager.Initilize(Content, new TestScene());
+            WindowManager.Initilize(Content, new TestScene()); 
+            WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920,1080) / 4);
+            //WindowManager.AddWindow(new NoCloseForm(), new TestScene(), new Vector2(1920, 1080) / 4);
+            //SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }
@@ -59,16 +60,17 @@ namespace MonoGame_Core.Scripts
             InputManager.Update(TimeManager.DeltaTime);
 
             CoroutineManager.Update(TimeManager.DeltaTime);
+            
+            WindowManager.Update(TimeManager.DeltaTime);
 
-            SceneManager.Update(TimeManager.DeltaTime);
+            //SceneManager.Update(TimeManager.DeltaTime);
 
             SoundManager.Update(TimeManager.DeltaTime);
 
             CameraManager.Update(TimeManager.DeltaTime);
 
-            CollisionManager.Update(TimeManager.DeltaTime);
+            //CollisionManager.Update(TimeManager.DeltaTime);
 
-            WindowManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }

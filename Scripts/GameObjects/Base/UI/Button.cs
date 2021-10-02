@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class Button : WorldObject
     {
-        public Button(string deselectedTex, string selectedTex, string tag, Vector2 size, Vector2 pos, byte layer, BehaviorHandler.Act onClick) : base(deselectedTex, tag, size, pos, layer)
+        public Button(SceneManager sm, List<Camera> cam, string deselectedTex, string selectedTex, string tag, Vector2 size, Vector2 pos, byte layer, BehaviorHandler.Act onClick) : base(sm, cam, deselectedTex, tag, size, pos, layer)
         {
             SpriteRenderer.IsHUD = true;
             ButtonData b = (ButtonData)componentHandler.AddComponent(new ButtonData(this, "ButtonData", selectedTex, deselectedTex));

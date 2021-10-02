@@ -233,10 +233,10 @@ namespace MonoGame_Core.Scripts
             
         }
 
-        protected override void loadContent()
+        protected override void loadContent(List<Camera> c)
         {
             size = new Vector2(2100, 1080);
-            CollisionManager.Initilize();
+            //CollisionManager.Initilize();
 
             CameraManager.Cameras[0].SetMinPos(Size/2*-1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
@@ -245,35 +245,34 @@ namespace MonoGame_Core.Scripts
             SoundManager.PlaySong("Melody");
             SoundManager.SoundEffects["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
-            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
-            Textures["BG"] = Content.Load<Texture2D>("Images/Background");
+            ResourceManager.Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Images/Test");
+            ResourceManager.Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
+            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+            ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
-            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
-
-
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new TestObject("PeaShooter", "testObj"));
-            GameObjects.Add(new TestStaticObject("Base", 1));
+            GameObjects.Add(new TestObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "PeaShooter", "testObj"));
+            GameObjects.Add(new TestStaticObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(200, 200));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(sceneManager.Cameras[0]);
 
-            GameObjects.Add(new TestStaticObject("Base", 1));
+            GameObjects.Add(new TestStaticObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(-200, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
 
-            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
+            GameObjects.Add(new WorldObject(sceneManager, new List<Camera>() { sceneManager.Cameras[0] }, "BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            //((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 
-            TiledImporter.LoadFromString(sceneMap);
+            //TiledImporter.LoadFromString(sceneMap);
             //TiledImporter.LoadFromContent(Content, "Tiled/Test.xml");
-            TiledImporter.BuildFromDoc();
+            //TiledImporter.BuildFromDoc();
 
-            base.loadContent();
+            base.loadContent(c);
         }
     }
 }

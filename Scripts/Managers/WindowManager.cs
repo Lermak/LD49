@@ -4,23 +4,41 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework.Content;
 
 namespace MonoGame_Core.Scripts
 {
+    public class Window
+    {
+        public Form Viewport;
+        public SceneManager SceneManager;
+
+        public Window(Form f, SceneManager sm)
+        {
+            Viewport = f;
+            SceneManager = sm;
+        }
+    }
+
     public static class WindowManager
     {
-        public static List<Form> Windows;
-
-        public static void Initilize()
+        public static List<Window> Windows;
+        private static ContentManager contentManager;
+        public static void Initilize(ContentManager cm, Scene s)
         {
-            Windows = new List<Form>();
+            contentManager = cm;
+            Windows = new List<Window>();
+            Windows.Add(new Window(null, new SceneManager()));
+            Windows[0].SceneManager.Initilize(cm, s, new List<Camera>() { CameraManager.Cameras[0] });
         }
 
-        public static void AddWindow(Form f, Vector2 size)
+        public static void AddWindow(Form f, Scene s, Vector2 size)
         {
-            Windows.Add(f);
+            SceneManager sm = new SceneManager();
+            
+            Windows.Add(new Window(f, sm));
             f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
-            Windows[Windows.Count - 1].Show();
+            Windows[Windows.Count - 1].Viewport.Show();
             RenderingManager.WindowTargets.Add(new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
                 f.Handle,
                 (int)size.X,
@@ -40,6 +58,7 @@ namespace MonoGame_Core.Scripts
                 DepthFormat.Depth24,
                 0,
                 RenderTargetUsage.PlatformContents));
+
             CameraManager.AddCamera(new Camera("Camera" + CameraManager.Cameras.Count,
                 RenderingManager.RenderTargets.Count - 1,
                 0,
@@ -52,19 +71,21 @@ namespace MonoGame_Core.Scripts
 
             Camera c = CameraManager.Cameras[CameraManager.Cameras.Count - 1];
             c.SwapChain = RenderingManager.WindowTargets.Count-1;
-            
 
+            sm.Initilize(contentManager, s, new List<Camera>() { c });
         }
 
-        public static void RemoveWindow(Form f)
+        public static void RemoveWindow(Window w)
         {
-            Windows.Remove(f);
-            f.Dispose();
+            Windows.Remove(w);
         }
 
         public static void Update(float gt)
         {
-
+            foreach(Window w in Windows)
+            {
+                w.SceneManager.Update(gt);
+            }
         }
     }
 }

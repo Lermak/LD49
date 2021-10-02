@@ -113,7 +113,7 @@ namespace MonoGame_Core.Scripts
 
                     if (sr.Shader != "")
                     {
-                        foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                        foreach (EffectTechnique t in ResourceManager.Effects[sr.Shader].Techniques)
                         {
                             foreach (EffectPass p in t.Passes)
                             {
@@ -139,8 +139,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt"></param>
         public static void Draw(float gt)
         {
-            var x = graphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(1, 1);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(.25f, .25f);//new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);

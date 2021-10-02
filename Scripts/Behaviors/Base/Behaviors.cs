@@ -121,7 +121,7 @@ namespace MonoGame_Core.Scripts
 
         public static void RunAnimation(float gt, Component[] c)
         {
-            if(SceneManager.SceneState == SceneManager.State.Running)
+            //if(SceneManager.SceneState == SceneManager.State.Running)
                 ((AnimationData)c[0]).Animate(gt);
         }
 
@@ -140,7 +140,7 @@ namespace MonoGame_Core.Scripts
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-                SceneManager.ChangeScene(new TestScene());
+                t.GameObject.SceneManager.ChangeScene(new TestScene());
         }
 
         public static void LoadNuclearLevelOnClick(float gt, Component[] c)
@@ -149,7 +149,7 @@ namespace MonoGame_Core.Scripts
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-                SceneManager.ChangeScene(new NuclearScene());
+                t.GameObject.SceneManager.ChangeScene(new NuclearScene());
         }
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
         {

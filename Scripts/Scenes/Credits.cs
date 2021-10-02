@@ -18,10 +18,5 @@ namespace MonoGame_Core.Scripts
         {
 
         }
-
-        public override void Initilize(ContentManager c)
-        {
-            base.Initilize(c);
-        }
     }
 }

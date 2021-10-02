@@ -16,13 +16,13 @@ namespace MonoGame_Core.Scripts
             get { return texture; }
             set
             {
-                if (SceneManager.CurrentScene.Fonts.ContainsKey(value))
+                if (ResourceManager.Fonts.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
             }
         }
-        public FontRenderer(GameObject go, string text, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, texID, t, off, drawArea, orderInLayer, clr)
+        public FontRenderer(GameObject go, List<Camera> cam, string text, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr) : base(go, cam, texID, t, off, drawArea, orderInLayer, clr)
         {
             name = "fontRenderer";
             this.text = text;
@@ -30,11 +30,11 @@ namespace MonoGame_Core.Scripts
 
         public override void Draw(SpriteBatch sb, Camera c)
         {
-            Vector2 stringSize = SceneManager.CurrentScene.Fonts[Texture].MeasureString(text) * 0.5f;
+            Vector2 stringSize = ResourceManager.Fonts[Texture].MeasureString(text) * 0.5f;
 
             if (isHUD)
             {
-                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
@@ -46,7 +46,7 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                sb.DrawString(ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),

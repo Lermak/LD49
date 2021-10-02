@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         {
             if (isStatic)
             {
-                CollisionManager.PassiveColliders.Insert(this);
+                //CollisionManager.PassiveColliders.Insert(this);
             }
             else
             {
@@ -49,8 +49,8 @@ namespace MonoGame_Core.Scripts
 
         private static void addToActiveColliders(float gt, Component[] c)
         {
-            if(((Collider)c[0]).checkCollision)
-                CollisionManager.ActiveColliders.Insert((Collider)c[0]);
+           // if(((Collider)c[0]).checkCollision)
+                //CollisionManager.ActiveColliders.Insert((Collider)c[0]);
         }
     }
 }

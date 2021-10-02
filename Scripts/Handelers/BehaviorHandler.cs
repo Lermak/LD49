@@ -50,7 +50,7 @@ namespace MonoGame_Core.Scripts
 
         public void Update(float gt)
         {
-            if (SceneManager.SceneState == SceneManager.State.Running)
+            //if (SceneManager.SceneState == SceneManager.State.Running)
             {
                 foreach (Behavior b in Behaviors)
                 {

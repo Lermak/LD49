@@ -12,19 +12,21 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// Manageages the current scene, scene transitions and the state of the scene
     /// </summary>
-    static class SceneManager
+    public class SceneManager
     {
         /// <summary>
         /// Determines how to handle the game loop based on what the scene is performing
         /// </summary>
         public enum State { Running, Paused, SceneOut, SceneIn };
-        public static Scene CurrentScene = new TestScene();
-        public static Scene NextScene = null;
-        public static State SceneState;
+        public Scene CurrentScene = new TestScene();
+        public Scene NextScene = null;
+        public State SceneState;
+        public List<Camera> Cameras;
         static ContentManager cm;
-
-        public static void Initilize(ContentManager c, Scene s)
+        
+        public void Initilize(ContentManager c, Scene s, List<Camera> cam)
         {
+            Cameras = cam;
             SceneState = State.SceneIn;
             cm = c;
             CurrentScene = s;
@@ -32,7 +34,7 @@ namespace MonoGame_Core.Scripts
             CurrentScene.OnLoad();
         }   
 
-        public static void ChangeScene(Scene s)
+        public void ChangeScene(Scene s)
         {
             SceneState = State.SceneOut;
             CurrentScene.OnExit();
@@ -43,23 +45,25 @@ namespace MonoGame_Core.Scripts
         /// Run the update of the current scene, or load the next schene if it is null
         /// </summary>
         /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        public void Update(float gt)
         {
-            if(CurrentScene == null)
+            if (CurrentScene == null)
             {
                 CurrentScene = NextScene;
                 NextScene = null;
-                CurrentScene.Initilize(cm);
+                CurrentScene.Initilize(cm, this);
                 CurrentScene.OnLoad();
                 SceneState = State.SceneIn;
             }
-            else if(CurrentScene != null)
-                CurrentScene.Update(gt);         
+            else if (CurrentScene != null)
+            {
+                CurrentScene.Update(gt);
+            }
         }
 
-        public static void InitilizeCurrentScene()
+        public void InitilizeCurrentScene()
         {
-            CurrentScene.Initilize(cm);
+            CurrentScene.Initilize(cm, this);
         }
     }
 }
