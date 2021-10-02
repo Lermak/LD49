@@ -13,6 +13,8 @@ namespace MonoGame_Core.Scripts
     {
         public ChatForm()
         {
+            Size = new System.Drawing.Size(600, 800);
+
             var settings = new CefSettings();
 
             settings.RegisterScheme(new CefCustomScheme
