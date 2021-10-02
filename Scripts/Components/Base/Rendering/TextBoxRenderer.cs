@@ -35,6 +35,7 @@ namespace MonoGame_Core.Scripts
             name = "fontRenderer";
             this.fontId = fontId;
             this.text = text;
+            this.name = "textboxrenderer";
         }
 
         public override void Draw(SpriteBatch spriteBatch, Camera c)

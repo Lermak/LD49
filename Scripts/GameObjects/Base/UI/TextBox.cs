@@ -48,19 +48,13 @@ namespace MonoGame_Core.Scripts
                     }
 
                     _text = filtered;
-
-                    while (_font.MeasureString(_text).X > Transform.Width)
-                    {
-                        //to ensure that text cannot be larger than the box
-                        _text = _text.Substring(0, _text.Length - 1);
-                    }
                 }
             }
         }
 
         public TextBox(string textBoxTexture, string font, string tag, Vector2 size, Vector2 pos, byte layer) : base(tag)
         {
-            
+            _font = SceneManager.CurrentScene.Fonts[font];
 
             componentHandler.AddComponent(new Transform(this, pos, size.X, size.Y, 0, layer));
             componentHandler.AddComponent(new TextBoxRenderer(this,
@@ -75,6 +69,8 @@ namespace MonoGame_Core.Scripts
             _previousMouse = Mouse.GetState();
 
             behaviorHandler.AddBehavior("Update", OnUpdate, new Component[] {});
+
+            GameManager.MainWindowKeyDispatcher.Subscriber = this;
         }
 
         MouseState _previousMouse;
@@ -101,13 +97,10 @@ namespace MonoGame_Core.Scripts
             {
                 Highlighted = false;
             }
-        }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            
+            TextBoxRenderer r = (TextBoxRenderer)componentHandler.GetComponent("textboxrenderer");
+            r.Text = Text;
         }
-
 
         public void RecieveTextInput(char inputChar)
         {

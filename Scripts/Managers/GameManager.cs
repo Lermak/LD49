@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
-        public KeyboardDispatcher MainWindowKeyDispatcher;
+        public static KeyboardDispatcher MainWindowKeyDispatcher;
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
@@ -23,6 +23,8 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            MainWindowKeyDispatcher = new KeyboardDispatcher(Window.Handle);
+
             // TODO: Add your initialization logic here
             InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
@@ -31,8 +33,6 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.Initilize();
             CameraManager.Initilize();
             SceneManager.Initilize(Content, new ChatWindowScene());
-
-            MainWindowKeyDispatcher = new KeyboardDispatcher(Window.Handle);
 
             base.Initialize();
         }
