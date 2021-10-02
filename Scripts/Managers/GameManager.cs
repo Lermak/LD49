@@ -29,16 +29,24 @@ namespace MonoGame_Core.Scripts
             MainWindowKeyDispatcher = new KeyboardDispatcher(Window.Handle);
 
             // TODO: Add your initialization logic here
-            InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
             WindowManager.Initilize(); 
-            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920,1080) / 4);
-            WindowManager.AddWindow(new NoCloseForm(), new Vector2(1920, 1080) / 4);
-            SceneManager.Initilize(Content, new TestScene());
+            WindowManager.AddWindow(new Vector2(1920,1080) / 4);
+            WindowManager.AddWindow(new Vector2(1920, 1080) / 4);
+            SceneManager.Initilize(Content, new ChatWindowScene());
+
+            try
+            {
+                var c = new ChatForm();
+                c.Show();
+            }
+            catch {
+                var a = "sd";
+            }
 
             base.Initialize();
         }
@@ -60,9 +68,9 @@ namespace MonoGame_Core.Scripts
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
 
-            InputManager.Update(TimeManager.DeltaTime);
-
             CoroutineManager.Update(TimeManager.DeltaTime);
+
+            WindowManager.Update(TimeManager.DeltaTime);
 
             SceneManager.Update(TimeManager.DeltaTime);
 
@@ -71,8 +79,6 @@ namespace MonoGame_Core.Scripts
             CameraManager.Update(TimeManager.DeltaTime);
 
             CollisionManager.Update(TimeManager.DeltaTime);
-
-            WindowManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }

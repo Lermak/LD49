@@ -55,7 +55,7 @@ namespace MonoGame_Core.Scripts
 
         public virtual void Update(float gt)
         {
-            if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Escape))
+            if (CurrentWindow.inputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Escape))
                 if (SceneManager.SceneState == SceneManager.State.Running)
                     SceneManager.SceneState = SceneManager.State.Paused;
                 else

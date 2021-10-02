@@ -7,20 +7,42 @@ using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
+
+    public class Window
+    {
+        public Form form;
+        public KeyboardDispatcher keyboardDispatcher;
+        public InputManager inputManager;
+    };
+
+    public static class CurrentWindow {
+        public static Window _window;
+
+        public static Window windowData { set { _window = value; } private get { return _window; } }
+        public static InputManager inputManager { get { return windowData.inputManager; } }
+    }
+
     public static class WindowManager
     {
-        public static List<Form> Windows;
+
+        public static List<Window> Windows;
 
         public static void Initilize()
         {
-            Windows = new List<Form>();
+            Windows = new List<Window>();
         }
 
-        public static void AddWindow(Form f, Vector2 size)
+        public static Window AddWindow(Vector2 size)
         {
-            Windows.Add(f);
+            Form f = new NoCloseForm();
+            Window w = new Window();
+            w.form = f;
+            w.keyboardDispatcher = new KeyboardDispatcher(f.Handle);
+            w.inputManager = new InputManager(w);
+            Windows.Add(w);
+
             f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
-            Windows[Windows.Count - 1].Show();
+            f.Show();
             RenderingManager.WindowTargets.Add(new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
                 f.Handle,
                 (int)size.X,
@@ -52,19 +74,24 @@ namespace MonoGame_Core.Scripts
 
             Camera c = CameraManager.Cameras[CameraManager.Cameras.Count - 1];
             c.SwapChain = RenderingManager.WindowTargets.Count-1;
-            
 
+            return w;
         }
 
-        public static void RemoveWindow(Form f)
+        public static void RemoveWindow(Window w)
         {
-            Windows.Remove(f);
-            f.Dispose();
+            Windows.Remove(w);
+            w.form.Dispose();
         }
 
         public static void Update(float gt)
         {
-
+            foreach(Window w in WindowManager.Windows)
+            {
+                CurrentWindow._window = w;
+                
+                //Do update for scenes and such
+            }
         }
     }
 }

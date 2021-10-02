@@ -20,8 +20,8 @@ namespace MonoGame_Core.Scripts
                 behaviorHandler.AddBehavior("OnClick", (float gt, Component[] c) =>
                 {
                     Transform t = (Transform)c[0];
-                    Vector2 v = InputManager.MousePos;
-                    if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) && t.ContainsPoint(v))
+                    Vector2 v = CurrentWindow.inputManager.MousePos;
+                    if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) && t.ContainsPoint(v))
                     {
                         onClick();
                     }
