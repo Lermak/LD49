@@ -16,7 +16,8 @@ namespace MonoGame_Core.Scripts
             Component ad = componentHandler.AddComponent(new AnimationData(this, "AnimationData", SpriteRenderer, 0));
             behaviorHandler.AddBehavior("Animate", Behaviors.RunAnimation, new Component[] { ad });
             behaviorHandler.AddBehavior("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b, ad });
-            if(onClick != null)
+            if (onClick != null)
+            {
                 behaviorHandler.AddBehavior("OnClick", (float gt, Component[] c) =>
                 {
                     Transform t = (Transform)c[0];
@@ -26,6 +27,7 @@ namespace MonoGame_Core.Scripts
                         onClick();
                     }
                 }, new Component[] { Transform });
+            }
         }
     }
 }

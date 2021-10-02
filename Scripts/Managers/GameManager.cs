@@ -36,17 +36,11 @@ namespace MonoGame_Core.Scripts
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
             //CollisionManager.Initilize();
-            CameraManager.Initilize(); 
+            CameraManager.Initilize();
 
-            try
-            {
-                var c = new ChatForm();
-                c.Show();
-            }
-            catch {
-                var a = "sd";
-            }
-            
+            var c = new ChatForm();
+            c.Show();
+
             WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
             WindowManager.AddWindow(new NoCloseForm(), new RoboTestchaScene(), new Vector2(300, 300));
