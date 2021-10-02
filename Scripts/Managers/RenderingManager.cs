@@ -88,6 +88,22 @@ namespace MonoGame_Core.Scripts
                 DepthFormat.Depth24,
                 0,
                 RenderTargetUsage.PlatformContents));
+            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
+                (int)1920,
+                (int)1080,
+                false,
+                graphicsDevice.PresentationParameters.BackBufferFormat,
+                DepthFormat.Depth24,
+                0,
+                RenderTargetUsage.PlatformContents));
+            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
+                (int)1920,
+                (int)1080,
+                false,
+                graphicsDevice.PresentationParameters.BackBufferFormat,
+                DepthFormat.Depth24,
+                0,
+                RenderTargetUsage.PlatformContents));
 
             WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
                 GameManager.chatWindow.Handle,
@@ -104,6 +120,17 @@ namespace MonoGame_Core.Scripts
                 GameManager.miniGame.Handle,
                 GameManager.miniGame.Width,
                 GameManager.miniGame.Height,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.Depth24Stencil8,
+                0,
+                RenderTargetUsage.PlatformContents,
+                PresentInterval.Default));
+
+            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
+                GameManager.miniGameTwo.Handle,
+                GameManager.miniGameTwo.Width,
+                GameManager.miniGameTwo.Height,
                 false,
                 SurfaceFormat.Color,
                 DepthFormat.Depth24Stencil8,
@@ -174,8 +201,7 @@ namespace MonoGame_Core.Scripts
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
             graphicsDevice.SetRenderTarget(null);
-            graphicsDevice.Clear(Color.Black);
-
+            graphicsDevice.Clear(Color.Transparent);
 
             Dictionary<int, List<Camera>> rtBucket = new Dictionary<int, List<Camera>>();
 
@@ -229,7 +255,7 @@ namespace MonoGame_Core.Scripts
             foreach (var p in scBucket)
             {
                 graphicsDevice.SetRenderTarget(RenderingManager.WindowTargets[p.Key]);
-                graphicsDevice.Clear(Color.Transparent);
+                graphicsDevice.Clear(Color.Black);
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 

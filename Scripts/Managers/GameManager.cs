@@ -13,8 +13,9 @@ namespace MonoGame_Core.Scripts
     {
         private GraphicsDeviceManager _graphics;
         private static bool quit;
-        public static Form chatWindow;
-        public static Form miniGame;
+        public static NoCloseForm chatWindow;
+        public static NoCloseForm miniGame;
+        public static NoCloseForm miniGameTwo;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -25,10 +26,12 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
-            chatWindow = new Form();
+            chatWindow = new NoCloseForm();
             chatWindow.Show();
-            miniGame = new Form();
+            miniGame = new NoCloseForm();
             miniGame.Show();
+            miniGameTwo = new NoCloseForm();
+            miniGameTwo.Show();
 
             // TODO: Add your initialization logic here
             InputManager.Initilize();

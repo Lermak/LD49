@@ -260,20 +260,28 @@ namespace MonoGame_Core.Scripts
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
             CameraManager.Cameras[1].SwapChain = 0;
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             
-            CameraManager.Cameras.Add(new Camera("miniGame", 0, 0,
+            CameraManager.Cameras.Add(new Camera("miniGame", 1, 0,
                 480,
                 270,
                 new Vector2(480, 270),
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[2].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
             CameraManager.Cameras[2].SwapChain = 1;
             CameraManager.Cameras[2].ScreenPosition = new Vector2(480, 270) / 2;
+
+            CameraManager.Cameras.Add(new Camera("miniGameTwo", 2, 0,
+                480,
+                270,
+                new Vector2(480, 270),
+                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
+                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+
+            CameraManager.Cameras[3].SwapChain = 2;
+            CameraManager.Cameras[3].ScreenPosition = new Vector2(480, 270) / 2;
 
             GameObjects = new List<GameObject>();
             GameObjects.Add(new TestObject("PeaShooter", "testObj"));
