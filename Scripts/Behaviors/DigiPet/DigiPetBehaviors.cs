@@ -20,6 +20,7 @@ namespace MonoGame_Core.Scripts
                 if (!d.NeedsPlay && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Playing)
                 {
@@ -49,6 +50,7 @@ namespace MonoGame_Core.Scripts
                 if (!d.NeedsWash && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Washing)
                 {
@@ -78,6 +80,7 @@ namespace MonoGame_Core.Scripts
                 if (!d.NeedsFood && ad.SpriteRenderer.Animation != 0)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
+                    ad.ChangeSpriteSheet("ButtonDown", 0);
                 }
                 else if (!d.Feeding)
                 {
