@@ -101,9 +101,9 @@ namespace MonoGame_Core.Scripts
                 PresentInterval.Default));
 
             WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
-                GameManager.chatWindow.Handle,
-                GameManager.chatWindow.Width,
-                GameManager.chatWindow.Height,
+                GameManager.miniGame.Handle,
+                GameManager.miniGame.Width,
+                GameManager.miniGame.Height,
                 false,
                 SurfaceFormat.Color,
                 DepthFormat.Depth24Stencil8,
