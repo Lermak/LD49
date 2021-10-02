@@ -99,6 +99,17 @@ namespace MonoGame_Core.Scripts
                 0,
                 RenderTargetUsage.PlatformContents,
                 PresentInterval.Default));
+
+            WindowTargets.Add(new SwapChainRenderTarget(graphicsDevice,
+                GameManager.chatWindow.Handle,
+                GameManager.chatWindow.Width,
+                GameManager.chatWindow.Height,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.Depth24Stencil8,
+                0,
+                RenderTargetUsage.PlatformContents,
+                PresentInterval.Default));
         }
 
         /// <summary>
