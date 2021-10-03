@@ -221,7 +221,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   async function sendAsyncResponse(person, msg) {
     setTyping(person, true)
-    await waitTime(msg.length * 0.006)
+    await waitTime(msg.length * 0.01)
     setTyping(person, false)
     recieveMessage(person, msg)
   }
@@ -246,6 +246,20 @@ Object.defineProperty(Array.prototype, "random", {
     }
   }
 
+  function generateResponseObjects(list) {
+    let responseList = []
+    for(let r of list) {
+      if(typeof r === "string") {
+        responseList.push({ msg: r})
+      }
+      else {
+        responseList.push(r)
+      }
+    }
+
+    return responseList
+  }
+
   function handleResponse(person, message) {
     if(person.responses.length == 0) {
       return
@@ -256,15 +270,7 @@ Object.defineProperty(Array.prototype, "random", {
       return
     }
 
-    let responseList = []
-    for(let r of person.responses) {
-      if(typeof r === "string") {
-        responseList.push({ msg: r})
-      }
-      else {
-        responseList.push(r)
-      }
-    }
+    let responseList = generateResponseObjects(person.responses)
 
     //First, check all our filters
     let matchedFilters = []
@@ -296,6 +302,8 @@ Object.defineProperty(Array.prototype, "random", {
   
   }
 
+  let DOING_SLASH_COMMAND = false
+
   function sendMessage(text) {
     let mainfeed = document.getElementById("mainfeed")
 
@@ -304,6 +312,29 @@ Object.defineProperty(Array.prototype, "random", {
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
     handleResponse(toPerson, text)
+
+    if(toPerson == you) {
+      if(text.startsWith("/test")) {
+        let regex = /\/test\s+(\w+)\s+(\w+)/
+        let matches = text.match(regex)
+        if(matches != null && matches[1] !== undefined && matches[2] !== undefined) {
+          let p = getPerson(matches[1])
+          if(p === undefined) {
+            recieveMessage(you, `No person with the name ${matches[1]}`)
+          }
+          
+          DOING_SLASH_COMMAND = true
+          runCustomChat(matches[1], matches[2])
+          DOING_SLASH_COMMAND = false
+        }
+      }
+      else if(text.startsWith("/clearMessages")) {
+        for(let p of People) {
+          p.messages = []
+        }
+        mainfeed.innerHTML = ""
+      }
+    }
 
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
   }
@@ -391,23 +422,28 @@ Object.defineProperty(Array.prototype, "random", {
 
   function runCustomChat(person, name) {
     person = getPerson(person)
-    switchToPerson(person)
-    lockSwitching = true
-
+    //switchToPerson(person)
+    //lockSwitching = true
+    let doing_slash = DOING_SLASH_COMMAND
     game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
       if(r != "") {
+        if(doing_slash) {
+          recieveMessage(you, `Running Content/Web/Chat/people/${person.name}/${name}.json`)
+        }
+
         let customChat = JSON.parse(r)
         person.inCustomChat = true
 
         let person_is_typing = document.getElementById("person_is_typing")
-        for(let msg of customChat) {
-          if(typeof msg === "string") {
-            await sendAsyncResponse(person, msg)
-            await waitTime(msg.length * 0.024)
+        let responses = generateResponseObjects(customChat)
+        for(let r of responses) {
+          await handleResponseObject(person, r)
+          if(r.msg !== undefined) {
+            await waitTime(r.msg.length * 0.024)
           }
         }
 
-        lockSwitching = false
+        //lockSwitching = false
         person.inCustomChat = false
       }
     })
@@ -418,6 +454,7 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
-  runCustomChat("Delores", "intro_chat")
+  //runCustomChat("Delores", "intro_chat")
+  //runCustomChat("Christopher", "security_check")
 
 })();

@@ -1,0 +1,6 @@
+[
+    "Yo.",
+    { "wait": 5, "msg": "Thanks for taking this job so we can get that sweet, sweet referral bonus. Though I gotta say there are some things I keep running across that seem… a bit sus."},
+    { "typing": true, "wait": 3, "msg": "Is it just me or did you see a weird word in the security check text file?" },
+    "Check it out when you see it and let me know what you think. Maybe I’ve just had too many Joja Colas today or something."
+]
