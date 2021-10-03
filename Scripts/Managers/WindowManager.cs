@@ -40,7 +40,10 @@ namespace MonoGame_Core.Scripts
         {
             var cursorPt = Cursor.Position;
             var pt = f.PointToClient(cursorPt);
-            return new Vector2(pt.X, pt.Y);
+            System.Drawing.Rectangle screenRectangle = f.RectangleToScreen(f.ClientRectangle);
+            int titleHeight = screenRectangle.Top - f.Top;
+            int sideWidth = screenRectangle.Left - f.Left;
+            return new Vector2(pt.X + sideWidth, pt.Y + titleHeight);
         }
     }
 
@@ -123,6 +126,9 @@ namespace MonoGame_Core.Scripts
 
         public static Window UpdateWindow;
         public static bool KillUpdate = false;
+
+        public static Window ReauthWindow;
+        public static bool KillReauth = false;
 
         public static List<Window> ToAdd = new List<Window>();
 
@@ -244,6 +250,11 @@ namespace MonoGame_Core.Scripts
             {
                 KillUpdate = false;
                 WindowManager.RemoveWindow(WindowManager.UpdateWindow);
+            }
+            if (KillReauth)
+            {
+                KillReauth = false;
+                WindowManager.RemoveWindow(WindowManager.ReauthWindow);
             }
         }
     }
