@@ -115,6 +115,8 @@ namespace MonoGame_Core.Scripts
     public static class WindowManager
     {
         public static List<Window> Windows;
+        public static Window ITHelp;
+        public static bool killIT = false;
         private static ContentManager contentManager;
         public static void Initilize(ContentManager cm, Scene s)
         {
@@ -208,6 +210,11 @@ namespace MonoGame_Core.Scripts
                 w.inputManager.Update(gt);
                 w.coroutineManager.Update(gt);
                 w.sceneManager.Update(gt);
+            }
+            if (killIT)
+            {
+                killIT = false;
+                WindowManager.RemoveWindow(WindowManager.ITHelp);
             }
         }
     }
