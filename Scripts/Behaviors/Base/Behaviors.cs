@@ -193,7 +193,7 @@ namespace MonoGame_Core.Scripts
                         }
                         if(flag)
                         {
-                            Globals.CreateFile("PayLog", "");
+                            Globals.CreateFile("PayLog", "Delores H     - $ 90,000\nDanni B       - $ 75,000\nTim G         - $ 40,000\nQuinn R       - $ 40,000\nKailee M      - $ 40,000\nChristopher C - $ 40,000\nJaney L       - $ 40,000\nJude N        - $ 150,000\nAida F        - $ 40,000\nAdrian B      - $ 60,000\nGerald B      - $ 60,000\nJamie Z       - $ 60,000");
                         }
                             
                     }
