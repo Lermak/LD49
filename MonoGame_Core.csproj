@@ -42,4 +42,10 @@
   <Target Name="CopyWebFiles" AfterTargets="AfterBuild">
     <Copy SourceFiles="@(WebItems)" DestinationFolder="$(OutputPath)\Content\Web\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
   </Target>
+
+  <ItemGroup>
+    <Content Include="Content\Web\Chat\**\*.*" Link="Content\Web\Chat\%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
