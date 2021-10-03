@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('p');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("PlayDown", 0);
 
                 if (!Globals.DigiPetAlive)
                 {
@@ -41,12 +41,14 @@ namespace MonoGame_Core.Scripts
                     d.Playing = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "PlayingAnimate", 0, true);
                     d.TimeSinceLastPlay = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Playing = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("PlayUp", 0);
             }
         }
         public static void Wash(float gt, Component[] c)
@@ -66,7 +68,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('w');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("WashDown", 0);
                 if (!Globals.DigiPetAlive)
                 {
 
@@ -81,12 +83,14 @@ namespace MonoGame_Core.Scripts
                     d.Washing = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "WashingAnimate", 0, true);
                     d.TimeSinceLastWash = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Washing = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("WashUp", 0);
             }
         }
         public static void Feed(float gt, Component[] c)
@@ -105,7 +109,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('f');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("FeedDown", 0);
                 if(!Globals.DigiPetAlive)
                 {
 
@@ -120,12 +124,14 @@ namespace MonoGame_Core.Scripts
                     d.Feeding = true;
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "FeedingAnimate", 0, true);
                     d.TimeSinceLastFeed = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Feeding = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("FeedUp", 0);
             }
         }
 
@@ -197,11 +203,20 @@ namespace MonoGame_Core.Scripts
                     Random r = new Random();
                     int i = r.Next(0, 100);
                     if (i < 10)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 1;
                         d.NeedsFood = true;
+                    }
                     else if (i < 20)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 2;
                         d.NeedsPlay = true;
+                    }
                     else if (i < 30)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 3;
                         d.NeedsWash = true;
+                    }
                 }
             }
 
@@ -210,7 +225,8 @@ namespace MonoGame_Core.Scripts
                 d.TimeSinceLastWash > 30) &&
                 Globals.DigiPetAlive == true)
             {
-                Globals.DigiPetAlive = false;              
+                Globals.DigiPetAlive = false;
+                d.Needs.SpriteRenderer.Animation = 0;
                 a.ChangeAnimation(4);
             }
             WorldObject w = ((WorldObject)a.GameObject);
@@ -233,15 +249,13 @@ namespace MonoGame_Core.Scripts
                             w.SpriteRenderer.Animation = 0;
                     }
 
-                    if (w.Transform.Position.X < -900 && w.RigidBody.MoveVelocity.X < 0)
+                    if (w.Transform.Position.X < -900 && w.SpriteRenderer.Animation == 2)
                     {
-                        w.Transform.Place(new Vector2(-900, w.Transform.Position.Y));
                         a.SpriteRenderer.Animation = 0;
                     }
 
-                    if (w.Transform.Position.X > -720 && w.RigidBody.MoveVelocity.X > 0)
+                    if (w.Transform.Position.X > -720 && w.SpriteRenderer.Animation == 1)
                     {
-                        w.Transform.Place(new Vector2(-720, w.Transform.Position.Y));
                         a.SpriteRenderer.Animation = 0;
                     }
                 }

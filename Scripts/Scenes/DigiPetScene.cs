@@ -10,21 +10,28 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent(List<Camera> c)
         {
-            ResourceManager.Textures["DigiPetBG"] = Content.Load<Texture2D>("Images/DigiPet/DigiPetBackground");
-            ResourceManager.Textures["ButtonDown"] = Content.Load<Texture2D>("Images/DigiPet/ButtonDown");
-            ResourceManager.Textures["ButtonUp"] = Content.Load<Texture2D>("Images/DigiPet/ButtonUp");
+            ResourceManager.Textures["DigiPetNeeds"] = Content.Load<Texture2D>("Images/DigiPet/chat_sprite_sheet");
+            ResourceManager.Textures["DigiPetBG"] = Content.Load<Texture2D>("Images/DigiPet/background");
+            ResourceManager.Textures["FeedUp"] = Content.Load<Texture2D>("Images/DigiPet/button_feed");
+            ResourceManager.Textures["FeedDown"] = Content.Load<Texture2D>("Images/DigiPet/button_feed_press");
+            ResourceManager.Textures["WashUp"] = Content.Load<Texture2D>("Images/DigiPet/button_wash");
+            ResourceManager.Textures["WashDown"] = Content.Load<Texture2D>("Images/DigiPet/button_wash_press");
+            ResourceManager.Textures["PlayUp"] = Content.Load<Texture2D>("Images/DigiPet/button_play");
+            ResourceManager.Textures["PlayDown"] = Content.Load<Texture2D>("Images/DigiPet/button_play_press");
             ResourceManager.Textures["DigiPet"] = Content.Load<Texture2D>("Images/DigiPet/pet_sprite_sheet");
-            GameObjects.Add(new WorldObject("DigiPetBG", "Background", new Vector2(400, 600), new Vector2(-760, 240), 0));
-            GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(80, 80), new Vector2(-810, 450), 1));
+           
+            GameObjects.Add(new WorldObject("DigiPetBG", "DigiPetBG", new Vector2(480, 340), new Vector2(-720, 380), 0));
+            
+            GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(80, 80), new Vector2(-810, 370), 2));
             DigiPet d = (DigiPet)GameObjects[GameObjects.Count - 1];
-            GameObjects.Add(new DigiPetNeeds("DigiPetNeeds", "Needs", new Vector2(240, 240), new Vector2(), 1));
+            GameObjects.Add(new DigiPetNeeds("DigiPetNeeds", "Needs", new Vector2(240, 240), new Vector2(-810, 375), 1));
             DigiPetNeeds dpn = (DigiPetNeeds)GameObjects[^1];
             ((DigiPetData)d.ComponentHandler.GetComponent("DigiPetData")).Needs = (AnimationData)dpn.ComponentHandler.GetComponent("AnimationData");
             dpn.Transform.AttachToTransform(d.Transform);
-            dpn.Transform.Place(new Vector2());
-            GameObjects.Add(new FeedButton("ButtonUp", "ButtonUp", "FeedButton", new Vector2(75, 75), new Vector2(-860, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
-            GameObjects.Add(new WashButton("ButtonUp", "ButtonUp", "WashButton", new Vector2(75, 75), new Vector2(-760, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
-            GameObjects.Add(new PlayButton("ButtonUp", "ButtonUp", "PlayButton", new Vector2(75, 75), new Vector2(-660, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
+
+            GameObjects.Add(new FeedButton("FeedUp", "FeedUp", "FeedButton", new Vector2(160, 90), new Vector2(-880, 260), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
+            GameObjects.Add(new WashButton("WashUp", "WashUp", "WashButton", new Vector2(160, 90), new Vector2(-720, 260), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
+            GameObjects.Add(new PlayButton("PlayUp", "PlayUp", "PlayButton", new Vector2(160, 90), new Vector2(-560, 260), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
 
         }
     }
