@@ -158,12 +158,12 @@ namespace MonoGame_Core.Scripts
             {
                 if (NuclearLevel.Locked)
                 {
-                    NuclearLevel.heldTime += gt;
+                    NuclearLevel.ButtonHoldTime += gt;
                 }
             }
             else
             {
-                NuclearLevel.heldTime = 0.0f;
+                NuclearLevel.ButtonHoldTime = 0.0f;
             }
 
         }
