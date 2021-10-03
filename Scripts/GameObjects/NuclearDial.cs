@@ -7,11 +7,12 @@ namespace MonoGame_Core.Scripts
     {
         public NuclearDial(string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(texID, tag, size, pos, layer) {
 
-            Transform.Radians = MathHelper.ToRadians(135);
+            Transform.Radians = MathHelper.ToRadians(70);
 
             BehaviorHandler.AddBehavior("increasingNuclear", Behaviors.IncreaseNuclearLevelOverTime, new Component[] {  });
             BehaviorHandler.AddBehavior("NuclearRotate", Behaviors.NuclearRotate, new Component[] { Transform });
             BehaviorHandler.AddBehavior("NuclearDeath", Behaviors.NuclearDeath, new Component[] { });
+            BehaviorHandler.AddBehavior("isButtonHeld", Behaviors.isButtonHeld, new Component[] { Transform });
         }
 
     }
