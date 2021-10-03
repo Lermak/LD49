@@ -10,6 +10,9 @@ namespace MonoGame_Core.Scripts
         public float TimeSinceLastPlay = 0;
         public float TimeSinceLastWash = 0;
         public float CheckNeedsTimer = 0;
+        public float AnimationDuration = 1;
+        public float TimeSinceAnimation = 0;
+        public float TimeDead = 0;
         public bool Feeding = false;
         public bool Playing = false;
         public bool Washing = false;
@@ -18,6 +21,7 @@ namespace MonoGame_Core.Scripts
         public bool NeedsWash = false;
         public Queue<char> Code = new Queue<char>();
         public bool CodeAccessed = false;
+        public AnimationData Needs;
         public DigiPetData(GameObject go, string name) : base(go, name)
         {
 

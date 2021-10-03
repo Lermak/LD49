@@ -5,15 +5,12 @@ using Microsoft.Xna.Framework;
 
 namespace MonoGame_Core.Scripts
 {
-    public class DigiPet : WorldObject
+    public class DigiPetNeeds : WorldObject
     {
-        public DigiPet(string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(texID, tag, size, pos, layer)
+        public DigiPetNeeds(string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(texID, tag, size, pos, layer)
         {
             Component c = componentHandler.AddComponent(new DigiPetData(this, "DigiPetData"));
             Component anim = componentHandler.AddComponent(new AnimationData(this, "AnimationData", SpriteRenderer, .6f));
-
-            behaviorHandler.AddBehavior("Animate", DigiPetBehaviors.Animate, new Component[] { anim });
-            behaviorHandler.AddBehavior("RunDigiPet", DigiPetBehaviors.Running, new Component[] { c, anim });
         }
     }
 }

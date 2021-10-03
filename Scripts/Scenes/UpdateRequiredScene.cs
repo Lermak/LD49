@@ -7,7 +7,7 @@ using System.IO;
 
 namespace MonoGame_Core.Scripts
 {
-    public class AskITScene : Scene
+    public class UpdateRequiredScene : Scene
     {
         protected override void loadContent(List<Camera> c)
         {
@@ -19,17 +19,10 @@ namespace MonoGame_Core.Scripts
 
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
-            obj.ComponentHandler.AddComponent(new FontRenderer(obj, 
-                "Error: This should NEVER\nhappen, contact Tim", 
+            obj.ComponentHandler.AddComponent(new FontRenderer(obj,
+                "Update Required",
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-            obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { 
-                if (NuclearLevel.ButtonHoldTime >= 5) { 
-                    NuclearLevel.Locked = false;
-                    if (WindowManager.ITHelp != null)
-                    {
-                        WindowManager.killIT = true;
-                    }
-                } }, new Component[] { });
+
         }
     }
 }

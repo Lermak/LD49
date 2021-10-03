@@ -42,10 +42,11 @@ namespace MonoGame_Core.Scripts
             c.Show();
 
             WindowManager.Initilize(Content, new NuclearScene()); 
-            WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(400,600));
+            WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(480,330));
             WindowManager.AddWindow(new NoCloseForm(), new SecurityCheckScene(), new Vector2(600, 240));
             WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
-            //SceneManager.Initilize(Content, new TestScene());
+            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+            WindowManager.ITHelp = WindowManager.Windows[^1];//SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }

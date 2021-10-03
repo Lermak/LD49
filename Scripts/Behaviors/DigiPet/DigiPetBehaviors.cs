@@ -25,13 +25,13 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('p');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("PlayDown", 0);
 
                 if (!Globals.DigiPetAlive)
                 {
 
                 }
-                else if (!d.NeedsPlay && ad.SpriteRenderer.Animation == 0)
+                else if (!d.NeedsPlay && ad.SpriteRenderer.Animation < 3)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -39,14 +39,16 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsPlay = false;
                     d.Playing = true;
-                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "PlayingAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "PlayingAnimate", 0, true);
                     d.TimeSinceLastPlay = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Playing = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("PlayUp", 0);
             }
         }
         public static void Wash(float gt, Component[] c)
@@ -66,12 +68,12 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('w');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("WashDown", 0);
                 if (!Globals.DigiPetAlive)
                 {
 
                 }
-                else if (!d.NeedsWash && ad.SpriteRenderer.Animation == 0)
+                else if (!d.NeedsWash && ad.SpriteRenderer.Animation < 3)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -79,14 +81,16 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsWash = false;
                     d.Washing = true;
-                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "WashingAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "WashingAnimate", 0, true);
                     d.TimeSinceLastWash = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Washing = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("WashUp", 0);
             }
         }
         public static void Feed(float gt, Component[] c)
@@ -105,12 +109,12 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('f');
                 }
 
-                ad.ChangeSpriteSheet("ButtonDown", 0);
+                ad.ChangeSpriteSheet("FeedDown", 0);
                 if(!Globals.DigiPetAlive)
                 {
 
                 }
-                else if (!d.NeedsFood && ad.SpriteRenderer.Animation == 0)
+                else if (!d.NeedsFood && ad.SpriteRenderer.Animation < 3)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "RejectAnimate", 0, true);
                 }
@@ -118,14 +122,16 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsFood = false;
                     d.Feeding = true;
-                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, ad), "FeedingAnimate", 0, true);
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, ad), "FeedingAnimate", 0, true);
                     d.TimeSinceLastFeed = 0;
+                    d.Needs.SpriteRenderer.Animation = 0;
+
                 }
             }
             else
             {
                 d.Feeding = false;
-                ad.ChangeSpriteSheet("ButtonUp", 0);
+                ad.ChangeSpriteSheet("FeedUp", 0);
             }
         }
 
@@ -191,28 +197,85 @@ namespace MonoGame_Core.Scripts
             else if(!d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
             {
                 d.CheckNeedsTimer += gt;
-                if (d.CheckNeedsTimer > 5)
+                if (d.CheckNeedsTimer > 20)
                 {
                     d.CheckNeedsTimer = 0;
                     Random r = new Random();
                     int i = r.Next(0, 100);
                     if (i < 10)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 1;
                         d.NeedsFood = true;
+                    }
                     else if (i < 20)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 2;
                         d.NeedsPlay = true;
+                    }
                     else if (i < 30)
+                    {
+                        d.Needs.SpriteRenderer.Animation = 3;
                         d.NeedsWash = true;
+                    }
                 }
             }
 
-            if ((d.TimeSinceLastPlay > 15 ||
-                d.TimeSinceLastFeed > 15 ||
-                d.TimeSinceLastWash > 15) &&
+            if ((d.TimeSinceLastPlay > 30 ||
+                d.TimeSinceLastFeed > 30 ||
+                d.TimeSinceLastWash > 30) &&
                 Globals.DigiPetAlive == true)
             {
-                Globals.DigiPetAlive = false;              
-                a.ChangeAnimation(1);
+                Globals.DigiPetAlive = false;
+                d.Needs.SpriteRenderer.Animation = 0;
+                a.ChangeAnimation(4);
             }
+            WorldObject w = ((WorldObject)a.GameObject);
+
+            if (Globals.DigiPetAlive)
+            {
+                if (a.SpriteRenderer.Animation < 3)
+                {
+                    d.TimeSinceAnimation += gt;
+                    if (d.TimeSinceAnimation > d.AnimationDuration)
+                    {
+                        d.TimeSinceAnimation = 0;
+                        Random r = new Random();
+                        int i = r.Next(0, 100);
+                        if (i < 20 && w.Transform.Position.X > -900)
+                            w.SpriteRenderer.Animation = 1;
+                        else if (i < 40 && w.Transform.Position.X < -720)
+                            w.SpriteRenderer.Animation = 2;
+                        else
+                            w.SpriteRenderer.Animation = 0;
+                    }
+
+                    if (w.Transform.Position.X < -900 && w.SpriteRenderer.Animation == 2)
+                    {
+                        a.SpriteRenderer.Animation = 0;
+                    }
+
+                    if (w.Transform.Position.X > -720 && w.SpriteRenderer.Animation == 1)
+                    {
+                        a.SpriteRenderer.Animation = 0;
+                    }
+                }
+            }
+            else
+            {
+                d.TimeDead += gt;
+                if (d.TimeDead > 40)
+                    w.SpriteRenderer.Animation = 6;
+                else if (d.TimeDead > 20)
+                    w.SpriteRenderer.Animation = 5;
+
+            }
+
+            if (w.SpriteRenderer.Animation == 1)
+                w.RigidBody.MoveVelocity = new Vector2(1, 0);
+            else if (w.SpriteRenderer.Animation == 2)
+                w.RigidBody.MoveVelocity = new Vector2(-1, 0);
+            else
+                w.RigidBody.MoveVelocity = new Vector2(0, 0);
         }
 
         public static void Animate(float gt, Component[] c)
