@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
     public class FontRenderer : SpriteRenderer
     {
         private string text;
-        float textScale = 5;
+        float textScale = 1;
         public string Text { get { return text; } set { text = value; } }
         public override string Texture
         {
