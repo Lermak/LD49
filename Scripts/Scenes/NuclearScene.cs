@@ -58,7 +58,7 @@ namespace MonoGame_Core.Scripts
             //Wonky, yell at Rhen later
             Vector2 ButtonPosition = screenCenter;
             Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 1, () =>
-            {
+            {             
                 if (!NuclearLevel.Locked)
                 {
                     NuclearLevel.level -= NuclearLevel.reduceAmount;
