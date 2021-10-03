@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -44,6 +45,8 @@ namespace MonoGame_Core.Scripts
             //CollisionManager.Initilize();
             CameraManager.Initilize();
 
+            ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
+            ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
             var c = new ChatForm();
             c.Show();
 

@@ -34,6 +34,8 @@ Object.defineProperty(Array.prototype, "random", {
     CefSharp.BindObjectAsync = () => {}
 
     game = {}
+    game.notify = () => {}
+    game.playSound = () => {}
     game.readFile = (path) => {
       return new Promise((resolve) => {
         var rawFile = new XMLHttpRequest();
@@ -242,6 +244,7 @@ Object.defineProperty(Array.prototype, "random", {
       let toPerson = SelectedPerson
       mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text)
 
+      game.playSound("MessagePop")
       mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
     }
     else {
@@ -252,8 +255,10 @@ Object.defineProperty(Array.prototype, "random", {
         notificationNode.classList.add("mention-badge")
         notificationNode.textContent = "0"
         contactNode.appendChild(notificationNode)
-      }
 
+      }
+      
+      game.playSound("MessageNotification")
       notificationNode.textContent = parseInt(notificationNode.textContent) + 1
     }
   }

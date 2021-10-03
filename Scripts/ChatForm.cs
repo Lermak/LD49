@@ -25,6 +25,11 @@ namespace MonoGame_Core.Scripts
 
             return "";
         }
+
+        public void playSound(string sound)
+        {
+            SoundManager.PlaySoundEffect(sound);
+        }
     }
 
     public class ChatForm : NoCloseForm
