@@ -13,7 +13,7 @@
         "sequence": [
             {
                 "typing": false,
-                "wait": 0.1
+                "wait": 1
             },
             {
                 "typing": true,
@@ -21,11 +21,11 @@
             },
             {
                 "typing": false,
-                "wait": 0.3
+                "wait": 1.5
             },
             {
                 "typing": true,
-                "wait": 0.5
+                "wait": 1.5
             },
             {
                 "msg": "I don't really even know how to respond. Figure it out yourself."
