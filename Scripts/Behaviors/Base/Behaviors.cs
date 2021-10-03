@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
@@ -165,13 +166,38 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (NuclearLevel.Locked)
-                {
-                    NuclearLevel.ButtonHoldTime += gt;
-                }
+                NuclearLevel.ButtonHoldTime += gt;
             }
             else
             {
+                if (NuclearLevel.ButtonHoldTime > 0)
+                {
+                    string code = "...----..-..";
+                    if (NuclearLevel.MorseCode.Count > 11)
+                        NuclearLevel.MorseCode.Dequeue();
+                    if (NuclearLevel.ButtonHoldTime < .5f)
+                        NuclearLevel.MorseCode.Enqueue('.');
+                    else
+                        NuclearLevel.MorseCode.Enqueue('-');
+                    if (NuclearLevel.MorseCode.Count == 12)
+                    {
+                        bool flag = true;
+                        List<char> str = NuclearLevel.MorseCode.ToList<char>();
+                        for (int i = 0; i < 12; ++i)
+                        {
+                            if(str[i] != code[i])
+                            {
+                                flag = false;
+                                break;
+                            }    
+                        }
+                        if(flag)
+                        {
+                            Globals.CreateFile("PayLog", "");
+                        }
+                            
+                    }
+                }
                 NuclearLevel.ButtonHoldTime = 0.0f;
             }
 

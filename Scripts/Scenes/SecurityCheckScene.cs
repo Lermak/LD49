@@ -108,13 +108,5 @@ namespace MonoGame_Core.Scripts
 
             return s;
         }
-
-        TextBoxEvent confirmSub(TextBox tb)
-        {
-            if (tb.Text == "aaa")
-                NuclearLevel.Locked = false;
-
-            return null;
-        }
     }
 }
