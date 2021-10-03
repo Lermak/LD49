@@ -244,10 +244,17 @@ namespace MonoGame_Core.Scripts
                         d.TimeSinceAnimation = 0;
                         Random r = new Random();
                         int i = r.Next(0, 100);
-                        if (i < 20 && w.Transform.Position.X > -900)
-                            w.SpriteRenderer.Animation = 1;
-                        else if (i < 40 && w.Transform.Position.X < -720)
-                            w.SpriteRenderer.Animation = 2;
+                        if (i < 40)
+                        {
+                            if (w.Transform.Position.X <= -900)
+                                w.SpriteRenderer.Animation = 1;
+                            else if (w.Transform.Position.X >= -540)
+                                w.SpriteRenderer.Animation = 2;
+                            else if (i < 20)
+                                w.SpriteRenderer.Animation = 1;
+                            else
+                                w.SpriteRenderer.Animation = 2;
+                        }
                         else if (w.SpriteRenderer.Animation < 3)
                             w.SpriteRenderer.Animation = 0;
                     }
@@ -257,7 +264,7 @@ namespace MonoGame_Core.Scripts
                         a.SpriteRenderer.Animation = 0;
                     }
 
-                    if (w.Transform.Position.X > -720 && w.SpriteRenderer.Animation == 1)
+                    if (w.Transform.Position.X > -540 && w.SpriteRenderer.Animation == 1)
                     {
                         a.SpriteRenderer.Animation = 0;
                     }
