@@ -60,7 +60,7 @@ namespace MonoGame_Core.Scripts
             Vector2 cooldownButtonSize = new Vector2(100, 100);
             //Wonky, yell at Rhen later
             Vector2 ButtonPosition = screenCenter;
-            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 4, () =>
+            Button cooldownButton = new Button("CoolantButton", "CoolantButtonPress", "NuclearButton", cooldownButtonSize, ButtonPosition, 4, () =>
             {
                 if (!NuclearLevel.started)
                     NuclearLevel.started = true;
@@ -71,9 +71,14 @@ namespace MonoGame_Core.Scripts
                         NuclearLevel.level = 0.0f;
                 }
             });
-            cooldownButton.Transform.SetScale(1, 1);
+            cooldownButton.BehaviorHandler.AddBehavior("clickSwapAnim", Behaviors.ButtonSwapImagesOnClick, new Component[] {
+                    cooldownButton.Transform, 
+                    cooldownButton.ComponentHandler.GetComponent("ButtonData"),
+                    cooldownButton.ComponentHandler.GetComponent("AnimationData")
+            });
+            cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
             GameObjects.Add(cooldownButton);
-
+             
             base.loadContent(c);
         }
     }
