@@ -40,6 +40,9 @@ namespace MonoGame_Core.Scripts
             //Scene background
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
+            ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
+            SoundManager.SoundEffects["alert"] = ResourceManager.SoundEffects["alert"].CreateInstance();
+
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
 
@@ -59,6 +62,8 @@ namespace MonoGame_Core.Scripts
             Vector2 ButtonPosition = screenCenter;
             Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 4, () =>
             {
+                if (!NuclearLevel.started)
+                    NuclearLevel.started = true;
                 if (!NuclearLevel.Locked)
                 {
                     NuclearLevel.level -= NuclearLevel.reduceAmount;

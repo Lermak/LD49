@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         public static float reduceAmount = 0.02f;
         public static bool Locked = false;
         public static float ButtonHoldTime = 0f;
-
+        public static bool started = false;
         public NuclearLevel(GameObject go, string name) : base(go, name)
         {
         }
