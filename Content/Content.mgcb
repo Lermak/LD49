@@ -140,30 +140,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/DigiPet/button_wash_press.png
 
-#begin Images/DigiPet/ButtonDown.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/DigiPet/ButtonDown.png
-
-#begin Images/DigiPet/ButtonUp.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/DigiPet/ButtonUp.png
-
 #begin Images/DigiPet/chat_sprite_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -175,18 +151,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/DigiPet/chat_sprite_sheet.png
-
-#begin Images/DigiPet/DigiPet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/DigiPet/DigiPet.png
 
 #begin Images/DigiPet/fly.png
 /importer:TextureImporter
