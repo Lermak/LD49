@@ -713,9 +713,11 @@ body::-webkit-scrollbar-thumb {
 
 /* feeds */
 .feeds {
+  width:100%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0.9375rem 0.3125rem 0.625rem 0.3125rem;
 }
 
@@ -871,20 +873,31 @@ body::-webkit-scrollbar-thumb {
   justify-content: center;
   align-items: flex-start;
 }
-.form .input {
+
+.form .inputContainerWidth {
   width: 90%;
-  height: 2.5em;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  grid-template-rows: auto minmax(0,100%) auto auto;
+
+  border-top: 0.0625rem solid var(--slack-input-border-color);
+  border-left: 0.0625rem solid var(--slack-input-border-color);
+  border-right: 0.0625rem solid var(--slack-input-border-color);
+  border-bottom: none;
   margin-right: 5%;
   margin-left: 5%;
   padding: 0.6rem;
   border-top-left-radius: 0.3125rem;
   border-top-right-radius: 0.3125rem;
   outline: none;
-  border-top: 0.0625rem solid var(--slack-input-border-color);
-  border-left: 0.0625rem solid var(--slack-input-border-color);
-  border-right: 0.0625rem solid var(--slack-input-border-color);
-  border-bottom: none;
-  overflow: auto;
+  overflow:auto;
+  cursor: text;
+}
+
+.form .inputContainerHeight {
+  display: flex;
+  flex: 1;
+  min-width: 0;
 }
 
 .input:empty:before {

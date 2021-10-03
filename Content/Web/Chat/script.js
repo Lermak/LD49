@@ -85,6 +85,8 @@ Object.defineProperty(Array.prototype, "random", {
       icon: `people/${name}/icon.png`,
       responses: [],
       id: People.length,
+      inCustomChat: false,
+      isTyping: false,
       messages: []
     }
 
@@ -172,8 +174,7 @@ Object.defineProperty(Array.prototype, "random", {
     */
 
 
-  function createMessageHTML(fromPerson, message, time) {
-    time = "10:00pm";
+  function createMessageHTML(fromPerson, message) {
 
     return `
     <article class="feed">
@@ -182,7 +183,7 @@ Object.defineProperty(Array.prototype, "random", {
       </section>
       <section class="feed-content">
         <section class="feed-user-info">
-          <h4>${fromPerson.name} <span class="time-stamp">${time}</span></h4>
+          <h4>${fromPerson.name} </h4>
         </section>
         <div>
           <p class="feed-text">
@@ -200,7 +201,7 @@ Object.defineProperty(Array.prototype, "random", {
     if(person == SelectedPerson) {
       let mainfeed = document.getElementById("mainfeed")
       let toPerson = SelectedPerson
-      mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text, response_msg.time)
+      mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text)
 
       mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
     }
@@ -250,6 +251,11 @@ Object.defineProperty(Array.prototype, "random", {
       return
     }
 
+    //@TODO: Maybe do some custom handling for talking while in a sequence
+    if(person.inCustomChat) {
+      return
+    }
+
     let responseList = []
     for(let r of person.responses) {
       if(typeof r === "string") {
@@ -295,7 +301,7 @@ Object.defineProperty(Array.prototype, "random", {
 
     let toPerson = SelectedPerson
     let msg = addMessage(toPerson, you, text, "now")
-    mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
+    mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
     handleResponse(toPerson, text)
 
@@ -316,7 +322,7 @@ Object.defineProperty(Array.prototype, "random", {
     mainfeed.innerHTML = `<div style="flex: 1"></div>`
     
     for(let msg of person.messages) {
-      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
+      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
     }
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
 
@@ -391,15 +397,18 @@ Object.defineProperty(Array.prototype, "random", {
     game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
       if(r != "") {
         let customChat = JSON.parse(r)
+        person.inCustomChat = true
+
         let person_is_typing = document.getElementById("person_is_typing")
         for(let msg of customChat) {
           if(typeof msg === "string") {
             await sendAsyncResponse(person, msg)
             await waitTime(msg.length * 0.024)
           }
-
-          lockSwitching = false
         }
+
+        lockSwitching = false
+        person.inCustomChat = false
       }
     })
   }
