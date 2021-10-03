@@ -22,7 +22,14 @@ namespace MonoGame_Core.Scripts
             obj.ComponentHandler.AddComponent(new FontRenderer(obj, 
                 "Error: This should NEVER\nhappen, contact Tim", 
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-            obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { if (NuclearLevel.ButtonHoldTime >= 5) NuclearLevel.Locked = false; }, new Component[] { });
+            obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { 
+                if (NuclearLevel.ButtonHoldTime >= 5) { 
+                    NuclearLevel.Locked = false;
+                    if (WindowManager.ITHelp != null)
+                    {
+                        WindowManager.killIT = true;
+                    }
+                } }, new Component[] { });
         }
     }
 }
