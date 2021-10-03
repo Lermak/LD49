@@ -97,10 +97,27 @@ namespace MonoGame_Core.Scripts
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
             }
-            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
 
             yield return true;
         }
+
+        public static IEnumerator<bool> ConnectToServer(FontRenderer fr)
+        {
+            float timeElapsed = 0;
+
+            while (timeElapsed < 30)
+            {
+                fr.Text = "Connecting";
+                for (int i = 0; i < timeElapsed / 10; ++i)
+                    fr.Text += ".";
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            NuclearLevel.Locked = false;
+            WindowManager.KillBadConnection = true;
+            yield return true;
+        }
+
     }
 }

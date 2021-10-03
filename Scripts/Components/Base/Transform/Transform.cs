@@ -75,8 +75,8 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 WorldPosition(Vector2 offSet)
         {
-            return (Position
-                + hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians) + 90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale * new Vector2(1,-1);
+            return (Position + offSet) * new Vector2(1,-1);
+                //+ hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians), (float)Math.Sqrt(Math.Pow(offSet.X, 2) + (float)Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale * new Vector2(1,-1);
         }
 
         public void AttachToTransform(Transform t)

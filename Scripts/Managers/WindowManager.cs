@@ -121,6 +121,8 @@ namespace MonoGame_Core.Scripts
         public static List<Window> Windows;
         public static Window MainWindow;
 
+        public static Window DigiPetWindow;
+
         public static Window ITHelp;
         public static bool killIT = false;
 
@@ -129,6 +131,12 @@ namespace MonoGame_Core.Scripts
 
         public static Window ReauthWindow;
         public static bool KillReauth = false;
+
+        public static Window BadConnectionWindow;
+        public static bool KillBadConnection = false;
+
+        public static Window ResetKeysWindow;
+        public static bool KillResetKeys = false;
 
         public static List<Window> ToAdd = new List<Window>();
 
@@ -145,11 +153,23 @@ namespace MonoGame_Core.Scripts
             MainWindow = Windows[0];
         }
 
-        public static Window AddWindow(Form f, Scene s, Vector2 size)
+        public static Window AddWindow(Form f, string BlackboardConnection, Scene s, Vector2 size)
         {
             Window w = new Window(f);
-            
-            ToAdd.Add(w);
+            if (BlackboardConnection == "DigiPetWindow")
+                DigiPetWindow = w;
+            else if (BlackboardConnection == "ITHelp")
+                ITHelp = w;
+            else if (BlackboardConnection == "UpdateWindow")
+                UpdateWindow = w;
+            else if (BlackboardConnection == "ReauthWindow")
+                ReauthWindow = w;
+            else if (BlackboardConnection == "ResetKeysWindow")
+                ResetKeysWindow = w;
+            else if (BlackboardConnection == "BadConnectionWindow")
+                BadConnectionWindow = w;
+
+        ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
             ToAdd[ToAdd.Count - 1].form.Show();
 
@@ -255,6 +275,16 @@ namespace MonoGame_Core.Scripts
             {
                 KillReauth = false;
                 WindowManager.RemoveWindow(WindowManager.ReauthWindow);
+            }
+            if (KillBadConnection)
+            {
+                KillBadConnection = false;
+                WindowManager.RemoveWindow(WindowManager.BadConnectionWindow);
+            }
+            if (KillResetKeys)
+            {
+                KillResetKeys = false;
+                WindowManager.RemoveWindow(WindowManager.ResetKeysWindow);
             }
         }
     }
