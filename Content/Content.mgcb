@@ -548,11 +548,65 @@
 /processorParam:Quality=Best
 /build:Sound/alert.wav
 
-#begin Sound/alert2.wav
+#begin Sound/arabian_harp.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sound/alert2.wav
+/build:Sound/arabian_harp.wav
+
+#begin Sound/cooling.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/cooling.wav
+
+#begin Sound/DigiPet/success.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/success.ogg
+
+#begin Sound/DigiPet/walk_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/walk_1.wav
+
+#begin Sound/DigiPet/walk_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/walk_2.wav
+
+#begin Sound/DigiPet/walk_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/walk_3.wav
+
+#begin Sound/DigiPet/walk_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/walk_4.wav
+
+#begin Sound/DigiPet/want.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/DigiPet/want.wav
+
+#begin Sound/Relaque/message_notification.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Relaque/message_notification.wav
+
+#begin Sound/Relaque/message_pop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Relaque/message_pop.mp3
 
 #begin Sound/TestHit.wav
 /importer:WavImporter
