@@ -87,5 +87,20 @@ namespace MonoGame_Core.Scripts
             ad.SpriteRenderer.Visible = false;
             yield return true;
         }
+
+        public static IEnumerator<bool> UpdateLater()
+        {
+            float timeElapsed = 0;
+
+            while (timeElapsed < 300)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+            WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+
+            yield return true;
+        }
     }
 }

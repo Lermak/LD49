@@ -26,19 +26,35 @@ namespace MonoGame_Core.Scripts
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
             GameObjects.Add(new Button("UpdateNow", "UpdateNow", "UpdateButton", new Vector2(150, 50), new Vector2(-860, 380), 2, () => { }));
             WorldObject unBtn = (WorldObject)GameObjects[^1];
-            unBtn.BehaviorHandler.AddBehavior("CheckUpdate", UpdateButton, new Component[] { });
+            unBtn.BehaviorHandler.AddBehavior("CheckUpdate", UpdateButton, new Component[] { unBtn.Transform });
             GameObjects.Add(new Button("UpdateLater", "UpdateLater", "LaterButton", new Vector2(150, 50), new Vector2(-460, 380), 2, () => {  }));
-
+            WorldObject ulBtn = (WorldObject)GameObjects[^1];
+            ulBtn.BehaviorHandler.AddBehavior("UpdateLater", LaterButton, new Component[] { ulBtn.Transform });
         }
 
         private static void UpdateButton(float gt, Component[] c)
         {
-            if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
-            {
+            Transform t = (Transform)c[0];
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+            { 
                 if (!NuclearLevel.Updated)
                 {
                     NuclearLevel.Updating = true;
                 }
+                WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
+            }
+        }
+
+        public static void LaterButton(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+            { 
+                WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.UpdateLater(), "UpdateLater", 0, true);
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
             }
         }
