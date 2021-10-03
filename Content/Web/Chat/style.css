@@ -603,8 +603,13 @@ body::-webkit-scrollbar-thumb {
 }
 .direct-messages li {
   display: flex;
+  width: 100%;
   align-items: center;
   padding: 0.25rem;
+}
+
+.direct-messages.displayName {
+  flex: 1;
 }
 
 .direct-messages-selected {
@@ -623,6 +628,19 @@ body::-webkit-scrollbar-thumb {
 }
 .direct-messages .make-white {
   color: var(--slack-main-white);
+}
+
+.mention-badge {
+  background: #EB4D5C;
+  border-radius: 16px;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  height: 16px;
+  line-height: 16px;
+  margin-left: auto;
+  padding: 0 9px;
 }
 
 .active {
