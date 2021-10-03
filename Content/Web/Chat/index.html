@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Slack Redesign</title>
+    <title>Relaque Redesign</title>
     <link rel="stylesheet" href="css/all.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -25,16 +25,13 @@
               type="search"
               name="search"
               id="search"
-              placeholder="Search Slack"
+              placeholder="Search Relaque"
               class="search-bar-input"
             />
           </form>
 
           <div class="move-left">
             <a href="#"><i class="far fa-question-circle"></i></a>
-            <div class="user-img-wrapper" id="user">
-              <img src="images/user2.jpg" alt="User 1" />
-            </div>
           </div>
         </nav>
       </header>
@@ -138,7 +135,6 @@
             </section>
             <form action="." class="form" name="feedForm">
               <div class="input" id="textBox" contenteditable="true">
-                <p id="chat"></p>
               </div>
 
               <div class="input-toolbar-icons">
@@ -160,12 +156,13 @@
                 -->
 
                 <div class="move-left">
-                  <button type="button" class="btn-borderless button">
+                  <button type="button" onclick="sendChatMessage()" class="btn-borderless button">
                     <i class="fas fa-paper-plane"></i>
                   </button>
                 </div>
               </div>
               <div class="input-toolbar-selection"></div>
+              <div id="person_is_typing"></div>
             </form>
           </section>
 
