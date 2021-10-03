@@ -1,3 +1,35 @@
 [
-    "Hello!"
+    "Hello!",
+    "Hi!",
+    "Woah!",
+    "Nope!",
+    "Maybe!",
+    {
+        "filter": "\\?$",
+        "msg": "I don't have time for your questions."
+    },
+    {
+        "condition": "return msg.length > 15",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 0.1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 0.3
+            },
+            {
+                "typing": true,
+                "wait": 0.5
+            },
+            {
+                "msg": "I don't really even know how to respond. Figure it out yourself."
+            }
+        ]
+    }
 ]

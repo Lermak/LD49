@@ -6,6 +6,13 @@ function waitTime(time) {
   })
 }
 
+Object.defineProperty(Array.prototype, "random", {
+  value: function () {
+    return this[Math.floor((Math.random()*this.length))];
+  },
+  enumerable: false
+});
+
 (async () => 
 {
   //For web debugging
@@ -15,12 +22,54 @@ function waitTime(time) {
 
     game = {}
     game.readFile = (path) => {
-      return new Promise( (resolve, reject) => { resolve(`[
-        "Welcome to Forward Thinking Energy - we’re happy to have you here! Your role is critical to our success so please pay attention to the following instructions.",
-        "In front of you is a button. If you press this button by clicking it with your mouse, you will cool down the reactor. You must press this button to prevent the reactor from overheating. <b>DO NOT allow the reactor to reach the critical heat level!</b> If this happens, the reactor will enter meltdown protocol and this scenario is grounds for immediate employment termination.",
-        "This should be simple enough but feel free to reach out to one of your co-workers if you have any questions. You can do this by clicking on the name of one of your co-workers in the chat window. Any meetings or messages from your co-workers will appear here as well.",
-        "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button."
-    ]`)});
+      let str = ""
+      if(path == "Content/Web/Chat/people/Delores/responses.json") {
+        str = `[
+          "Hello!",
+          "Hi!",
+          "Woah!",
+          "Nope!",
+          "Maybe!",
+          {
+              "filter": "\\\\?$",
+              "msg": "I don't have time for your questions."
+          },
+          {
+              "condition": "return msg.length > 15",
+              "sequence": [
+                  {
+                      "typing": false,
+                      "wait": 0.1
+                  },
+                  {
+                      "typing": true,
+                      "wait": 1.5
+                  },
+                  {
+                      "typing": false,
+                      "wait": 0.3
+                  },
+                  {
+                      "typing": true,
+                      "wait": 0.5
+                  },
+                  {
+                      "msg": "I don't really even know how to respond. Figure it out yourself."
+                  }
+              ]
+          }
+      ]`
+      }
+      else {
+        str = `[
+          "Welcome to Forward Thinking Energy - we’re happy to have you here! Your role is critical to our success so please pay attention to the following instructions.",
+          "In front of you is a button. If you press this button by clicking it with your mouse, you will cool down the reactor. You must press this button to prevent the reactor from overheating. <b>DO NOT allow the reactor to reach the critical heat level!</b> If this happens, the reactor will enter meltdown protocol and this scenario is grounds for immediate employment termination.",
+          "This should be simple enough but feel free to reach out to one of your co-workers if you have any questions. You can do this by clicking on the name of one of your co-workers in the chat window. Any meetings or messages from your co-workers will appear here as well.",
+          "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button."
+      ]`
+      }
+
+      return new Promise( (resolve) => { resolve(str)});
     }
   }
 
@@ -49,6 +98,13 @@ function waitTime(time) {
     return person
   }
 
+  function setTyping(person, isTyping) {
+    person.isTyping = isTyping
+    if(person == SelectedPerson) {
+      document.getElementById("person_is_typing").style.visibility = isTyping ? "visible" : "hidden"
+    }
+  }
+
   function getPerson(person) {
     if(typeof person === "string") {
       person = People.find((p) => {return p.name == person} )
@@ -70,8 +126,9 @@ function waitTime(time) {
     return msg
   }
 
-  let you = addPerson("Jogn Idogun");
-  you.displayName = "Jogn Idogun (You)"
+  let you = addPerson("Player");
+  you.displayName = "Player (You)"
+  you.icon = "people/Player/icon.png"
 
   addPerson("Administrator")
   addPerson("Adrian")
@@ -137,13 +194,100 @@ function waitTime(time) {
     `
   }
 
-  function recieveMessage(text) {
-    let mainfeed = document.getElementById("mainfeed")
-    let toPerson = SelectedPerson
-    let response_msg = addMessage(toPerson, toPerson, text, "now")
-    mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text, response_msg.time)
+  function recieveMessage(person, text) {
+    let response_msg = addMessage(person, person, text, "now")
 
-    mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
+    if(person == SelectedPerson) {
+      let mainfeed = document.getElementById("mainfeed")
+      let toPerson = SelectedPerson
+      mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text, response_msg.time)
+
+      mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
+    }
+    else {
+      let contactNode = document.getElementById(`dm_contact_${person.id}`).children[0]
+      let notificationNode = contactNode.querySelector(".mention-badge")
+      if(notificationNode == null) {
+        notificationNode = document.createElement("span")
+        notificationNode.classList.add("mention-badge")
+        notificationNode.textContent = "0"
+        contactNode.appendChild(notificationNode)
+      }
+
+      notificationNode.textContent = parseInt(notificationNode.textContent) + 1
+    }
+  }
+
+  async function sendAsyncResponse(person, msg) {
+    setTyping(person, true)
+    await waitTime(msg.length * 0.006)
+    setTyping(person, false)
+    recieveMessage(person, msg)
+  }
+
+  async function handleResponseObject(person, response) {
+    if(response.typing !== undefined) {
+      setTyping(person, response.typing)
+    }
+
+    if(response.wait !== undefined) {
+      await waitTime(response.wait)
+    }
+
+    if(response.msg !== undefined) {
+      await sendAsyncResponse(person, response.msg)
+    }
+
+    if(response.sequence !== undefined) {
+      for(let s of response.sequence) {
+        await (handleResponseObject(person, s))
+      }
+    }
+  }
+
+  function handleResponse(person, message) {
+    if(person.responses.length == 0) {
+      return
+    }
+
+    let responseList = []
+    for(let r of person.responses) {
+      if(typeof r === "string") {
+        responseList.push({ msg: r})
+      }
+      else {
+        responseList.push(r)
+      }
+    }
+
+    //First, check all our filters
+    let matchedFilters = []
+    for(let r of responseList) {
+      if(r.filter !== undefined) {
+        let filter = new RegExp(r.filter)
+        if(filter.test(message) == true) {
+          matchedFilters.push(r)
+        }
+      }
+
+      if(r.condition !== undefined) {
+        let conditionFn = new Function('msg', r.condition)
+        let conditionRet = conditionFn(message)
+        if(conditionRet === true) {
+          matchedFilters.push(r)
+        }
+      }
+    }
+
+    if(matchedFilters.length > 0) {
+      setTimeout(async () => { await handleResponseObject(person, matchedFilters.random()) }, 0);
+      return
+    }
+
+    //Remove all filters
+    responseList = responseList.filter((v) => v.filter === undefined && v.condition === undefined)
+    setTimeout(async () => { await handleResponseObject(person, responseList.random()) }, 0);
+  
   }
 
   function sendMessage(text) {
@@ -153,9 +297,7 @@ function waitTime(time) {
     let msg = addMessage(toPerson, you, text, "now")
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
 
-    if(toPerson.responses.length > 0) {
-      recieveMessage(toPerson.responses[0])
-    }
+    handleResponse(toPerson, text)
 
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
   }
@@ -172,10 +314,11 @@ function waitTime(time) {
 
     let mainfeed = document.getElementById("mainfeed")
     mainfeed.innerHTML = `<div style="flex: 1"></div>`
-
+    
     for(let msg of person.messages) {
       mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
     }
+    mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
 
     //Add the selected tab class to the right one
     let dm_contacts = document.getElementById("dm_contacts")
@@ -186,13 +329,18 @@ function waitTime(time) {
     let contactNode = document.getElementById(`dm_contact_${person.id}`)
     contactNode.classList.add("direct-messages-selected")
 
+    let notificationNode = contactNode.children[0].querySelector(".mention-badge")
+    if(notificationNode != null) {
+      contactNode.children[0].removeChild(notificationNode)
+    }
+
     let textBox = document.getElementById(`textBox`)
     textBox.setAttribute("data-placeholder", `Message ${person.name}`)
     textBox.textContent = ""
 
     let person_is_typing = document.getElementById("person_is_typing")
     person_is_typing.textContent = `${person.name} is typing`
-    person_is_typing.style.visibility = "hidden"
+    setTyping(SelectedPerson, SelectedPerson.isTyping) //Silly, but avoids duplicate code for setting visibility
   }
 
   window.switchToChat = (id) => {
@@ -207,9 +355,9 @@ function waitTime(time) {
     let person = People[idx]
 
     dm_contacts.innerHTML += `
-    <a href="#" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
+    <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
         <li>
-            <i class="fas fa-circle online"></i>${person.displayName}
+            <i class="fas fa-circle online"></i> <span class="displayName">${person.displayName}</span>
         </li>
     </a>
     `
@@ -246,10 +394,7 @@ function waitTime(time) {
         let person_is_typing = document.getElementById("person_is_typing")
         for(let msg of customChat) {
           if(typeof msg === "string") {
-            person_is_typing.style.visibility = "visible";
-            await waitTime(msg.length * 0.006)
-            person_is_typing.style.visibility = "hidden";
-            recieveMessage(msg)
+            await sendAsyncResponse(person, msg)
             await waitTime(msg.length * 0.024)
           }
 
@@ -258,6 +403,11 @@ function waitTime(time) {
       }
     })
   }
+
+  //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 0)
+  //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 1000)
+  //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
+  //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
   runCustomChat("Delores", "intro_chat")
 
