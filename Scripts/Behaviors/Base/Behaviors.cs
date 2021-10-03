@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
@@ -142,8 +143,8 @@ namespace MonoGame_Core.Scripts
             float intensityScale = 5f;
             if (intensity > 0f)
             {
-                SoundManager.PlaySoundEffect("alert");
-                SoundManager.SoundEffects["alert"].Volume = intensity / 2;
+                //SoundManager.PlaySoundEffect("alert");
+                //SoundManager.SoundEffects["alert"].Volume = intensity / 2;
 
             }
                 
@@ -165,13 +166,38 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (NuclearLevel.Locked)
-                {
-                    NuclearLevel.ButtonHoldTime += gt;
-                }
+                NuclearLevel.ButtonHoldTime += gt;
             }
             else
             {
+                if (NuclearLevel.ButtonHoldTime > 0)
+                {
+                    string code = "...----..-..";
+                    if (NuclearLevel.MorseCode.Count > 11)
+                        NuclearLevel.MorseCode.Dequeue();
+                    if (NuclearLevel.ButtonHoldTime < .5f)
+                        NuclearLevel.MorseCode.Enqueue('.');
+                    else
+                        NuclearLevel.MorseCode.Enqueue('-');
+                    if (NuclearLevel.MorseCode.Count == 12)
+                    {
+                        bool flag = true;
+                        List<char> str = NuclearLevel.MorseCode.ToList<char>();
+                        for (int i = 0; i < 12; ++i)
+                        {
+                            if(str[i] != code[i])
+                            {
+                                flag = false;
+                                break;
+                            }    
+                        }
+                        if(flag)
+                        {
+                            Globals.CreateFile("PayLog", "Delores H     - $ 90,000\nDanni B       - $ 75,000\nTim G         - $ 40,000\nQuinn R       - $ 40,000\nKailee M      - $ 40,000\nChristopher C - $ 40,000\nJaney L       - $ 40,000\nJude N        - $ 150,000\nAida F        - $ 40,000\nAdrian B      - $ 60,000\nGerald B      - $ 60,000\nJamie Z       - $ 60,000");
+                        }
+                            
+                    }
+                }
                 NuclearLevel.ButtonHoldTime = 0.0f;
             }
 

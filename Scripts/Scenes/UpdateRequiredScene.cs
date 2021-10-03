@@ -15,13 +15,17 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.Textures["CarretTexture"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
+            ResourceManager.Textures["UpdateNow"] = Content.Load<Texture2D>(@"Images/UpdateRequired/UpdateNow");
+            ResourceManager.Textures["UpdateLater"] = Content.Load<Texture2D>(@"Images/UpdateRequired/UpdateLater");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
-
+            
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             obj.ComponentHandler.AddComponent(new FontRenderer(obj,
                 "Update Required",
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
+            GameObjects.Add(new Button("UpdateNow", "UpdateNow", "UpdateButton", new Vector2(150, 50), new Vector2(-860, 380), 2, () => { }));
+            GameObjects.Add(new Button("UpdateLater", "UpdateLater", "LaterButton", new Vector2(150, 50), new Vector2(-460, 380), 2, () => { }));
 
         }
     }

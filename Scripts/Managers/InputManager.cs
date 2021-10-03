@@ -25,10 +25,11 @@ namespace MonoGame_Core.Scripts
         public Vector2 MousePos { get { return mousePos; } }
 
         KeyboardState previousKeyboardState;
+        public KeyboardState PreviousKeyboardState { get { return previousKeyboardState; } }
 
         MouseState currentMouseState;
         MouseState previousMouseState;
-
+        public MouseState PreviousMouseState { get { return previousMouseState; } }
         public bool IsKeyPressed(Keys k)
         {
             return currentKeyboardState.IsKeyDown(k);
