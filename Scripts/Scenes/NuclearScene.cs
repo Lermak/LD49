@@ -59,7 +59,7 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(dialBorderObj);
 
             Vector2 cooldownButtonSize = new Vector2(100, 100);
-            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, buttonCenterPos, 4, () =>
+            Button cooldownButton = new Button("CoolantButton", "CoolantButtonPress", "NuclearButton", cooldownButtonSize, buttonCenterPos, 4, () =>
             {
                 if (!NuclearLevel.started)
                     NuclearLevel.started = true;
