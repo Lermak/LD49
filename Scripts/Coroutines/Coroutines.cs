@@ -97,8 +97,7 @@ namespace MonoGame_Core.Scripts
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
             }
-            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
 
             yield return true;
         }
