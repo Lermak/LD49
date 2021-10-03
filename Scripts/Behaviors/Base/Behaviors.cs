@@ -206,7 +206,7 @@ namespace MonoGame_Core.Scripts
                         }
                         if(flag)
                         {
-                            Globals.CreateFile("PayLog", "Delores H     - $ 90,000\nDanni B       - $ 75,000\nTim G         - $ 40,000\nQuinn R       - $ 40,000\nKailee M      - $ 40,000\nChristopher C - $ 40,000\nJaney L       - $ 40,000\nJude N        - $ 150,000\nAida F        - $ 40,000\nAdrian B      - $ 60,000\nGerald B      - $ 60,000\nJamie Z       - $ 60,000");
+                            Globals.CreateFile("PayLog", "    STAFF SALARIES FY22\n---------------------------\n    Delores H - $ 90,000\n      Danni B - $ 75,000\n        Tim G - $ 40,000\n      Quinn R - $ 40,000\n     Kailee M - $ 40,000\nChristopher C - $ 40,000\n      Janey L - $ 40,000\n       Jude N - $ 150,000\n       Aida F - $ 40,000\n     Adrian B - $ 60,000\n     Gerald B - $ 60,000\n      Jamie Z - $ 60,000");
                         }
                             
                     }
