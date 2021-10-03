@@ -49,8 +49,8 @@ namespace MonoGame_Core.Scripts
 
             WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(480,330));
-            //WindowManager.AddWindow(new NoCloseForm(), new ReauthScene(), new Vector2(600, 200));
-            //WindowManager.ReauthWindow = WindowManager.ToAdd[^1];
+            WindowManager.AddWindow(new NoCloseForm(), new BadConnectionScene(), new Vector2(600, 600));
+            WindowManager.BadConnectionWindow = WindowManager.ToAdd[^1];
             //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
             //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
             //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());

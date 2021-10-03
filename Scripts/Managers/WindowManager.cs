@@ -130,6 +130,9 @@ namespace MonoGame_Core.Scripts
         public static Window ReauthWindow;
         public static bool KillReauth = false;
 
+        public static Window BadConnectionWindow;
+        public static bool KillBadConnection = false;
+
         public static List<Window> ToAdd = new List<Window>();
 
         private static ContentManager contentManager;
@@ -255,6 +258,11 @@ namespace MonoGame_Core.Scripts
             {
                 KillReauth = false;
                 WindowManager.RemoveWindow(WindowManager.ReauthWindow);
+            }
+            if (KillBadConnection)
+            {
+                KillBadConnection = false;
+                WindowManager.RemoveWindow(WindowManager.BadConnectionWindow);
             }
         }
     }
