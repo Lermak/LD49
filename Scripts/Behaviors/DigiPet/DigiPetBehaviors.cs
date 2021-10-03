@@ -234,11 +234,26 @@ namespace MonoGame_Core.Scripts
                     }
 
                     if (w.Transform.Position.X < -900 && w.RigidBody.MoveVelocity.X < 0)
+                    {
+                        w.Transform.Place(new Vector2(-900, w.Transform.Position.Y));
                         a.SpriteRenderer.Animation = 0;
+                    }
 
                     if (w.Transform.Position.X > -720 && w.RigidBody.MoveVelocity.X > 0)
+                    {
+                        w.Transform.Place(new Vector2(-720, w.Transform.Position.Y));
                         a.SpriteRenderer.Animation = 0;
+                    }
                 }
+            }
+            else
+            {
+                d.TimeDead += gt;
+                if (d.TimeDead > 40)
+                    w.SpriteRenderer.Animation = 6;
+                else if (d.TimeDead > 20)
+                    w.SpriteRenderer.Animation = 5;
+
             }
 
             if (w.SpriteRenderer.Animation == 1)

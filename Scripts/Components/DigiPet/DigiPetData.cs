@@ -12,6 +12,7 @@ namespace MonoGame_Core.Scripts
         public float CheckNeedsTimer = 0;
         public float AnimationDuration = 1;
         public float TimeSinceAnimation = 0;
+        public float TimeDead = 0;
         public bool Feeding = false;
         public bool Playing = false;
         public bool Washing = false;
