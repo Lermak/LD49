@@ -34,16 +34,22 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
             ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/button_press");
             //Dial
-            ResourceManager.Textures["nd"] = Content.Load<Texture2D>("Images/Nuclear/NuclearDial");
-            ResourceManager.Textures["dialBG"] = Content.Load<Texture2D>("Images/Nuclear/DialBG");
+            ResourceManager.Textures["DialArrow"] = Content.Load<Texture2D>("Images/Nuclear/dial_arrow");
+            ResourceManager.Textures["DialBack"] = Content.Load<Texture2D>("Images/Nuclear/dial_back");
+            ResourceManager.Textures["DialBorder"] = Content.Load<Texture2D>("Images/Nuclear/dial_border");
             //Scene background
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
-            int dialSize = 75;
+            Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new WorldObject("dialBG", "DialBG", new Vector2(dialSize, dialSize), screenCenter, 1));
-            GameObjects.Add(new NuclearDial("nd", "NuclearDial", new Vector2(dialSize, dialSize),screenCenter));
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[GameObjects.Count - 2]).Transform);
+
+            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, new Vector2(-360, 140), 1);
+            NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, new Vector2(-360, 140), 2);
+            WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, new Vector2(-360, 140), 3);
+            dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
+            GameObjects.Add(dialBackObj);
+            GameObjects.Add(dialArrowObj);
+            GameObjects.Add(dialBorderObj);
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080),screenCenter, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Transform.Layer = 0;
