@@ -213,8 +213,15 @@ namespace MonoGame_Core.Scripts
                     }
                 }
                 NuclearLevel.ButtonHoldTime = 0.0f;
+            }           
+        }
+        public static void UpdateNuclear(float gt, Component[] c)
+        {
+            if (NuclearLevel.Updating)
+            {
+                AnimationData ad = (AnimationData)c[0];
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.UpdateNuclear(ad), "Updating", 0, true);
             }
-
         }
     }
 }
