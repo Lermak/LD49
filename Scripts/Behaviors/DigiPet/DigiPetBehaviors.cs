@@ -169,6 +169,7 @@ namespace MonoGame_Core.Scripts
 
             if (d.CodeAccessed == false && flag)
             {
+                SoundManager.PlaySoundEffect("MysterySound");
                 d.CodeAccessed = true;
                 d.NeedsFood = false;
                 d.NeedsPlay = false;

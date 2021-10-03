@@ -26,6 +26,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["DigiPetWalk4"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_4");
             ResourceManager.SoundEffects["DigiPetWant"] = Content.Load<SoundEffect>("Sound/DigiPet/want");
             ResourceManager.SoundEffects["DigiPetSuccess"] = Content.Load<SoundEffect>("Sound/DigiPet/success");
+            ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
 
             GameObjects.Add(new WorldObject("DigiPetBG", "DigiPetBG", new Vector2(480, 340), new Vector2(-720, 380), 0));
             
