@@ -506,15 +506,23 @@ Object.defineProperty(Array.prototype, "random", {
 
   setInterval(() => {
     if(Math.random() > 0.666) {
+      let prefix = [
+        "FIND",
+        "UNCOVER",
+        "SEEK",
+        "UNEARTH"
+      ]
+
       let wordbank = [
-        "STRANGER",
-        "VOID",
-        "DEATH",
-        "SOULS"
+        "SECRET",
+        "TRUTH",
+        "UNCOVER",
+        "CONSPIRACY"
       ]
 
       let nameStr = ""
-      for(let c = 0; c < 20; ++c) {
+      for(let c = 0; c < 10; ++c) {
+        nameStr += prefix.random()
         nameStr += wordbank.random()
       }
 
