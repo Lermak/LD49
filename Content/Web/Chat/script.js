@@ -33,7 +33,7 @@ function waitTime(time) {
     let person = {
       name: name,
       displayName: name,
-      icon: "images/" + icon + ".png",
+      icon: `people/${name}/icon.png`,
       responses: [],
       id: People.length,
       messages: []
@@ -70,15 +70,19 @@ function waitTime(time) {
     return msg
   }
 
-  let you = addPerson("Jogn Idogun", "default_icon");
+  let you = addPerson("Jogn Idogun");
   you.displayName = "Jogn Idogun (You)"
 
-  addPerson("Delores", "default_icon")
-  addPerson("Sally", "default_icon")
-  addPerson("Joe", "default_icon")
-  addPerson("Mary", "default_icon")
-
-  addMessage("Sally", "Sally", "Hello!", "now")
+  addPerson("Administrator")
+  addPerson("Adrian")
+  addPerson("Aida")
+  addPerson("Christopher")
+  addPerson("Delores")
+  addPerson("Janey")
+  addPerson("Jude")
+  addPerson("Kailee")
+  //addPerson("Mystery Person")
+  addPerson("Quinn")
 
 
   let SelectedPerson = People[0]
