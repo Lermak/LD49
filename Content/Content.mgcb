@@ -446,6 +446,18 @@
 /processorParam:Quality=Best
 /build:Music/TestSong.mp3
 
+#begin Sound/alert.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/alert.wav
+
+#begin Sound/alert2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/alert2.wav
+
 #begin Sound/TestHit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

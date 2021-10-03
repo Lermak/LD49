@@ -13,9 +13,9 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["DigiPetBG"] = Content.Load<Texture2D>("Images/DigiPet/DigiPetBackground");
             ResourceManager.Textures["ButtonDown"] = Content.Load<Texture2D>("Images/DigiPet/ButtonDown");
             ResourceManager.Textures["ButtonUp"] = Content.Load<Texture2D>("Images/DigiPet/ButtonUp");
-            ResourceManager.Textures["DigiPet"] = Content.Load<Texture2D>("Images/DigiPet/DigiPet");
+            ResourceManager.Textures["DigiPet"] = Content.Load<Texture2D>("Images/DigiPet/pet_sprite_sheet");
             GameObjects.Add(new WorldObject("DigiPetBG", "Background", new Vector2(400, 600), new Vector2(-760, 240), 0));
-            GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(300, 300), new Vector2(-760, 390), 1));
+            GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(80, 80), new Vector2(-810, 450), 1));
             DigiPet d = (DigiPet)GameObjects[GameObjects.Count - 1];
             GameObjects.Add(new FeedButton("ButtonUp", "ButtonUp", "FeedButton", new Vector2(75, 75), new Vector2(-860, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
             GameObjects.Add(new WashButton("ButtonUp", "ButtonUp", "WashButton", new Vector2(75, 75), new Vector2(-760, 60), 1, (DigiPetData)d.ComponentHandler.GetComponent("DigiPetData"), (AnimationData)d.ComponentHandler.GetComponent("AnimationData")));
