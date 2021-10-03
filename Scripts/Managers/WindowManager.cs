@@ -85,14 +85,15 @@ namespace MonoGame_Core.Scripts
             if(f == null)
             {
                 data = new WindowDataMain();
+                GameManager.Instance.Window.Title = "Remote Work";
                 keyboardDispatcher = new KeyboardDispatcher(GameManager.Instance.Window.Handle);
             }
             //All other windows
             else
             {
-               form = f;
-               data = new WindowDataForm(form);
-               keyboardDispatcher = new KeyboardDispatcher(f.Handle);
+                form = f;
+                data = new WindowDataForm(form);
+                keyboardDispatcher = new KeyboardDispatcher(f.Handle);
             }
 
             inputManager = new InputManager(data);
@@ -132,6 +133,7 @@ namespace MonoGame_Core.Scripts
         public static Window AddWindow(Form f, Scene s, Vector2 size)
         {
             Window w = new Window(f);
+            
             Windows.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
             Windows[Windows.Count - 1].form.Show();
