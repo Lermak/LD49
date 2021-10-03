@@ -134,18 +134,10 @@ namespace MonoGame_Core.Scripts
             Random r = new Random();
             Transform t = (Transform)c[0];
             //start at -135 degrees from straight up, then rotate to the right until +135 degrees
-            float rot_start = MathHelper.ToRadians(135);
-            float rot_end = MathHelper.ToRadians(-135);
+            float rot_start = MathHelper.ToRadians(70);
+            float rot_end = MathHelper.ToRadians(-70);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
-            float intensity = 0.0f;
-            if (NuclearLevel.level > 2f/3f)
-            {
-                intensity = 2.0f;
-            }
-            if (NuclearLevel.level > 5f / 6f)
-            {
-                intensity = 5.0f;
-            }
+            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f)*2, 0, 1)*5;
             float r1 = intensity * ((float)r.NextDouble() - 0.5f);
             float r2 = intensity * ((float)r.NextDouble() - 0.5f);
             t.Place(new Vector2(r1, r2));

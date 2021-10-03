@@ -19,34 +19,45 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadContent(List<Camera> c)
         {
-            size = new Vector2(800, 600);
+            size = new Vector2(1920, 1080);
             //CollisionManager.Initilize();
+            Vector2 screenCenter = new Vector2(-560, 240);
 
-            CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
-            CameraManager.Cameras[0].SetMaxPos(Size / 2);
+
+            CameraManager.Cameras[0].SetMinPos(size/2 * -1);
+            CameraManager.Cameras[0].SetMaxPos(size/2);
+            
 
             ResourceManager.Textures = new Dictionary<string, Texture2D>();
             //NuclearButton!
-            ResourceManager.Textures["CoolantButton"] = Content.Load<Texture2D>("Images/Nuclear/blue_button");
-            ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/blue_button_hover");
-            ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/blue_button_press");
+            ResourceManager.Textures["CoolantButton"] = Content.Load<Texture2D>("Images/Nuclear/button");
+            ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
+            ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/button_press");
             //Dial
-            ResourceManager.Textures["nd"] = Content.Load<Texture2D>("Images/Nuclear/NuclearDial");
-            ResourceManager.Textures["dialBG"] = Content.Load<Texture2D>("Images/Nuclear/DialBG");
+            ResourceManager.Textures["DialArrow"] = Content.Load<Texture2D>("Images/Nuclear/dial_arrow");
+            ResourceManager.Textures["DialBack"] = Content.Load<Texture2D>("Images/Nuclear/dial_back");
+            ResourceManager.Textures["DialBorder"] = Content.Load<Texture2D>("Images/Nuclear/dial_border");
             //Scene background
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
-            int dialSize = 75;
+            Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new WorldObject("dialBG", "DialBG", new Vector2(dialSize, dialSize), new Vector2(-360, 140), 1));
-            GameObjects.Add(new NuclearDial("nd", "NuclearDial", new Vector2(dialSize, dialSize), new Vector2(-360, 140)));
-            ((WorldObject)GameObjects[^1]).Transform.AttachToTransform(((WorldObject)GameObjects[^2]).Transform);
 
-            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080), new Vector2(), 0));
+            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, screenCenter, 1);
+            NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, screenCenter, 2);
+            WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, screenCenter, 3);
+            dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
+            GameObjects.Add(dialBackObj);
+            GameObjects.Add(dialArrowObj);
+            GameObjects.Add(dialBorderObj);
+
+            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080),screenCenter, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Transform.Layer = 0;
 
-            Vector2 cooldownButtonSize = new Vector2(49, 49);
-            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, new Vector2(-560, 140), 1, () =>
+            Vector2 cooldownButtonSize = new Vector2(100, 100);
+            //Wonky, yell at Rhen later
+            Vector2 ButtonPosition = screenCenter;
+            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 4, () =>
             {
                 if (!NuclearLevel.Locked)
                 {
@@ -55,7 +66,7 @@ namespace MonoGame_Core.Scripts
                         NuclearLevel.level = 0.0f;
                 }
             });
-            cooldownButton.Transform.SetScale(3, 3);
+            cooldownButton.Transform.SetScale(1, 1);
             GameObjects.Add(cooldownButton);
 
             base.loadContent(c);
