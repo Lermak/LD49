@@ -101,6 +101,10 @@ code {
     monospace;
 }
 
+b {
+  font-weight: bold;
+}
+
 html {
   line-height: 1;
   position: relative;
@@ -378,7 +382,7 @@ body::-webkit-scrollbar-thumb {
   border-right: 0.1rem solid var(--slack-white);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr 6.75rem;
+  grid-template-rows: auto 1fr 7.85rem;
   grid-template-areas:
     "header"
     "main"
@@ -691,7 +695,8 @@ body::-webkit-scrollbar-thumb {
 
 /* feeds */
 .feeds {
-  grid-area: main;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   padding: 0.9375rem 0.3125rem 0.625rem 0.3125rem;
 }
@@ -863,6 +868,21 @@ body::-webkit-scrollbar-thumb {
   border-bottom: none;
   overflow: auto;
 }
+
+.input:empty:before {
+  content: attr(data-placeholder);
+}
+
+#person_is_typing {
+  width: 90%;
+  font-size: 0.8rem;
+  padding: 0.2rem 0rem;
+  position: absolute;
+  top: 5.25em;
+  word-wrap: break-word;
+  font-weight: 300;
+}
+
 .input-toolbar-icons {
   width: 90%;
   font-size: 1rem;
