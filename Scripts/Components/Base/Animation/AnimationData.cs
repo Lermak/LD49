@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
                 anim <= (ResourceManager.Textures[spriteRenderer.Texture].Height / (int)spriteRenderer.DrawArea.Y) - 1)
             {
                 spriteRenderer.Animation = anim;
-                spriteRenderer.CurrentFrame = 0;
+                currentFrame = 0;
                 timeSinceFrameChange = 0;
             }
         }
