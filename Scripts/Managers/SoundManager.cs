@@ -59,9 +59,10 @@ namespace MonoGame_Core.Scripts
 
         public static void PlaySoundEffect(string name)
         {
-            SoundEffectInstance se = SoundEffects[name];
+            SoundEffectInstance se = ResourceManager.SoundEffects[name].CreateInstance();
             se.Volume = volume;
             se.Play();
+            SoundEffects[name] = se;
         }
     }
 }

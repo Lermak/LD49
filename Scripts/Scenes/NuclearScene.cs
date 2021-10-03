@@ -37,9 +37,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["DialBorder"] = Content.Load<Texture2D>("Images/Nuclear/dial_border");
             ResourceManager.Textures["HeatText"] = Content.Load<Texture2D>("Images/Nuclear/heat_text");
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Nuclear/background");
-
             ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
-            SoundManager.SoundEffects["alert"] = ResourceManager.SoundEffects["alert"].CreateInstance();
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
