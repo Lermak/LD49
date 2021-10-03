@@ -143,8 +143,8 @@ namespace MonoGame_Core.Scripts
             float intensityScale = 5f;
             if (intensity > 0f)
             {
-                SoundManager.PlaySoundEffect("alert");
-                SoundManager.SoundEffects["alert"].Volume = intensity / 2;
+                //SoundManager.PlaySoundEffect("alert");
+                //SoundManager.SoundEffects["alert"].Volume = intensity / 2;
 
             }
                 
