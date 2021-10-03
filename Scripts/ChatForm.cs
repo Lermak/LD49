@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
@@ -13,7 +16,9 @@ namespace MonoGame_Core.Scripts
     {
         public string readFile(string path)
         {
-            if(File.Exists(path))
+            path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/" + path;
+
+            if (File.Exists(path))
             {
                 return File.ReadAllText(path);
             }
@@ -26,21 +31,8 @@ namespace MonoGame_Core.Scripts
     {
         public ChatForm()
         {
+            //Size = new System.Drawing.Size(0,0);
             Size = new System.Drawing.Size((int)(700 * GameManager.WidthScale), (int)(800 * GameManager.HeightScale));
-
-            var settings = new CefSettings();
-
-            settings.RegisterScheme(new CefCustomScheme
-            {
-                SchemeName = "localfolder",
-                DomainName = "cefsharp",
-                SchemeHandlerFactory = new FolderSchemeHandlerFactory(
-                    rootFolder: Directory.GetCurrentDirectory() + "/Content/Web/Chat",
-                    hostName: "cefsharp",
-                    defaultPage: "index.html" // will default to index.html
-                )
-            });
-            Cef.Initialize(settings);
 
             //Create a new instance in code or add via the designer
             //Set the ChromiumWebBrowser.Address property to your Url if you use the designer.
@@ -64,6 +56,29 @@ namespace MonoGame_Core.Scripts
             };
 
             this.Controls.Add(browser);
+
+            this.Visible = false;
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+
+            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            //this.ShowInTaskbar = false;
+            browser.FrameLoadEnd += (object owner, FrameLoadEndEventArgs args) =>
+            {
+                if (InvokeRequired)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        //Size = new System.Drawing.Size((int)(700 * GameManager.WidthScale), (int)(800 * GameManager.HeightScale));
+                        //this.ShowInTaskbar = true;
+                        //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+
+                        this.Visible = true;
+                        this.WindowState = FormWindowState.Normal;
+                        this.ShowInTaskbar = true;
+                    }));
+                }
+            };
         }
     }
 }
