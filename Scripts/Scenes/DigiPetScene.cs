@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,14 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["PlayUp"] = Content.Load<Texture2D>("Images/DigiPet/button_play");
             ResourceManager.Textures["PlayDown"] = Content.Load<Texture2D>("Images/DigiPet/button_play_press");
             ResourceManager.Textures["DigiPet"] = Content.Load<Texture2D>("Images/DigiPet/pet_sprite_sheet");
-           
+            ResourceManager.SoundEffects["DigiPetWalk1"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_1");
+            ResourceManager.SoundEffects["DigiPetWalk2"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_2");
+            ResourceManager.SoundEffects["DigiPetWalk3"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_3");
+            ResourceManager.SoundEffects["DigiPetWalk4"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_4");
+            ResourceManager.SoundEffects["DigiPetWant"] = Content.Load<SoundEffect>("Sound/DigiPet/want");
+            ResourceManager.SoundEffects["DigiPetSuccess"] = Content.Load<SoundEffect>("Sound/DigiPet/success");
+            ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
+
             GameObjects.Add(new WorldObject("DigiPetBG", "DigiPetBG", new Vector2(480, 340), new Vector2(-720, 380), 0));
             
             GameObjects.Add(new DigiPet("DigiPet", "DigiPet", new Vector2(80, 80), new Vector2(-810, 370), 2));

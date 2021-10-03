@@ -33,8 +33,8 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = (int)(800 * WidthScale);
-            _graphics.PreferredBackBufferHeight = (int)(600 * HeightScale);
+            _graphics.PreferredBackBufferWidth = (int)(250 * WidthScale);
+            _graphics.PreferredBackBufferHeight = (int)(250 * HeightScale);
 
             _graphics.ApplyChanges();
             // TODO: Add your initialization logic here
@@ -49,10 +49,11 @@ namespace MonoGame_Core.Scripts
 
             WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(480,330));
-            //WindowManager.AddWindow(new NoCloseForm(), new SecurityCheckScene(), new Vector2(600, 240));
+            //WindowManager.AddWindow(new NoCloseForm(), new ReauthScene(), new Vector2(600, 200));
+            //WindowManager.ReauthWindow = WindowManager.ToAdd[^1];
             //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
             //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            WindowManager.ITHelp = WindowManager.Windows[^1];//SceneManager.Initilize(Content, new TestScene());
+            //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }

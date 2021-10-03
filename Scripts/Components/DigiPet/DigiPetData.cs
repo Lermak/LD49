@@ -21,6 +21,8 @@ namespace MonoGame_Core.Scripts
         public bool NeedsWash = false;
         public Queue<char> Code = new Queue<char>();
         public bool CodeAccessed = false;
+        public int PrevWalkSound = 0;
+        public float TimeSinceLastSound = 0;
         public AnimationData Needs;
         public DigiPetData(GameObject go, string name) : base(go, name)
         {

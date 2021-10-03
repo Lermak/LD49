@@ -40,7 +40,10 @@ namespace MonoGame_Core.Scripts
         {
             var cursorPt = Cursor.Position;
             var pt = f.PointToClient(cursorPt);
-            return new Vector2(pt.X, pt.Y);
+            System.Drawing.Rectangle screenRectangle = f.RectangleToScreen(f.ClientRectangle);
+            int titleHeight = screenRectangle.Top - f.Top;
+            int sideWidth = screenRectangle.Left - f.Left;
+            return new Vector2(pt.X + sideWidth, pt.Y + titleHeight);
         }
     }
 
@@ -77,7 +80,7 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Global color value applied to produce a fade effect between scenes
         /// </summary>
-        public float GlobalFade = 255;
+        public float GlobalFade = 0;
 
         public Window(Form f)
         {
@@ -116,8 +119,19 @@ namespace MonoGame_Core.Scripts
     public static class WindowManager
     {
         public static List<Window> Windows;
+        public static Window MainWindow;
+
         public static Window ITHelp;
         public static bool killIT = false;
+
+        public static Window UpdateWindow;
+        public static bool KillUpdate = false;
+
+        public static Window ReauthWindow;
+        public static bool KillReauth = false;
+
+        public static List<Window> ToAdd = new List<Window>();
+
         private static ContentManager contentManager;
         public static void Initilize(ContentManager cm, Scene s)
         {
@@ -128,15 +142,16 @@ namespace MonoGame_Core.Scripts
 
             CurrentWindow._window = Windows[0];
             Windows[0].sceneManager.Initilize(cm, s, new List<Camera>() { CameraManager.Cameras[0] });
+            MainWindow = Windows[0];
         }
 
         public static Window AddWindow(Form f, Scene s, Vector2 size)
         {
             Window w = new Window(f);
             
-            Windows.Add(w);
+            ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
-            Windows[Windows.Count - 1].form.Show();
+            ToAdd[ToAdd.Count - 1].form.Show();
 
             w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
                 f.Handle,
@@ -200,8 +215,16 @@ namespace MonoGame_Core.Scripts
 
         public static void RemoveWindow(Window w)
         {
-            Windows.Remove(w);
+            //
+            //RenderingManager.RenderTargets.Remove(w.renderTarget);
+            //IEnumerable<Camera> cams = CameraManager.Cameras.Where(c => c.SwapChain != -1)
+            //                                                .Where(c => RenderingManager.WindowTargets[c.SwapChain] == w.swapChainTarget);
+            //foreach (Camera c in cams)
+            //    CameraManager.Cameras.Remove(c);
+            //RenderingManager.WindowTargets.Remove(w.swapChainTarget);
             w.form.Dispose();
+            Windows.Remove(w);
+            
         }
 
         public static void Update(float gt)
@@ -213,10 +236,25 @@ namespace MonoGame_Core.Scripts
                 w.coroutineManager.Update(gt);
                 w.sceneManager.Update(gt);
             }
+            foreach(Window w in ToAdd)
+            {
+                Windows.Add(w);
+            }
+            ToAdd.Clear();
             if (killIT)
             {
                 killIT = false;
                 WindowManager.RemoveWindow(WindowManager.ITHelp);
+            }
+            if (KillUpdate)
+            {
+                KillUpdate = false;
+                WindowManager.RemoveWindow(WindowManager.UpdateWindow);
+            }
+            if (KillReauth)
+            {
+                KillReauth = false;
+                WindowManager.RemoveWindow(WindowManager.ReauthWindow);
             }
         }
     }

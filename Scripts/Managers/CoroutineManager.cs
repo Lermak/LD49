@@ -31,14 +31,14 @@ namespace MonoGame_Core.Scripts
             /// <param name="timeBetween">Delay in seconds between iterations</param>
             /// <param name="start">Start immediately</param>
             public Coroutine(IEnumerator<bool> routine, string name, float timeBetween, bool start)
-            {
+           {
                 if (start)
                     State = CoroutineState.Running;
                 else
                     State = CoroutineState.Paused;
                 Routine = routine;
-                Name = name;
-                TimeBetweenSteps = timeBetween;
+              Name = name;
+               TimeBetweenSteps = timeBetween;
                 TimeSinceLast = 0;
             }
         }
@@ -58,7 +58,7 @@ namespace MonoGame_Core.Scripts
         {
             if (!coroutines.ContainsKey(name))
             {
-                coroutines[name] = new Coroutine(coroutine, name, timeBetween, start);
+               coroutines[name] = new Coroutine(coroutine, name, timeBetween, start);
             }
         }
 

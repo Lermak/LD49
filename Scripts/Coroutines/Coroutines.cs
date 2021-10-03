@@ -67,5 +67,40 @@ namespace MonoGame_Core.Scripts
             ad.ChangeAnimation(animAfterRun);
             yield return true;
         }
+
+        public static IEnumerator<bool> UpdateNuclear(AnimationData ad)
+        {
+            ad.SpriteRenderer.Visible = true;
+            ad.ChangeSpriteSheet("UpdateOverlay", 2);
+            NuclearLevel.Locked = true;
+            float timeElapsed = 0;
+
+            while (timeElapsed < 30)
+            {
+                ad.Animate(TimeManager.DeltaTime);
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            NuclearLevel.Updating = false;
+            NuclearLevel.Updated = true;
+            NuclearLevel.Locked = false;
+            ad.SpriteRenderer.Visible = false;
+            yield return true;
+        }
+
+        public static IEnumerator<bool> UpdateLater()
+        {
+            float timeElapsed = 0;
+
+            while (timeElapsed < 300)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+            WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+
+            yield return true;
+        }
     }
 }
