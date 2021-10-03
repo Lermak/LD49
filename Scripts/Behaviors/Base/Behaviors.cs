@@ -122,7 +122,7 @@ namespace MonoGame_Core.Scripts
         public static void RunAnimation(float gt, Component[] c)
         {
             //if(SceneManager.SceneState == SceneManager.State.Running)
-                ((AnimationData)c[0]).Animate(gt);
+            ((AnimationData)c[0]).Animate(gt);
         }
 
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
@@ -137,7 +137,7 @@ namespace MonoGame_Core.Scripts
             float rot_start = MathHelper.ToRadians(70);
             float rot_end = MathHelper.ToRadians(-70);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
-            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f)*2, 0, 1)*5;
+            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f) * 2, 0, 1) * 5;
             float r1 = intensity * ((float)r.NextDouble() - 0.5f);
             float r2 = intensity * ((float)r.NextDouble() - 0.5f);
             t.Place(new Vector2(r1, r2));
@@ -146,7 +146,26 @@ namespace MonoGame_Core.Scripts
         public static void NuclearDeath(float gt, Component[] c)
         {
             if (NuclearLevel.level >= 1.1) { }
-                //GameManager.Quit(); //TODO() this is bad, make it into a game over screen
+            //GameManager.Quit(); //TODO() this is bad, make it into a game over screen
+        }
+
+        public static void isButtonHeld(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
+            {
+                if (NuclearLevel.Locked)
+                {
+                    NuclearLevel.ButtonHoldTime += gt;
+                }
+            }
+            else
+            {
+                NuclearLevel.ButtonHoldTime = 0.0f;
+            }
+
         }
     }
 }
