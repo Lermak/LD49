@@ -1,3 +1,11 @@
+function waitTime(time) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve()
+    }, time * 1000)
+  })
+}
+
 (async () => 
 {
   //For web debugging
@@ -7,22 +15,27 @@
 
     game = {}
     game.readFile = (path) => {
-      return `[ "Hello!" ]`
+      return new Promise( (resolve, reject) => { resolve(`[
+        "Welcome to Forward Thinking Energy - we’re happy to have you here! Your role is critical to our success so please pay attention to the following instructions.",
+        "In front of you is a button. If you press this button by clicking it with your mouse, you will cool down the reactor. You must press this button to prevent the reactor from overheating. <b>DO NOT allow the reactor to reach the critical heat level!</b> If this happens, the reactor will enter meltdown protocol and this scenario is grounds for immediate employment termination.",
+        "This should be simple enough but feel free to reach out to one of your co-workers if you have any questions. You can do this by clicking on the name of one of your co-workers in the chat window. Any meetings or messages from your co-workers will appear here as well.",
+        "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button."
+    ]`)});
     }
   }
 
   await CefSharp.BindObjectAsync("game", "bound");
 
-
+  let lockSwitching = false
   let People = []
-  
 
   function addPerson(name, icon) {
     let person = {
       name: name,
       displayName: name,
-      icon: "images/" + icon + ".png",
+      icon: `people/${name}/icon.png`,
       responses: [],
+      id: People.length,
       messages: []
     }
 
@@ -36,14 +49,17 @@
     return person
   }
 
-  function addMessage(personMessage, fromPerson, message, time) {
-    if(typeof personMessage === "string") {
-      personMessage = People.find((p) => {return p.name == personMessage} )
+  function getPerson(person) {
+    if(typeof person === "string") {
+      person = People.find((p) => {return p.name == person} )
     }
 
-    if(typeof fromPerson === "string") {
-      fromPerson = People.find((p) => {return p.name == fromPerson} )
-    }
+    return person
+  }
+
+  function addMessage(personMessage, fromPerson, message, time) {
+    personMessage = getPerson(personMessage)
+    fromPerson = getPerson(fromPerson)
 
     let msg = {
       from: fromPerson,
@@ -54,15 +70,19 @@
     return msg
   }
 
-  let you = addPerson("Jogn Idogun", "default_icon");
+  let you = addPerson("Jogn Idogun");
   you.displayName = "Jogn Idogun (You)"
 
-  addPerson("Delores", "default_icon")
-  addPerson("Sally", "default_icon")
-  addPerson("Joe", "default_icon")
-  addPerson("Mary", "default_icon")
-
-  addMessage("Sally", "Sally", "Hello!", "now")
+  addPerson("Administrator")
+  addPerson("Adrian")
+  addPerson("Aida")
+  addPerson("Christopher")
+  addPerson("Delores")
+  addPerson("Janey")
+  addPerson("Jude")
+  addPerson("Kailee")
+  //addPerson("Mystery Person")
+  addPerson("Quinn")
 
 
   let SelectedPerson = People[0]
@@ -117,6 +137,15 @@
     `
   }
 
+  function recieveMessage(text) {
+    let mainfeed = document.getElementById("mainfeed")
+    let toPerson = SelectedPerson
+    let response_msg = addMessage(toPerson, toPerson, text, "now")
+    mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text, response_msg.time)
+
+    mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
+  }
+
   function sendMessage(text) {
     let mainfeed = document.getElementById("mainfeed")
 
@@ -125,15 +154,14 @@
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
 
     if(toPerson.responses.length > 0) {
-      let response_msg = addMessage(toPerson, toPerson, toPerson.responses[0], "now")
-      mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text, response_msg.time)
+      recieveMessage(toPerson.responses[0])
     }
 
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
   }
 
-  window.switchToChat = (id) => {
-    let person = People[id]
+  function switchToPerson(person) {
+    if(lockSwitching) return;
     SelectedPerson = person
 
     let header = document.getElementById("channel-name")
@@ -143,7 +171,7 @@
     header_avatar.innerHTML = `<img src="${person.icon}" alt="${person.name}" width="40" />`
 
     let mainfeed = document.getElementById("mainfeed")
-    mainfeed.innerHTML = ""
+    mainfeed.innerHTML = `<div style="flex: 1"></div>`
 
     for(let msg of person.messages) {
       mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
@@ -155,8 +183,21 @@
       c.classList.remove("direct-messages-selected")
     }
 
-    let contactNode = document.getElementById(`dm_contact_${id}`)
+    let contactNode = document.getElementById(`dm_contact_${person.id}`)
     contactNode.classList.add("direct-messages-selected")
+
+    let textBox = document.getElementById(`textBox`)
+    textBox.setAttribute("data-placeholder", `Message ${person.name}`)
+    textBox.textContent = ""
+
+    let person_is_typing = document.getElementById("person_is_typing")
+    person_is_typing.textContent = `${person.name} is typing`
+    person_is_typing.style.visibility = "hidden"
+  }
+
+  window.switchToChat = (id) => {
+    let person = People[id]
+    switchToPerson(person)
   }
 
   let dm_contacts = document.getElementById("dm_contacts")
@@ -176,16 +217,48 @@
 
   switchToChat(0)
 
+  window.sendChatMessage = () => {
+    let textBox = document.getElementById("textBox")
+    if(textBox.textContent != "") {
+      sendMessage(textBox.textContent)
+      textBox.textContent = ""
+    }
+  }
+
   let textBox = document.getElementById("textBox")
   textBox.addEventListener("keypress", (e) => {
     if (e.key === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
-
-        if(textBox.textContent != "") {
-          sendMessage(textBox.textContent)
-          textBox.textContent = ""
-        }
+        sendChatMessage();
     }
   })
+
+
+
+  function runCustomChat(person, name) {
+    person = getPerson(person)
+    switchToPerson(person)
+    lockSwitching = true
+
+    game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
+      if(r != "") {
+        let customChat = JSON.parse(r)
+        let person_is_typing = document.getElementById("person_is_typing")
+        for(let msg of customChat) {
+          if(typeof msg === "string") {
+            person_is_typing.style.visibility = "visible";
+            await waitTime(msg.length * 0.006)
+            person_is_typing.style.visibility = "hidden";
+            recieveMessage(msg)
+            await waitTime(msg.length * 0.024)
+          }
+
+          lockSwitching = false
+        }
+      }
+    })
+  }
+
+  runCustomChat("Delores", "intro_chat")
 
 })();
