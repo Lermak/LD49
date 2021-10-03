@@ -6,6 +6,12 @@ function waitTime(time) {
   })
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
 Object.defineProperty(Array.prototype, "random", {
   value: function () {
     return this[Math.floor((Math.random()*this.length))];
@@ -100,6 +106,10 @@ Object.defineProperty(Array.prototype, "random", {
     return person
   }
 
+  function generateNameHTML(person, extraClass) {
+    return `<div class="${extraClass}"> <span class="${person.cthulhu !== undefined ? "cthulhu" : ""}" >${person.name}</span> </div>`
+  }
+
   function setTyping(person, isTyping) {
     person.isTyping = isTyping
     if(person == SelectedPerson) {
@@ -140,8 +150,10 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Janey")
   addPerson("Jude")
   addPerson("Kailee")
-  //addPerson("Mystery Person")
   addPerson("Quinn")
+
+  let stranger = addPerson("?????")
+  stranger.cthulhu = true
 
 
   let SelectedPerson = People[0]
@@ -183,7 +195,7 @@ Object.defineProperty(Array.prototype, "random", {
       </section>
       <section class="feed-content">
         <section class="feed-user-info">
-          <h4>${fromPerson.name} </h4>
+          <h4>${generateNameHTML(fromPerson)}</h4>
         </section>
         <div>
           <p class="feed-text">
@@ -221,7 +233,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   async function sendAsyncResponse(person, msg) {
     setTyping(person, true)
-    await waitTime(msg.length * 0.006)
+    await waitTime(msg.length * 0.01)
     setTyping(person, false)
     recieveMessage(person, msg)
   }
@@ -246,6 +258,20 @@ Object.defineProperty(Array.prototype, "random", {
     }
   }
 
+  function generateResponseObjects(list) {
+    let responseList = []
+    for(let r of list) {
+      if(typeof r === "string") {
+        responseList.push({ msg: r})
+      }
+      else {
+        responseList.push(r)
+      }
+    }
+
+    return responseList
+  }
+
   function handleResponse(person, message) {
     if(person.responses.length == 0) {
       return
@@ -256,15 +282,7 @@ Object.defineProperty(Array.prototype, "random", {
       return
     }
 
-    let responseList = []
-    for(let r of person.responses) {
-      if(typeof r === "string") {
-        responseList.push({ msg: r})
-      }
-      else {
-        responseList.push(r)
-      }
-    }
+    let responseList = generateResponseObjects(person.responses)
 
     //First, check all our filters
     let matchedFilters = []
@@ -296,6 +314,8 @@ Object.defineProperty(Array.prototype, "random", {
   
   }
 
+  let DOING_SLASH_COMMAND = false
+
   function sendMessage(text) {
     let mainfeed = document.getElementById("mainfeed")
 
@@ -305,6 +325,29 @@ Object.defineProperty(Array.prototype, "random", {
 
     handleResponse(toPerson, text)
 
+    if(toPerson == you) {
+      if(text.startsWith("/test")) {
+        let regex = /\/test\s+(\w+)\s+(\w+)/
+        let matches = text.match(regex)
+        if(matches != null && matches[1] !== undefined && matches[2] !== undefined) {
+          let p = getPerson(matches[1])
+          if(p === undefined) {
+            recieveMessage(you, `No person with the name ${matches[1]}`)
+          }
+          
+          DOING_SLASH_COMMAND = true
+          runCustomChat(matches[1], matches[2])
+          DOING_SLASH_COMMAND = false
+        }
+      }
+      else if(text.startsWith("/clearMessages")) {
+        for(let p of People) {
+          p.messages = []
+        }
+        mainfeed.innerHTML = ""
+      }
+    }
+
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
   }
 
@@ -313,7 +356,7 @@ Object.defineProperty(Array.prototype, "random", {
     SelectedPerson = person
 
     let header = document.getElementById("channel-name")
-    header.innerHTML = person.displayName
+    header.innerHTML =  `${generateNameHTML(person)}`
 
     let header_avatar = document.getElementById("channel-avatar")
     header_avatar.innerHTML = `<img src="${person.icon}" alt="${person.name}" width="40" />`
@@ -345,7 +388,7 @@ Object.defineProperty(Array.prototype, "random", {
     textBox.textContent = ""
 
     let person_is_typing = document.getElementById("person_is_typing")
-    person_is_typing.textContent = `${person.name} is typing`
+    person_is_typing.innerHTML = `${generateNameHTML(person)} is typing`
     setTyping(SelectedPerson, SelectedPerson.isTyping) //Silly, but avoids duplicate code for setting visibility
   }
 
@@ -363,7 +406,7 @@ Object.defineProperty(Array.prototype, "random", {
     dm_contacts.innerHTML += `
     <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
         <li>
-            <i class="fas fa-circle online"></i> <span class="displayName">${person.displayName}</span>
+            <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")}
         </li>
     </a>
     `
@@ -391,33 +434,129 @@ Object.defineProperty(Array.prototype, "random", {
 
   function runCustomChat(person, name) {
     person = getPerson(person)
-    switchToPerson(person)
-    lockSwitching = true
-
+    //switchToPerson(person)
+    //lockSwitching = true
+    let doing_slash = DOING_SLASH_COMMAND
     game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
       if(r != "") {
+        if(doing_slash) {
+          recieveMessage(you, `Running Content/Web/Chat/people/${person.name}/${name}.json`)
+        }
+
         let customChat = JSON.parse(r)
         person.inCustomChat = true
 
         let person_is_typing = document.getElementById("person_is_typing")
-        for(let msg of customChat) {
-          if(typeof msg === "string") {
-            await sendAsyncResponse(person, msg)
-            await waitTime(msg.length * 0.024)
+        let responses = generateResponseObjects(customChat)
+        for(let r of responses) {
+          await handleResponseObject(person, r)
+          if(r.msg !== undefined) {
+            await waitTime(r.msg.length * 0.024)
           }
         }
 
-        lockSwitching = false
+        //lockSwitching = false
         person.inCustomChat = false
       }
     })
   }
+
+  var zalgo_up = [
+    '\u030d', /*     ̍     */   '\u030e', /*     ̎     */   '\u0304', /*     ̄     */   '\u0305', /*     ̅     */
+    '\u033f', /*     ̿     */   '\u0311', /*     ̑     */   '\u0306', /*     ̆     */   '\u0310', /*     ̐     */
+    '\u0352', /*     ͒     */   '\u0357', /*     ͗     */   '\u0351', /*     ͑     */   '\u0307', /*     ̇     */
+    '\u0308', /*     ̈     */   '\u030a', /*     ̊     */   '\u0342', /*     ͂     */   '\u0343', /*     ̓     */
+    '\u0344', /*     ̈́     */    '\u034a', /*     ͊     */   '\u034b', /*     ͋     */   '\u034c', /*     ͌     */
+    '\u0303', /*     ̃     */   '\u0302', /*     ̂     */   '\u030c', /*     ̌     */   '\u0350', /*     ͐     */
+    '\u0300', /*     ̀     */   '\u0301', /*     ́     */   '\u030b', /*     ̋     */   '\u030f', /*     ̏     */
+    '\u0312', /*     ̒     */   '\u0313', /*     ̓     */   '\u0314', /*     ̔     */   '\u033d', /*     ̽     */
+    '\u0309', /*     ̉     */   '\u0363', /*     ͣ     */   '\u0364', /*     ͤ     */   '\u0365', /*     ͥ     */
+    '\u0366', /*     ͦ     */   '\u0367', /*     ͧ     */   '\u0368', /*     ͨ     */   '\u0369', /*     ͩ     */
+    '\u036a', /*     ͪ     */   '\u036b', /*     ͫ     */   '\u036c', /*     ͬ     */   '\u036d', /*     ͭ     */
+    '\u036e', /*     ͮ     */   '\u036f', /*     ͯ     */   '\u033e', /*     ̾     */   '\u035b', /*     ͛     */
+    '\u0346', /*     ͆     */   '\u031a' /*     ̚     */
+  ];
+  
+  //those go DOWN
+  var zalgo_down = [
+    '\u0316', /*     ̖     */   '\u0317', /*     ̗     */   '\u0318', /*     ̘     */   '\u0319', /*     ̙     */
+    '\u031c', /*     ̜     */   '\u031d', /*     ̝     */   '\u031e', /*     ̞     */   '\u031f', /*     ̟     */
+    '\u0320', /*     ̠     */   '\u0324', /*     ̤     */   '\u0325', /*     ̥     */   '\u0326', /*     ̦     */
+    '\u0329', /*     ̩     */   '\u032a', /*     ̪     */   '\u032b', /*     ̫     */   '\u032c', /*     ̬     */
+    '\u032d', /*     ̭     */   '\u032e', /*     ̮     */   '\u032f', /*     ̯     */   '\u0330', /*     ̰     */
+    '\u0331', /*     ̱     */   '\u0332', /*     ̲     */   '\u0333', /*     ̳     */   '\u0339', /*     ̹     */
+    '\u033a', /*     ̺     */   '\u033b', /*     ̻     */   '\u033c', /*     ̼     */   '\u0345', /*     ͅ     */
+    '\u0347', /*     ͇     */   '\u0348', /*     ͈     */   '\u0349', /*     ͉     */   '\u034d', /*     ͍     */
+    '\u034e', /*     ͎     */   '\u0353', /*     ͓     */   '\u0354', /*     ͔     */   '\u0355', /*     ͕     */
+    '\u0356', /*     ͖     */   '\u0359', /*     ͙     */   '\u035a', /*     ͚     */   '\u0323' /*     ̣     */
+  ];
+  
+  //those always stay in the middle
+  var zalgo_mid = [
+    '\u0315', /*     ̕     */   '\u031b', /*     ̛     */   '\u0340', /*     ̀     */   '\u0341', /*     ́     */
+    '\u0358', /*     ͘     */   '\u0321', /*     ̡     */   '\u0322', /*     ̢     */   '\u0327', /*     ̧     */
+    '\u0328', /*     ̨     */   '\u0334', /*     ̴     */   '\u0335', /*     ̵     */   '\u0336', /*     ̶     */
+    '\u034f', /*     ͏     */   '\u035c', /*     ͜     */   '\u035d', /*     ͝     */   '\u035e', /*     ͞     */
+    '\u035f', /*     ͟     */   '\u0360', /*     ͠     */   '\u0362', /*     ͢     */   '\u0338', /*     ̸     */
+    '\u0337', /*     ̷     */   '\u0361', /*     ͡     */   '\u0489' /*     ҉_     */
+  ];
+
+  setInterval(() => {
+    if(Math.random() > 0.666) {
+      let elements = document.querySelectorAll(".cthulhu")
+      for (i = 0; i < elements.length; i++) {
+
+        let wordbank = [
+          "STRANGER",
+          "VOID",
+          "DEATH",
+          "SOULS"
+        ]
+
+        let nameStr = ""
+        for(let c = 0; c < 20; ++c) {
+          nameStr += wordbank.random()
+        }
+
+        let str = ""
+        let numChars = getRandomInt(8, 20)
+        for(let c = 0; c < numChars; ++c) {
+
+          let numZalgo = getRandomInt(5, 30)
+          for(let z = 0; z < numZalgo; ++z) {
+            str += zalgo_mid.random();
+          }
+
+          numZalgo = getRandomInt(1, 5)
+          for(let z = 0; z < numZalgo; ++z) {
+            str += zalgo_up.random();
+          }
+
+          numZalgo = getRandomInt(1, 5)
+          for(let z = 0; z < numZalgo; ++z) {
+            str += zalgo_down.random();
+          }
+
+          str += nameStr[c];
+        }
+
+        elements[i].textContent = str
+        elements[i].setAttribute("data-text", str)
+
+        elements[i].classList.remove("cthulhu")
+        void elements[i].offsetWidth;
+        elements[i].classList.add("cthulhu")
+
+      }
+    }
+  }, 666)
 
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 0)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 1000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
-  runCustomChat("Delores", "intro_chat")
+  //runCustomChat("Delores", "intro_chat")
+  //runCustomChat("Christopher", "security_check")
 
 })();

@@ -120,6 +120,19 @@ namespace MonoGame_Core.Scripts
                 ad.ChangeSpriteSheet(b.DeselectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
         }
 
+        public static void ButtonSwapImagesOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            ButtonData b = (ButtonData)c[1];
+            AnimationData ad = (AnimationData)c[2];
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+
+            if (t.ContainsPoint(v) && CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton))
+                ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
+            else
+                ad.ChangeSpriteSheet(b.DeselectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
+        }
+
         public static void RunAnimation(float gt, Component[] c)
         {
             //if(SceneManager.SceneState == SceneManager.State.Running)

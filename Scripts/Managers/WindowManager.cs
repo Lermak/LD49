@@ -133,7 +133,7 @@ namespace MonoGame_Core.Scripts
         {
             Window w = new Window(f);
             Windows.Add(w);
-            f.Size = new System.Drawing.Size((int)size.X, (int)size.Y);
+            f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
             Windows[Windows.Count - 1].form.Show();
 
             w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
