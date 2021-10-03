@@ -43,9 +43,9 @@ namespace MonoGame_Core.Scripts
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
 
-            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, new Vector2(-360, 140), 1);
-            NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, new Vector2(-360, 140), 2);
-            WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, new Vector2(-360, 140), 3);
+            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, screenCenter, 1);
+            NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, screenCenter, 2);
+            WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, screenCenter, 3);
             dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
             GameObjects.Add(dialBackObj);
             GameObjects.Add(dialArrowObj);
@@ -57,8 +57,8 @@ namespace MonoGame_Core.Scripts
             Vector2 cooldownButtonSize = new Vector2(100, 100);
             //Wonky, yell at Rhen later
             Vector2 ButtonPosition = screenCenter;
-            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 1, () =>
-            {             
+            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 4, () =>
+            {
                 if (!NuclearLevel.Locked)
                 {
                     NuclearLevel.level -= NuclearLevel.reduceAmount;
