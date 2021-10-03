@@ -31,5 +31,14 @@
                 "msg": "I don't really even know how to respond. Figure it out yourself."
             }
         ]
+    },
+
+    {
+        "uniqueId": 1,
+        "msg": "I will only say this once."
+    },
+    {
+        "uniqueId": 1,
+        "msg": "I will also only say this once, shared with above."
     }
 ]
