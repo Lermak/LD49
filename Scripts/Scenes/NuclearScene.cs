@@ -19,9 +19,9 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadContent(List<Camera> c)
         {
-            size = new Vector2(1920, 1080);
+            size = new Vector2(250, 250);
             //CollisionManager.Initilize();
-            Vector2 screenCenter = new Vector2(-560, 240);
+            Vector2 screenCenter = new Vector2(-835, 415);
 
 
             CameraManager.Cameras[0].SetMinPos(size/2 * -1);
@@ -45,7 +45,7 @@ namespace MonoGame_Core.Scripts
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(250, 250), screenCenter, 0));
             
-            GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(800, 600), screenCenter, 10));
+            GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(250, 250), screenCenter, 10));
             WorldObject overlay = (WorldObject)GameObjects[^1];
             overlay.SpriteRenderer.Visible = false;
             AnimationData oad = (AnimationData)overlay.ComponentHandler.AddComponent(new AnimationData(overlay, "AnimationData", overlay.SpriteRenderer, 2));

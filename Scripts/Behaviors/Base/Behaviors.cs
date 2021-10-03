@@ -152,12 +152,12 @@ namespace MonoGame_Core.Scripts
             float rot_start = MathHelper.ToRadians(70);
             float rot_end = MathHelper.ToRadians(-70);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
-            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f) * 2, 0, 1);
+            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f), 0, 1);
             float intensityScale = 5f;
             if (intensity > 0f)
             {
                 SoundManager.PlaySoundEffect("alert");
-                SoundManager.SoundEffects["alert"].Volume = intensity / 2;
+                SoundManager.SoundEffects["alert"].Volume = intensity / 20;
             }
                 
             float r1 = intensity * intensityScale * ((float)r.NextDouble() - 0.5f);
