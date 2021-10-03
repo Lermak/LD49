@@ -128,7 +128,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/MainMenuBG.png
 
-#begin Images/Nuclear/button.png
+#begin Images/Nuclear/CoolantButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -138,9 +138,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/Nuclear/button.png
+/build:Images/Nuclear/CoolantButton.png
 
-#begin Images/Nuclear/button_hover.png
+#begin Images/Nuclear/CoolantButtonPressed.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -150,19 +150,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/Nuclear/button_hover.png
-
-#begin Images/Nuclear/button_press.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/Nuclear/button_press.png
+/build:Images/Nuclear/CoolantButtonPressed.png
 
 #begin Images/Nuclear/DialBG.png
 /importer:TextureImporter
@@ -223,6 +211,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Pong/Paddle.png
+
+#begin Images/SecurityCode/MessageBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SecurityCode/MessageBox.png
+
+#begin Images/SecurityCode/Textbox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SecurityCode/Textbox.png
 
 #begin Images/Test.png
 /importer:TextureImporter
