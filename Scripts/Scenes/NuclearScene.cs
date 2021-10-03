@@ -45,7 +45,7 @@ namespace MonoGame_Core.Scripts
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(250, 250), screenCenter, 0));
             
-            GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(250, 250), screenCenter, 10));
+            GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(800, 600), screenCenter, 10));
             WorldObject overlay = (WorldObject)GameObjects[^1];
             overlay.SpriteRenderer.Visible = false;
             AnimationData oad = (AnimationData)overlay.ComponentHandler.AddComponent(new AnimationData(overlay, "AnimationData", overlay.SpriteRenderer, 2));

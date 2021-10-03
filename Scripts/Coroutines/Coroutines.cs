@@ -77,6 +77,7 @@ namespace MonoGame_Core.Scripts
 
             while (timeElapsed < 30)
             {
+                ad.Animate(TimeManager.DeltaTime);
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
             }
