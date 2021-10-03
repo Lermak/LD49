@@ -170,6 +170,8 @@ namespace MonoGame_Core.Scripts
             if (d.CodeAccessed == false && flag)
             {
                 SoundManager.PlaySoundEffect("MysterySound");
+                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+
                 d.CodeAccessed = true;
                 d.NeedsFood = false;
                 d.NeedsPlay = false;
@@ -228,6 +230,8 @@ namespace MonoGame_Core.Scripts
                     if(i < 30)
                     {
                         SoundManager.PlaySoundEffect("DigiPetWant");
+                        SoundManager.SoundEffects["DigiPetWant"].Volume = .1f;
+
                     }
 
                 }
@@ -311,6 +315,8 @@ namespace MonoGame_Core.Scripts
                         while (i == d.PrevWalkSound)
                             i = r.Next(0, 4);
                         SoundManager.PlaySoundEffect(sounds[i]);
+                        SoundManager.SoundEffects[sounds[i]].Volume = .1f;
+
                     }
                 }
             }
