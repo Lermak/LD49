@@ -19,11 +19,14 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadContent(List<Camera> c)
         {
-            size = new Vector2(800, 600);
+            size = new Vector2(1920, 1080);
             //CollisionManager.Initilize();
+            Vector2 screenCenter = new Vector2(-560, 240);
 
-            CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
-            CameraManager.Cameras[0].SetMaxPos(Size / 2);
+
+            CameraManager.Cameras[0].SetMinPos(size/2 * -1);
+            CameraManager.Cameras[0].SetMaxPos(size/2);
+            
 
             ResourceManager.Textures = new Dictionary<string, Texture2D>();
             //NuclearButton!
@@ -39,16 +42,22 @@ namespace MonoGame_Core.Scripts
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new WorldObject("DialBack", "DialBG", dialSize, new Vector2(-360, 140), 1));
-            GameObjects.Add(new WorldObject("DialBorder", "DialBorder", dialSize, new Vector2(-360, 140), 3));
-            GameObjects.Add(new NuclearDial("DialArrow", "NuclearDial", dialSize, new Vector2(-360, 140), 2));
-            ((WorldObject)GameObjects[^1]).Transform.AttachToTransform(((WorldObject)GameObjects[^2]).Transform);
 
-            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080), new Vector2(), 0));
+            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, new Vector2(-360, 140), 1);
+            NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, new Vector2(-360, 140), 2);
+            WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, new Vector2(-360, 140), 3);
+            dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
+            GameObjects.Add(dialBackObj);
+            GameObjects.Add(dialArrowObj);
+            GameObjects.Add(dialBorderObj);
+
+            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920, 1080),screenCenter, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Transform.Layer = 0;
 
             Vector2 cooldownButtonSize = new Vector2(100, 100);
-            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, new Vector2(-560, 140), 1, () =>
+            //Wonky, yell at Rhen later
+            Vector2 ButtonPosition = screenCenter;
+            Button cooldownButton = new Button("CoolantButton", "CoolantButtonHover", "NuclearButton", cooldownButtonSize, ButtonPosition, 1, () =>
             {
                 if (!NuclearLevel.Locked)
                 {
