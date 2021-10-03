@@ -205,14 +205,23 @@ namespace MonoGame_Core.Scripts
                         }
                         if(flag)
                         {
+                            SoundManager.PlaySoundEffect("MysterySound");
+                            SoundManager.SoundEffects["MysterySound"].Volume = .1f;
                             Globals.CreateFile("PayLog", "    STAFF SALARIES FY22\n---------------------------\n    Delores H - $ 90,000\n      Danni B - $ 75,000\n        Tim G - $ 40,000\n      Quinn R - $ 40,000\n     Kailee M - $ 40,000\nChristopher C - $ 40,000\n      Janey L - $ 40,000\n       Jude N - $ 150,000\n       Aida F - $ 40,000\n     Adrian B - $ 60,000\n     Gerald B - $ 60,000\n      Jamie Z - $ 60,000");
                         }
                             
                     }
                 }
                 NuclearLevel.ButtonHoldTime = 0.0f;
+            }           
+        }
+        public static void UpdateNuclear(float gt, Component[] c)
+        {
+            if (NuclearLevel.Updating)
+            {
+                AnimationData ad = (AnimationData)c[0];
+                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.UpdateNuclear(ad), "Updating", 0, true);
             }
-
         }
     }
 }

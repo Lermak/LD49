@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Core.Scripts
 {
@@ -40,6 +41,7 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsPlay = false;
                     d.Playing = true;
+                    SoundManager.PlaySoundEffect("DigiPetSuccess");
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, dpad), "PlayingAnimate", 0, true);
                     d.TimeSinceLastPlay = 0;
                     d.Needs.SpriteRenderer.Animation = 0;
@@ -83,6 +85,7 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsWash = false;
                     d.Washing = true;
+                    SoundManager.PlaySoundEffect("DigiPetSuccess");
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, dpad), "WashingAnimate", 0, true);
                     d.TimeSinceLastWash = 0;
                     d.Needs.SpriteRenderer.Animation = 0;
@@ -125,6 +128,7 @@ namespace MonoGame_Core.Scripts
                 {
                     d.NeedsFood = false;
                     d.Feeding = true;
+                    SoundManager.PlaySoundEffect("DigiPetSuccess");
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(3, 0, dpad), "FeedingAnimate", 0, true);
                     d.TimeSinceLastFeed = 0;
                     d.Needs.SpriteRenderer.Animation = 0;
@@ -165,6 +169,9 @@ namespace MonoGame_Core.Scripts
 
             if (d.CodeAccessed == false && flag)
             {
+                SoundManager.PlaySoundEffect("MysterySound");
+                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+
                 d.CodeAccessed = true;
                 d.NeedsFood = false;
                 d.NeedsPlay = false;
@@ -220,6 +227,13 @@ namespace MonoGame_Core.Scripts
                         d.Needs.SpriteRenderer.Animation = 3;
                         d.NeedsWash = true;
                     }
+                    if(i < 30)
+                    {
+                        SoundManager.PlaySoundEffect("DigiPetWant");
+                        SoundManager.SoundEffects["DigiPetWant"].Volume = .1f;
+
+                    }
+
                 }
             }
 
@@ -286,6 +300,26 @@ namespace MonoGame_Core.Scripts
                 w.RigidBody.MoveVelocity = new Vector2(-1, 0);
             else
                 w.RigidBody.MoveVelocity = new Vector2(0, 0);
+
+            if(w.RigidBody.MoveVelocity != new Vector2())
+            {
+                if (!SoundManager.SoundEffects.ContainsKey("Walk") || SoundManager.SoundEffects["Walk"].State != Microsoft.Xna.Framework.Audio.SoundState.Playing)
+                {
+                    d.TimeSinceLastSound += gt;
+                    if (d.TimeSinceLastSound > .5f)
+                    {
+                        d.TimeSinceLastSound = 0;
+                        string[] sounds = { "DigiPetWalk1", "DigiPetWalk2", "DigiPetWalk3", "DigiPetWalk4" };
+                        Random r = new Random();
+                        int i = r.Next(0, 4);
+                        while (i == d.PrevWalkSound)
+                            i = r.Next(0, 4);
+                        SoundManager.PlaySoundEffect(sounds[i]);
+                        SoundManager.SoundEffects[sounds[i]].Volume = .1f;
+
+                    }
+                }
+            }
         }
 
         public static void Animate(float gt, Component[] c)

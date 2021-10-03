@@ -13,6 +13,9 @@ namespace MonoGame_Core.Scripts
         public static float ButtonHoldTime = 0f;
         public static bool started = false;
         public static Queue<char> MorseCode = new Queue<char>();
+        public static bool Updating = false;
+        public static bool Updated = false;
+
         public NuclearLevel(GameObject go, string name) : base(go, name)
         {
         }

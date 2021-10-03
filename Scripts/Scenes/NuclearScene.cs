@@ -37,14 +37,19 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["DialBorder"] = Content.Load<Texture2D>("Images/Nuclear/dial_border");
             ResourceManager.Textures["HeatText"] = Content.Load<Texture2D>("Images/Nuclear/heat_text");
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Nuclear/background");
-
+            ResourceManager.Textures["UpdateOverlay"] = Content.Load<Texture2D>("Images/Nuclear/UpdatingOverlay");
             ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
-            SoundManager.SoundEffects["alert"] = ResourceManager.SoundEffects["alert"].CreateInstance();
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(250, 250), screenCenter, 0));
+            
+            GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(800, 600), screenCenter, 10));
+            WorldObject overlay = (WorldObject)GameObjects[^1];
+            overlay.SpriteRenderer.Visible = false;
+            AnimationData oad = (AnimationData)overlay.ComponentHandler.AddComponent(new AnimationData(overlay, "AnimationData", overlay.SpriteRenderer, 2));
+            overlay.BehaviorHandler.AddBehavior("Overlay", Behaviors.UpdateNuclear, new Component[] { oad });
 
             GameObjects.Add(new WorldObject("HeatText", "HeatText", new Vector2(96, 32), screenCenter + new Vector2(0, 86), 1));
 
