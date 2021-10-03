@@ -86,6 +86,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   function addPerson(name, icon) {
     let person = {
+      idName: name,
       name: name,
       displayName: name,
       icon: `people/${name}/icon.png`,
@@ -96,7 +97,7 @@ Object.defineProperty(Array.prototype, "random", {
       messages: []
     }
 
-    game.readFile(`Content/Web/Chat/people/${name}/responses.json`).then((r) => {
+    game.readFile(`Content/Web/Chat/people/${person.idName}/responses.json`).then((r) => {
       if(r != "") {
         person.responses = JSON.parse(r)
       }
@@ -119,7 +120,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   function getPerson(person) {
     if(typeof person === "string") {
-      person = People.find((p) => {return p.name == person} )
+      person = People.find((p) => {return p.idName == person} )
     }
 
     return person
@@ -152,8 +153,10 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Kailee")
   addPerson("Quinn")
 
-  let stranger = addPerson("?????")
+  let stranger = addPerson("Stranger")
   stranger.cthulhu = true
+  stranger.name = "?????"
+  stranger.displayName = "?????"
 
 
   let SelectedPerson = People[0]
@@ -440,7 +443,7 @@ Object.defineProperty(Array.prototype, "random", {
     game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
       if(r != "") {
         if(doing_slash) {
-          recieveMessage(you, `Running Content/Web/Chat/people/${person.name}/${name}.json`)
+          recieveMessage(you, `Running Content/Web/Chat/people/${person.idName}/${name}.json`)
         }
 
         let customChat = JSON.parse(r)
@@ -503,43 +506,42 @@ Object.defineProperty(Array.prototype, "random", {
 
   setInterval(() => {
     if(Math.random() > 0.666) {
+      let wordbank = [
+        "STRANGER",
+        "VOID",
+        "DEATH",
+        "SOULS"
+      ]
+
+      let nameStr = ""
+      for(let c = 0; c < 20; ++c) {
+        nameStr += wordbank.random()
+      }
+
+      let str = ""
+      let numChars = getRandomInt(8, 20)
+      for(let c = 0; c < numChars; ++c) {
+
+        let numZalgo = getRandomInt(5, 30)
+        for(let z = 0; z < numZalgo; ++z) {
+          str += zalgo_mid.random();
+        }
+
+        numZalgo = getRandomInt(1, 5)
+        for(let z = 0; z < numZalgo; ++z) {
+          str += zalgo_up.random();
+        }
+
+        //numZalgo = getRandomInt(1, 5)
+        //for(let z = 0; z < numZalgo; ++z) {
+        //  str += zalgo_down.random();
+        //}
+
+        str += nameStr[c];
+      }
+
       let elements = document.querySelectorAll(".cthulhu")
       for (i = 0; i < elements.length; i++) {
-
-        let wordbank = [
-          "STRANGER",
-          "VOID",
-          "DEATH",
-          "SOULS"
-        ]
-
-        let nameStr = ""
-        for(let c = 0; c < 20; ++c) {
-          nameStr += wordbank.random()
-        }
-
-        let str = ""
-        let numChars = getRandomInt(8, 20)
-        for(let c = 0; c < numChars; ++c) {
-
-          let numZalgo = getRandomInt(5, 30)
-          for(let z = 0; z < numZalgo; ++z) {
-            str += zalgo_mid.random();
-          }
-
-          numZalgo = getRandomInt(1, 5)
-          for(let z = 0; z < numZalgo; ++z) {
-            str += zalgo_up.random();
-          }
-
-          numZalgo = getRandomInt(1, 5)
-          for(let z = 0; z < numZalgo; ++z) {
-            str += zalgo_down.random();
-          }
-
-          str += nameStr[c];
-        }
-
         elements[i].textContent = str
         elements[i].setAttribute("data-text", str)
 
