@@ -12,6 +12,8 @@ namespace MonoGame_Core.Scripts
     public class GameManager : Game
     {
         public static GameManager Instance;
+        public static float WidthScale = 1;
+        public static float HeightScale = 1;
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
@@ -23,12 +25,16 @@ namespace MonoGame_Core.Scripts
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Instance = this;
+
+            Screen screen = Screen.FromHandle(Window.Handle);
+            WidthScale = (screen.Bounds.Width / 1920.0f);
+            HeightScale = (screen.Bounds.Height / 1080.0f);
         }
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferHeight = 600;
-            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferWidth = (int)(800 * WidthScale);
+            _graphics.PreferredBackBufferHeight = (int)(600 * HeightScale);
 
             _graphics.ApplyChanges();
             // TODO: Add your initialization logic here
