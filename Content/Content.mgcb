@@ -200,18 +200,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/DigiPet/fly.png
 
-#begin Images/DigiPet/fly.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/DigiPet/fly.png
-
 #begin Images/DigiPet/pet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -259,6 +247,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/MainMenuBG.png
+
+#begin Images/Nuclear/background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/background.png
 
 #begin Images/Nuclear/button.png
 /importer:TextureImporter
@@ -379,6 +379,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/evil_button_press.png
+
+#begin Images/Nuclear/heat_text.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/heat_text.png
 
 #begin Images/Nuclear/lock_black.png
 /importer:TextureImporter
