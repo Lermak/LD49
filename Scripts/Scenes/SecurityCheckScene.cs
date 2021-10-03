@@ -75,14 +75,14 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["Textbox"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
-            GameObjects.Add(new TextBox("Textbox", "TestFont", "TextInput", new Vector2(300, 40), new Vector2(0, 200), 1));
+            GameObjects.Add(new TextBox("Textbox", "TestFont", "TextInput", new Vector2(600, 40), new Vector2(0, 200), 1));
             GameObject tb = GameObjects[GameObjects.Count - 1];
             tb.BehaviorHandler.AddBehavior("LimitChar", RoboTestchaBenaviors.LimitCharCount, new Component[] { tb.ComponentHandler.GetComponent("textboxrenderer") });
             ResourceManager.Textures["DigiPetBG"] = Content.Load<Texture2D>("Images/DigiPet/DigiPetBackground");            
 
-            GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(660, 50), new Vector2(-660, 440), 1));
+            GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
-            obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(), new Vector2(100, 50), 0, Color.White));
+            obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
             
             ((TextBox)tb).OnEnterPressed += (TextBox tb) =>
             {
