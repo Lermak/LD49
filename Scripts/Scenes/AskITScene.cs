@@ -22,6 +22,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
+            GameManager.chatWindow.setGlobal("ask_it", true);
+
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             obj.ComponentHandler.AddComponent(new FontRenderer(obj, 

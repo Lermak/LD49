@@ -129,5 +129,10 @@ namespace MonoGame_Core.Scripts
         {
             browser.ExecuteScriptAsync("runCustomChat", new object[] { person, chat, forceWatch });
         }
+
+        public void setGlobal(string var, object value)
+        {
+            browser.ExecuteScriptAsync("setGlobalValue", new object[] { var, value });
+        }
     }
 }
