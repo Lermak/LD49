@@ -153,10 +153,32 @@ namespace MonoGame_Core.Scripts
         public static List<Window> ToAdd = new List<Window>();
 
         public static int DoingActications = 0;
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        static IntPtr LastForegroundWindow;
+
+        public static bool ShouldDoActivations()
+        {
+            if (DoingActications > 0) return false;
+
+            if (GameManager.Instance.Window.Handle == LastForegroundWindow) return false;
+
+            foreach (Window w in Windows)
+            {
+                if(w.form != null && w.form.Handle == LastForegroundWindow)
+                {
+                    return false;
+                }
+            }
+
+            if (GameManager.chatWindow.Handle == LastForegroundWindow) return false;
+
+            return true;
+        }
+
         public static void DoActivations()
         {
-            if (DoingActications > 0) return;
-
             DoingActications = 10;
             foreach (Window w in Windows)
             {
@@ -247,7 +269,7 @@ namespace MonoGame_Core.Scripts
 
                 f.Activated += (object owner, EventArgs e) =>
                 {
-                    if (DoingActications > 0) return;
+                    if (!ShouldDoActivations()) return;
 
                     DoActivations();
                     f.Activate();
@@ -331,6 +353,7 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
+            LastForegroundWindow = GetForegroundWindow();
             DoingActications -= 1;
 
             foreach (Window w in WindowManager.Windows)
