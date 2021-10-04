@@ -31,8 +31,8 @@ namespace MonoGame_Core.Scripts
                 "                 Error Code: 312\n" +
                 "Disconnected from Server.\n" +
                 "Please select new server with better connection.\n",
-                "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-            
+                "TestFont", obj.Transform, new Vector2(40,-20), new Vector2(600, 50), 0, Color.White));
+            fr.TextScale = .75f;
             Random r = new Random();
             int[] goodServers = new int[] { r.Next(0, 16), r.Next(0, 16), r.Next(0, 16) };
             for (int y = 0; y < 4; ++y)
