@@ -184,12 +184,6 @@ namespace MonoGame_Core.Scripts
                 galaxyBlaster = false;
                 flag = false;
             }
-            if(galaxyBlaster && WindowManager.GalaxyBlasterWindow == null)
-            {
-                SoundManager.PlaySoundEffect("MysterySound");
-                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
-                WindowManager.AddWindow(new NoCloseForm(), "GalaxyBlasterWindow", new GalaxyBlasterScene(), new Vector2(600, 400));
-            }
             if (d.CodeAccessed == false && flag)
             {
                 WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
@@ -225,6 +219,7 @@ namespace MonoGame_Core.Scripts
                             "\n--------------------------" +
                             "\n  setsalary # - Set salary to given amount" +
                             "\n   soulcounts - Display soul count info" +
+                            "\n   galaxyblaster - Play Galaxy Blaster" +
                             "\nremoveoverlay - Remove fake overlay");
                     }
                 }

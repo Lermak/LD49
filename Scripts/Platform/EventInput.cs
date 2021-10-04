@@ -181,6 +181,9 @@ namespace EventInput
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
+
 
         /// <summary>
         /// Initialize the TextInput with the given GameWindow.
@@ -215,8 +218,7 @@ namespace EventInput
                     {
                         if (WindowManager.ShouldDoActivations())
                         {
-                            WindowManager.DoActivations();
-                            SetForegroundWindow(GameManager.Instance.Window.Handle);
+                            WindowManager.MaybeFocusMainWindow = true;
                         }
                     }
                     break;

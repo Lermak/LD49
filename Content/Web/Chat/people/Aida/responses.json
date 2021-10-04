@@ -28,5 +28,10 @@
 		"filter": "removeoverlay",
 		"force": true,
 		"handler": "aida_removeoverlay"
+	},
+	{
+		"filter": "galaxyblaster",
+		"force": true,
+		"handler": "aida_galaxy_blaster"
     }
 ]
