@@ -232,7 +232,21 @@ Object.defineProperty(Array.prototype, "random", {
     */
 
 
-  function createMessageHTML(fromPerson, message, time) {
+  function createMessageHTML(msgObj) {
+    let fromPerson = msgObj.from
+    let message = msgObj.text
+    let time = msgObj.time
+    if(msgObj.read_game_event !== undefined && !global_data.met_stranger) {
+      if(msgObj.read_game_event == "spawn_stranger_button") {
+        document.getElementById("jude_button").style.visibility = "visible"
+        global_data.met_stranger = true
+        game.sendEvent("met_stranger")
+      }
+      else {
+        game.sendEvent(msgObj.read_game_event)
+      }
+    }
+
     return `
     <article class="feed">
       <section class="feeds-user-avatar">
@@ -254,14 +268,15 @@ Object.defineProperty(Array.prototype, "random", {
 
   let delayed_messages = []
   let process_delay = false
-  function recieveMessage(person, text) {
+  function recieveMessage(person, text, read_game_event) {
     if(JUDE_MODE) {
-      delayed_messages.push([person, text])
+      delayed_messages.push([person, text, read_game_event])
       game.playSound("MessageNotification")
       return
     }
 
     let response_msg = addMessage(person, person, text)
+    response_msg.read_game_event = read_game_event
 
     if(person == jude) {
       you.messagesToJude.push({
@@ -273,7 +288,7 @@ Object.defineProperty(Array.prototype, "random", {
     if(person == SelectedPerson) {
       let mainfeed = document.getElementById("mainfeed")
       let toPerson = SelectedPerson
-      mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text)
+      mainfeed.innerHTML += createMessageHTML(response_msg)
 
       game.playSound("MessagePop")
       mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
@@ -294,11 +309,11 @@ Object.defineProperty(Array.prototype, "random", {
     }
   }
 
-  async function sendAsyncResponse(person, msg) {
+  async function sendAsyncResponse(person, msg, read_game_event) {
     setTyping(person, true)
     await waitTime(0.25 + msg.length * 0.01)
     setTyping(person, false)
-    recieveMessage(person, msg)
+    recieveMessage(person, msg, read_game_event)
   }
 
   async function handleResponseObject(person, response) {
@@ -325,7 +340,7 @@ Object.defineProperty(Array.prototype, "random", {
     }
 
     if(response.msg !== undefined) {
-      await sendAsyncResponse(person, response.msg)
+      await sendAsyncResponse(person, response.msg, response.read_game_event)
     }
 
     if(response.waitAfter === undefined) {
@@ -479,7 +494,7 @@ Object.defineProperty(Array.prototype, "random", {
 
     let toPerson = SelectedPerson
     let msg = addMessage(toPerson, you, text)
-    mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
+    mainfeed.innerHTML += createMessageHTML(msg)
 
     if(toPerson == jude) {
       you.messagesToJude.push({
@@ -529,11 +544,13 @@ Object.defineProperty(Array.prototype, "random", {
     if(lockSwitching) return;
     SelectedPerson = person
 
-    if(person.idName == "Stranger") {
-      game.sendEvent("onStrangerScreen")
-    }
-    else {
-      game.sendEvent("offStrangerScreen")
+    if(!JUDE_MODE) {
+      if(person.idName == "Stranger") {
+        game.sendEvent("onStrangerScreen")
+      }
+      else {
+        game.sendEvent("offStrangerScreen")
+      }
     }
 
     let header = document.getElementById("channel-name")
@@ -551,7 +568,7 @@ Object.defineProperty(Array.prototype, "random", {
     }
 
     for(let msg of messages) {
-      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
+      mainfeed.innerHTML += createMessageHTML(msg)
     }
 
     if(!JUDE_MODE) {
@@ -814,6 +831,8 @@ Object.defineProperty(Array.prototype, "random", {
       if(SelectedPerson == jude || SelectedPerson.idName == "Stranger") {
         SelectedPerson = you
       }
+
+      game.sendEvent("onStrangerScreen")
     }
     else {
       button.classList.remove("jude_button2")
@@ -861,10 +880,6 @@ Object.defineProperty(Array.prototype, "random", {
 
         await waitTime(2)
         await runCustomChat("Stranger", "first_contact")
-        
-        document.getElementById("jude_button").style.visibility = "visible"
-        global_data.met_stranger = true
-        game.sendEvent("met_stranger")
 
       }, 0)
     }
@@ -903,8 +918,9 @@ Object.defineProperty(Array.prototype, "random", {
   //runCustomChat("Christopher", "security_check", false)
   //runCustomChat("Christopher", "morse_code", false)
   //runCustomChat("Christopher", "coworker_bot", false)
+  //runCustomChat("Kailee", "digipal_chat", false)
 
-  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 0)
+  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
   //document.getElementById("jude_button").style.visibility = "visible"
   //global_data.remove_overlay = true
 
