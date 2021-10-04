@@ -145,10 +145,10 @@ namespace MonoGame_Core.Scripts
             float timeElapsed = 0;
             SoundManager.PlaySoundEffect("Boot");
             Random r = new Random();
-            while (timeElapsed < 8)
+            while (timeElapsed < 4)
             {
                 timeElapsed += TimeManager.DeltaTime;
-                if (timeElapsed % .75f < .45f)
+                if (timeElapsed % 1f < .5f)
                 {
                     if(r.Next(0,100) < 50)
                     {
