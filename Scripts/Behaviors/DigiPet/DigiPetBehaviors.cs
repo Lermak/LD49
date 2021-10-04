@@ -204,8 +204,8 @@ namespace MonoGame_Core.Scripts
                     // Create a new file     
                     using (StreamWriter sw = File.CreateText(fileName))
                     {
-                        sw.WriteLine("     OVERRIDE COMMANDS\n" + 
-                            "--------------------------\n" +
+                        sw.WriteLine("     OVERRIDE COMMANDS" + 
+                            "\n--------------------------" +
                             "\n  setsalary # - Set salary to given amount" +
                             "\n   soulcounts - Display soul count info" +
                             "\nremoveoverlay - Remove fake overlay");
