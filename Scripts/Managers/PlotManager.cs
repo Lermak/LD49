@@ -160,10 +160,10 @@ namespace MonoGame_Core.Scripts.Managers
 
         public void SpawnRandomLockOut()
         {
-            if(WindowManager.ResetKeysWindow != null &&
-               WindowManager.ResetKeysWindow != null &&
-               WindowManager.ResetKeysWindow != null &&
-               WindowManager.ResetKeysWindow != null)
+            if(WindowManager.ResetKeysWindow != null ||
+               WindowManager.SecruityCheckWindow != null ||
+               WindowManager.ITHelp != null ||
+               WindowManager.UpdateWindow != null)
             {
                 return;
             }

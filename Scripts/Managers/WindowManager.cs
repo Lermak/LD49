@@ -180,7 +180,14 @@ namespace MonoGame_Core.Scripts
 
             ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
-            //if(f is Fo)
+            if(f is NoCloseForm)
+            {
+                Screen screen = Screen.FromHandle(GameManager.Instance.Window.Handle);
+                Random r = new Random();
+                int x = r.Next(0, (int)(screen.Bounds.Width - (size.X + 250) * GameManager.WidthScale));
+                int y = r.Next(0, (int)(screen.Bounds.Height - (size.Y + 250) * GameManager.HeightScale));
+                f.Location = new System.Drawing.Point(x, y);
+            }
             ToAdd[ToAdd.Count - 1].form.Show();
 
             w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
