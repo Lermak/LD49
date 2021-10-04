@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -44,15 +45,17 @@ namespace MonoGame_Core.Scripts
             //CollisionManager.Initilize();
             CameraManager.Initilize();
 
+            ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
+            ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
             var c = new ChatForm();
             c.Show();
 
             WindowManager.Initilize(Content, new NuclearScene()); 
-            WindowManager.AddWindow(new NoCloseForm(), new DigiPetScene(), new Vector2(480,330));
-            //WindowManager.AddWindow(new NoCloseForm(), new SecurityCheckScene(), new Vector2(600, 240));
+            WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480,330));
+            WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
             //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
-            WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+            //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
 
             base.Initialize();
         }

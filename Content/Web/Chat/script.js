@@ -6,6 +6,13 @@ function waitTime(time) {
   })
 }
 
+
+/*
+some way of running code in response
+erorrs as chat messages from player
+File loading working in publish
+*/
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -27,7 +34,16 @@ Object.defineProperty(Array.prototype, "random", {
     CefSharp.BindObjectAsync = () => {}
 
     game = {}
+    game.notify = () => {}
+    game.playSound = () => {}
     game.readFile = (path) => {
+      return new Promise((resolve) => {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", "http://localhost:8080/" + path, true);
+        rawFile.addEventListener("load", () => { resolve(rawFile.responseText); });
+        rawFile.send();
+      });
+
       let str = ""
       if(path == "Content/Web/Chat/people/Delores/responses.json") {
         str = `[
@@ -67,12 +83,14 @@ Object.defineProperty(Array.prototype, "random", {
       ]`
       }
       else {
-        str = `[
-          "Welcome to Forward Thinking Energy - we’re happy to have you here! Your role is critical to our success so please pay attention to the following instructions.",
-          "In front of you is a button. If you press this button by clicking it with your mouse, you will cool down the reactor. You must press this button to prevent the reactor from overheating. <b>DO NOT allow the reactor to reach the critical heat level!</b> If this happens, the reactor will enter meltdown protocol and this scenario is grounds for immediate employment termination.",
-          "This should be simple enough but feel free to reach out to one of your co-workers if you have any questions. You can do this by clicking on the name of one of your co-workers in the chat window. Any meetings or messages from your co-workers will appear here as well.",
-          "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button."
-      ]`
+        str = `[{
+          "uniqueId": 1,
+          "msg": "I will only say this once."
+      },
+      {
+          "uniqueId": 1,
+          "msg": "I will also only say this once, shared with above."
+      }, "Other"]`
       }
 
       return new Promise( (resolve) => { resolve(str)});
@@ -94,21 +112,29 @@ Object.defineProperty(Array.prototype, "random", {
       id: People.length,
       inCustomChat: false,
       isTyping: false,
+      uniqueIds: {},
       messages: []
     }
 
-    game.readFile(`Content/Web/Chat/people/${person.idName}/responses.json`).then((r) => {
-      if(r != "") {
-        person.responses = JSON.parse(r)
-      }
-    })
+    person.loadResponses = () => {
+      game.readFile(`Content/Web/Chat/people/${person.idName}/responses.json`).then((r) => {
+        if(r != "") {
+          person.responses = JSON.parse(r)
+        }
+      })
+    }
 
+    person.loadResponses();
     People.push(person)
     return person
   }
 
+  let currentCthulhuName = ""
   function generateNameHTML(person, extraClass) {
-    return `<div class="${extraClass}"> <span class="${person.cthulhu !== undefined ? "cthulhu" : ""}" >${person.name}</span> </div>`
+    let name = person.name
+    if(person.cthulhu !== undefined) name = currentCthulhuName
+    
+    return `<div class="${extraClass}"> <span ${person.cthulhu !== undefined ? `class="cthulhu" data-text="${currentCthulhuName}"` : ""}">${name}</span> </div>`
   }
 
   function setTyping(person, isTyping) {
@@ -218,6 +244,7 @@ Object.defineProperty(Array.prototype, "random", {
       let toPerson = SelectedPerson
       mainfeed.innerHTML += createMessageHTML(response_msg.from, response_msg.text)
 
+      game.playSound("MessagePop")
       mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
     }
     else {
@@ -228,8 +255,10 @@ Object.defineProperty(Array.prototype, "random", {
         notificationNode.classList.add("mention-badge")
         notificationNode.textContent = "0"
         contactNode.appendChild(notificationNode)
-      }
 
+      }
+      
+      game.playSound("MessageNotification")
       notificationNode.textContent = parseInt(notificationNode.textContent) + 1
     }
   }
@@ -242,6 +271,14 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   async function handleResponseObject(person, response) {
+    if(response.uniqueId !== undefined) {
+      if(person.uniqueIds[response.uniqueId] !== undefined) {
+        return
+      }
+
+      person.uniqueIds[response.uniqueId] = true
+    }
+
     if(response.typing !== undefined) {
       setTyping(person, response.typing)
     }
@@ -287,6 +324,9 @@ Object.defineProperty(Array.prototype, "random", {
 
     let responseList = generateResponseObjects(person.responses)
 
+    //Filter out unique responses that have already happened
+    responseList = responseList.filter((v) => v.uniqueId === undefined || person.uniqueIds[v.uniqueId] === undefined)
+
     //First, check all our filters
     let matchedFilters = []
     for(let r of responseList) {
@@ -326,9 +366,7 @@ Object.defineProperty(Array.prototype, "random", {
     let msg = addMessage(toPerson, you, text, "now")
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
-    handleResponse(toPerson, text)
-
-    if(toPerson == you) {
+    if(toPerson == you && text.startsWith("/")) {
       if(text.startsWith("/test")) {
         let regex = /\/test\s+(\w+)\s+(\w+)/
         let matches = text.match(regex)
@@ -349,6 +387,15 @@ Object.defineProperty(Array.prototype, "random", {
         }
         mainfeed.innerHTML = ""
       }
+      else if(text.startsWith("/reload")) {
+        for(let p of People) {
+          p.uniqueIds = {}
+          p.loadResponses()
+        }
+      }
+    }
+    else {
+      handleResponse(toPerson, text)
     }
 
     mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
@@ -391,7 +438,7 @@ Object.defineProperty(Array.prototype, "random", {
     textBox.textContent = ""
 
     let person_is_typing = document.getElementById("person_is_typing")
-    person_is_typing.innerHTML = `${generateNameHTML(person)} is typing`
+    person_is_typing.innerHTML = `${generateNameHTML(person)} <span style="margin-left:0.2em">is typing</span>`
     setTyping(SelectedPerson, SelectedPerson.isTyping) //Silly, but avoids duplicate code for setting visibility
   }
 
@@ -547,6 +594,8 @@ Object.defineProperty(Array.prototype, "random", {
 
         str += nameStr[c];
       }
+
+      currentCthulhuName = str
 
       let elements = document.querySelectorAll(".cthulhu")
       for (i = 0; i < elements.length; i++) {
