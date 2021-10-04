@@ -348,6 +348,10 @@ Object.defineProperty(Array.prototype, "random", {
         await (handleResponseObject(person, s))
       }
     }
+
+    if(response.random_set !== undefined) {
+      await handleResponseObject(person, response.random_set.random())
+    }
   }
 
   function generateResponseObjects(list) {
@@ -520,6 +524,13 @@ Object.defineProperty(Array.prototype, "random", {
   function switchToPerson(person) {
     if(lockSwitching) return;
     SelectedPerson = person
+
+    if(person.idName == "Stranger") {
+      game.sendEvent("onStrangerScreen")
+    }
+    else {
+      game.sendEvent("offStrangerScreen")
+    }
 
     let header = document.getElementById("channel-name")
     header.innerHTML =  `${generateNameHTML(person)}`
@@ -710,62 +721,66 @@ Object.defineProperty(Array.prototype, "random", {
     '\u0337', /*     ̷     */   '\u0361', /*     ͡     */   '\u0489' /*     ҉_     */
   ];
 
+  function generateCthulhu() {
+    let prefix = [
+      "FIND",
+      "UNCOVER",
+      "SEEK",
+      "UNEARTH"
+    ]
+
+    let wordbank = [
+      "SECRET",
+      "TRUTH",
+      "UNCOVER",
+      "CONSPIRACY"
+    ]
+
+    let nameStr = ""
+    for(let c = 0; c < 10; ++c) {
+      nameStr += prefix.random()
+      nameStr += wordbank.random()
+    }
+
+    let str = ""
+    let numChars = getRandomInt(8, 20)
+    for(let c = 0; c < numChars; ++c) {
+
+      let numZalgo = getRandomInt(5, 30)
+      for(let z = 0; z < numZalgo; ++z) {
+        str += zalgo_mid.random();
+      }
+
+      numZalgo = getRandomInt(1, 5)
+      for(let z = 0; z < numZalgo; ++z) {
+        str += zalgo_up.random();
+      }
+
+      //numZalgo = getRandomInt(1, 5)
+      //for(let z = 0; z < numZalgo; ++z) {
+      //  str += zalgo_down.random();
+      //}
+
+      str += nameStr[c];
+    }
+
+    currentCthulhuName = str
+
+    let elements = document.querySelectorAll(".cthulhu")
+    for (i = 0; i < elements.length; i++) {
+      elements[i].textContent = str
+      elements[i].setAttribute("data-text", str)
+
+      elements[i].classList.remove("cthulhu")
+      void elements[i].offsetWidth;
+      elements[i].classList.add("cthulhu")
+
+    }
+  }
+
   setInterval(() => {
     if(Math.random() > 0.666) {
-      let prefix = [
-        "FIND",
-        "UNCOVER",
-        "SEEK",
-        "UNEARTH"
-      ]
-
-      let wordbank = [
-        "SECRET",
-        "TRUTH",
-        "UNCOVER",
-        "CONSPIRACY"
-      ]
-
-      let nameStr = ""
-      for(let c = 0; c < 10; ++c) {
-        nameStr += prefix.random()
-        nameStr += wordbank.random()
-      }
-
-      let str = ""
-      let numChars = getRandomInt(8, 20)
-      for(let c = 0; c < numChars; ++c) {
-
-        let numZalgo = getRandomInt(5, 30)
-        for(let z = 0; z < numZalgo; ++z) {
-          str += zalgo_mid.random();
-        }
-
-        numZalgo = getRandomInt(1, 5)
-        for(let z = 0; z < numZalgo; ++z) {
-          str += zalgo_up.random();
-        }
-
-        //numZalgo = getRandomInt(1, 5)
-        //for(let z = 0; z < numZalgo; ++z) {
-        //  str += zalgo_down.random();
-        //}
-
-        str += nameStr[c];
-      }
-
-      currentCthulhuName = str
-
-      let elements = document.querySelectorAll(".cthulhu")
-      for (i = 0; i < elements.length; i++) {
-        elements[i].textContent = str
-        elements[i].setAttribute("data-text", str)
-
-        elements[i].classList.remove("cthulhu")
-        void elements[i].offsetWidth;
-        elements[i].classList.add("cthulhu")
-
-      }
+      generateCthulhu()
     }
   }, 666)
 
@@ -780,6 +795,8 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   window.toggleJudeMode = () => {
+    game.playSound("Hack")
+
     JUDE_MODE = !JUDE_MODE
     let button = document.getElementById("jude_button")
     if(JUDE_MODE) {
@@ -834,7 +851,9 @@ Object.defineProperty(Array.prototype, "random", {
         stranger.cthulhu = true
         stranger.name = "?????"
         stranger.displayName = "?????"
+        generateCthulhu()
         generateContacts()
+        game.playSound("StrangerArrive")
 
         await waitTime(2)
         await runCustomChat("Stranger", "first_contact")

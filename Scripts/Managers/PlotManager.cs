@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -101,7 +102,7 @@ namespace MonoGame_Core.Scripts.Managers
                 WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
             }
 
-            if(morse_code == false && christopher_morsecode == null)
+            if(morse_code == false && christopher_strange && christopher_morsecode == null)
             {
                 christopher_morsecode = ChritopherMorseCodeCo();
                 coroutines.AddCoroutine(christopher_morsecode, "christopher_morsecode", 0, true);
@@ -151,6 +152,32 @@ namespace MonoGame_Core.Scripts.Managers
             }
         }
 
+        public static float MysteryVolume = 0;
+        public IEnumerator SongStartCo()
+        {
+            SoundManager.PlaySong("MysteryContact");
+            yield return Coroutines.WaitTime(0.1f);
+
+            while (MysteryVolume < 1)
+            {
+                MysteryVolume += 0.05f;
+                SoundManager.SetVolume(MysteryVolume);
+                yield return Coroutines.WaitTime(0.5f);
+            }
+        }
+
+        public IEnumerator SongEndCo()
+        {
+            while (MysteryVolume > 0)
+            {
+                MysteryVolume -= 0.1f;
+                SoundManager.SetVolume(MysteryVolume);
+                yield return Coroutines.WaitTime(0.3f);
+            }
+
+            MediaPlayer.Stop();
+        }
+
         public void SendEvent(string ev)
         {
             if (ev == "Delores_intro_chat")
@@ -191,6 +218,23 @@ namespace MonoGame_Core.Scripts.Managers
             if (ev == "Stranger_great_old_one")
             {
                 Globals.CreateChalk = true;
+            }
+
+            if(ev == "onStrangerScreen")
+            {
+                coroutines.Stop("SongCo");
+                coroutines.AddCoroutine(SongStartCo(), "SongCo", 0, true);
+            }
+
+            if (ev == "offStrangerScreen")
+            {
+                coroutines.Stop("SongCo");
+                coroutines.AddCoroutine(SongEndCo(), "SongCo", 0, true);
+            }
+
+            if (ev == "Stranger_press_the_button")
+            {
+                Globals.ExpectFinalButtonPush = true;
             }
         }
 
