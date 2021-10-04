@@ -409,8 +409,8 @@ Object.defineProperty(Array.prototype, "random", {
     //Filter out unique responses that have already happened
     responseList = responseList.filter((v) => {
       if(v.requires) {
-        let conditionFn = new Function('msg', 'global_data', v.requires)
-        let conditionRet = conditionFn(message, global_data)
+        let conditionFn = new Function('msg', 'global_data', 'unique_id', v.requires)
+        let conditionRet = conditionFn(message, global_data, person.uniqueIds)
         return conditionRet
       }
 

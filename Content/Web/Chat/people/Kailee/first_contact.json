@@ -1,0 +1,64 @@
+[
+    "HEYYYYYY!! Christopher told me you were coming to work here but I didn't know it would be so soon! How have you been??",
+    { "uniqueId": "first_contact" },
+	
+	{
+        "filter": "(okay.*)|(ok.*)|(so so.*)|(alright.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Yeah, same here. Though Christopher has these new gummies that have definitely helped. You should hang out with us sometime soon and try them- it can be just like old times! Also Mr. Spoons has gotten SO BIG since you last saw him- he's like double the size since he was a kitten! He's still a huge snuggle bug though so I know he'll jump right on your lap to get your world-famous snuggles. Well, world-famous to me anyway. :) I MISS YOUR HUGS! You give such amazing hugs! I've just missed you so much!"
+            },
+			{
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 0.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I'm so so sorry but my heat level is getting bad so I have to go press my button. Message me anytime, seriously! I love talking to you!"
+            }
+        ]
+    },
+	{
+        "filter": "(bad.*)|(not good.*)|(not well.*)|(sick.*)|(awful.*)|(terrible.*)|(depressed.*)|(lonely.*)|(sad.*)|(anguished.*)|(defeated.*)|(paranoid.*)|(terribad.*)|(crushed.*)|(miserable.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 2
+            },
+            {
+                "msg": "OH NO! I'm so sorry to hear that! *BIG HUGS!* We need to hang out so I can give you real hugs. We can get Christopher and do our legendary cuddle huddles! :) I really wish I had known you were going through a tough time so I could help sooner. We're friends forever, remember?"
+            }
+        ]
+    }
+]
