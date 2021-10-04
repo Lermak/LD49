@@ -175,6 +175,7 @@ namespace MonoGame_Core.Scripts
 
             if (d.CodeAccessed == false && flag)
             {
+                WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
                 SoundManager.PlaySoundEffect("MysterySound");
                 SoundManager.SoundEffects["MysterySound"].Volume = .1f;
 

@@ -29,6 +29,7 @@ namespace MonoGame_Core.Scripts
             
             // Textures
             ResourceManager.Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             ResourceManager.Textures["UprightChalk"] = Content.Load<Texture2D>("Images/Nuclear/chalk_held");
             ResourceManager.Textures["SideChalk"] = Content.Load<Texture2D>("Images/Nuclear/chalk_laying");
