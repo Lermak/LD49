@@ -144,7 +144,21 @@ namespace MonoGame_Core.Scripts
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
         {
             if (NuclearLevel.started)
+            {
+                if (NuclearLevel.buttonHit)
+                {
+                    NuclearLevel.currentStopTime += gt;
+                    if (NuclearLevel.currentStopTime >= NuclearLevel.ButtonHitStopTime)
+                    {
+                        NuclearLevel.currentStopTime = 0;
+                        NuclearLevel.buttonHit = false;
+                    }
+
+                    return;
+                }
+
                 NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
+            }
         }
         public static void NuclearRotate(float gt, Component[] c)
         {
