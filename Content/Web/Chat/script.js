@@ -346,7 +346,7 @@ Object.defineProperty(Array.prototype, "random", {
     for(let r of responseList) {
       if(r.filter !== undefined) {
         let filter = new RegExp(r.filter)
-        if(filter.test(message) == true) {
+        if(filter.test(message.toLowerCase()) == true) {
           matchedFilters.push(r)
         }
       }

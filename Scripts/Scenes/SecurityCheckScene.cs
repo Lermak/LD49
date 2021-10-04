@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -17,6 +18,7 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {
             NuclearLevel.Locked = true;
+            
             string s = "";
             var random = new Random();
             string fileName = @".\SecurityCodes.txt";
@@ -88,6 +90,11 @@ namespace MonoGame_Core.Scripts
             message = "Please input code \n" + letter + (xindex + 1) + " from SecurityCodes.txt and confirm";
             key = codes[yindex, xindex];
 
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
+            ResourceManager.SoundEffects["Error"] = Content.Load<SoundEffect>(@"Sound/error");
             ResourceManager.Textures["Carret"] = Content.Load<Texture2D>(@"Images/Caret");
             ResourceManager.Textures["Textbox"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
@@ -107,10 +114,13 @@ namespace MonoGame_Core.Scripts
                 {
                     error = false;
                     NuclearLevel.Locked = false;
+                    SoundManager.PlaySoundEffect("Unlock");
+                    SoundManager.SoundEffects["Unlock"].Volume = .5f;
                     WindowManager.RemoveWindow(CurrentWindow.windowData);
                 }
                 else
                 {
+                    SoundManager.PlaySoundEffect("Error");
                     error = true;
                     tb.Text = "";
                 }

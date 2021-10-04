@@ -1,0 +1,48 @@
+[
+    "I do not have time to chat. Sorry.",
+    "Try contacting someone else. Thank you.",
+    "...",
+    "I am busy. Sorry.",
+    "Shouldn’t you be working right now instead?",
+	"This chat is for company business only. I have no business with you.",
+	"Do you not have better things to do? Quit wasting my time.",
+	"Don’t you ever give up? Do not answer that. I need to work. Goodbye.",
+	"I need to work and so do you. Bye.",
+    {
+        "filter": "\\?$",
+        "msg": "I don't have time for your questions."
+    },
+    {
+        "condition": "return msg.length > 15",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I don't really even know how to respond. Figure it out yourself."
+            }
+        ]
+    },
+
+    {
+        "uniqueId": 1,
+        "msg": "I do not have time for you. Message someone else."
+    },
+    {
+        "uniqueId": 1,
+        "msg": "Stop messaging me, new hire."
+    }
+]

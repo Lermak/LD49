@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -14,6 +15,11 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {
             NuclearLevel.Locked = true;
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
+
             WindowManager.ResetKeysWindow.form.AllowDrop = true;
             WindowManager.ResetKeysWindow.form.DragEnter += (object sender, System.Windows.Forms.DragEventArgs e) =>
             {
@@ -33,6 +39,8 @@ namespace MonoGame_Core.Scripts
                     {
                         WindowManager.KillResetKeys = true;
                         NuclearLevel.Locked = false;
+                        SoundManager.PlaySoundEffect("Unlock");
+                        SoundManager.SoundEffects["Unlock"].Volume = .5f;
                     }
                 }
                 

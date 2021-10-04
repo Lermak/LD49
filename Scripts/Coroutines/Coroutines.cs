@@ -74,6 +74,8 @@ namespace MonoGame_Core.Scripts
             ad.SpriteRenderer.Visible = true;
             ad.ChangeSpriteSheet("UpdateOverlay", 2);
             NuclearLevel.Locked = true;
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
             float timeElapsed = 0;
 
             while (timeElapsed < 30)
@@ -82,9 +84,12 @@ namespace MonoGame_Core.Scripts
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
             }
+            NuclearLevel.NeedsUpdate = false;
             NuclearLevel.Updating = false;
             NuclearLevel.Updated = true;
             NuclearLevel.Locked = false;
+            SoundManager.PlaySoundEffect("Unlock");
+            SoundManager.SoundEffects["Unlock"].Volume = .5f;
             ad.SpriteRenderer.Visible = false;
             yield return true;
         }
@@ -118,6 +123,8 @@ namespace MonoGame_Core.Scripts
                 yield return false;
             }
             NuclearLevel.Locked = false;
+            SoundManager.PlaySoundEffect("Unlock");
+            SoundManager.SoundEffects["Unlock"].Volume = .5f;
             WindowManager.KillBadConnection = true;
             yield return true;
         }

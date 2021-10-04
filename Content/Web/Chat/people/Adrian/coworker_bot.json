@@ -1,0 +1,6 @@
+[
+    "Hey! Glad you messaged me. I always wonder what newcomers think about this place. What do you think so far?",
+    { "wait": 5, "msg": "Ah yes. I’ve thought there was a conspiracy going on here for years, especially after I was suddenly promoted from Button Masher to Senior Button Masher. It makes good money which is why I haven’t left yet but I’m a software developer so this is pretty mind-numbing for me. I think we’re unwittingly part of something much, much larger than all of us."},
+    { "filter": "(aida.*\\?)|(aida.\\?)$","typing": true, "wait": 3, "msg": "Yes, Aida. She’s definitely an AI. I don’t have any solid evidence, of course, but she just suddenly showed up and has been working here ever since. I don’t think she’s actually a button masher like the rest of us though. I think Delores gives her secret commands or something. Again, I don’t exactly have any solid evidence to back this up but just talk to her yourself and you’ll see what I mean." },
+	"Oops, I've got to get back to work. Let's chat soon."
+]

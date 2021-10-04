@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -11,7 +12,9 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent(List<Camera> c)
         {
-            NuclearLevel.Locked = true;
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+
 
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
@@ -34,6 +37,8 @@ namespace MonoGame_Core.Scripts
             if(rd.TimeRemaining <= 0)
             {
                 NuclearLevel.Locked = true;
+                SoundManager.PlaySoundEffect("Lockout");
+                SoundManager.SoundEffects["Lockout"].Volume = .3f;
                 fr.Text = "You must reauthorize your account";
             }
             else

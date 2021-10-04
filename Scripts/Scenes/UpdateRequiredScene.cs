@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -16,7 +17,10 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["UpdateNow"] = Content.Load<Texture2D>(@"Images/UpdateRequired/UpdateNow");
             ResourceManager.Textures["UpdateLater"] = Content.Load<Texture2D>(@"Images/UpdateRequired/UpdateLater");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
-            
+            ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
+            ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
+            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
+
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             obj.ComponentHandler.AddComponent(new FontRenderer(obj,
@@ -36,10 +40,13 @@ namespace MonoGame_Core.Scripts
             Vector2 v = CurrentWindow.inputManager.MousePos;
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-            { 
+            {
+                Random r = new Random();
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+
                 if (!NuclearLevel.Updated)
                 {
-                    
+                    NuclearLevel.NeedsUpdate = true;
                 }
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
             }
@@ -51,7 +58,10 @@ namespace MonoGame_Core.Scripts
             Vector2 v = CurrentWindow.inputManager.MousePos;
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
-            { 
+            {
+                Random r = new Random();
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+
                 WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.UpdateLater(), "UpdateLater", 0, true);
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
             }
