@@ -89,6 +89,8 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
+        
+
         public static IEnumerator<bool> UpdateLater()
         {
             float timeElapsed = 0;

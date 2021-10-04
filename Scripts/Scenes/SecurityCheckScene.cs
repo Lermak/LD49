@@ -11,6 +11,7 @@ namespace MonoGame_Core.Scripts
     {
         string key = "";
         string message = "";
+        bool error = false;
         protected override void loadContent(List<Camera> c)
         {
             string[,] codes = new string[26, 10];
@@ -19,24 +20,44 @@ namespace MonoGame_Core.Scripts
             var random = new Random();
             for (int y = 0; y < 26; ++y)
                 for (int x = 0; x < 10; ++x)
-                {                  
-                    var chars = "0123456789";
-
-
-                    for (int i = 0; i < 2; i++)
+                {
+                    if (x == 9 && y == 0)
+                        codes[y, x] = "M";
+                    else if (x == 9 && y == 1)
+                        codes[y, x] = "O";
+                    else if (x == 9 && y == 2)
+                        codes[y, x] = "R";
+                    else if (x == 9 && y == 4)
+                        codes[y, x] = "S";
+                    else if (x == 9 && y == 5)
+                        codes[y, x] = "E";
+                    else if (x == 7 && y == 7)
+                        codes[y, x] = "CO";
+                    else if (x == 8 && y == 7)
+                        codes[y, x] = "DE";
+                    else if (x == 2 && y == 24)
+                        codes[y, x] = "VO";
+                    else if (x == 3 && y == 24)
+                        codes[y, x] = "ID";
+                    else
                     {
-                        codes[y, x] = "";
-                        codes[y, x] += chars[random.Next(chars.Length)];
-                        codes[y, x] += chars[random.Next(chars.Length)];
+                        var chars = "0123456789";
+
+                        for (int i = 0; i < 2; i++)
+                        {
+                            codes[y, x] = "";
+                            codes[y, x] += chars[random.Next(chars.Length)];
+                            codes[y, x] += chars[random.Next(chars.Length)];
+                        }
                     }
                 }
 
             
             int yindex = random.Next(0, 26);
             char letter = (char)(yindex+65);
-            int num = random.Next(0, 10);
-            message = "Please input code \n" + letter + (num + 1) + " from SecurityCodes.txt";
-            key = codes[yindex, num];
+            int xindex = random.Next(0, 10);
+            message = "Please input code \n" + letter + (xindex + 1) + " from SecurityCodes.txt and confirm";
+            key = codes[yindex, xindex];
 
             for (int x = 0; x < 10; ++x)
                 s += "\t" + (x + 1);
@@ -50,7 +71,7 @@ namespace MonoGame_Core.Scripts
             s += GetCodeLine(8, codes);
             s += GetCodeLine(3, codes);
 
-            string fileName = @".\SecurityFile.txt";
+            string fileName = @".\SecurityCodes.txt";
 
             try
             {
@@ -81,14 +102,21 @@ namespace MonoGame_Core.Scripts
 
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
-            obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-            
+            FontRenderer objfr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
+            obj.BehaviorHandler.AddBehavior("ErrorMessage", ShowError, new Component[] { objfr });
+
             ((TextBox)tb).OnEnterPressed += (TextBox tb) =>
             {
                 if (tb.Text == key)
                 {
+                    error = false;
                     NuclearLevel.Locked = false;
                     WindowManager.RemoveWindow(CurrentWindow.windowData);
+                }
+                else
+                {
+                    error = true;
+                    tb.Text = "";
                 }
             };
 
@@ -102,11 +130,24 @@ namespace MonoGame_Core.Scripts
 
             for (int x = 0; x < 10; ++x)
             {
-                s += st[y,x];
+                s += st[y, x];
                 s += "\t";
             }
 
             return s;
+        }
+        void ShowError(float gt, Component[] c)
+        {
+            FontRenderer fr = (FontRenderer)c[0];
+
+            if (error)
+            {
+                fr.Text = message + "\nError: Incorrect Code";
+            }
+            else
+            {
+                fr.Text = message;
+            }
         }
     }
 }

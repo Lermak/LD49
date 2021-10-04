@@ -230,7 +230,7 @@ namespace MonoGame_Core.Scripts
                     if(i < 30)
                     {
                         SoundManager.PlaySoundEffect("DigiPetWant");
-                        SoundManager.SoundEffects["DigiPetWant"].Volume = .1f;
+                        SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
 
                     }
 

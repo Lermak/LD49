@@ -138,6 +138,9 @@ namespace MonoGame_Core.Scripts
         public static Window ResetKeysWindow;
         public static bool KillResetKeys = false;
 
+        public static Window GalaxyBlasterWindow;
+        public static bool KillGalaxyBlaster = false;
+
         public static List<Window> ToAdd = new List<Window>();
 
         private static ContentManager contentManager;
@@ -168,8 +171,10 @@ namespace MonoGame_Core.Scripts
                 ResetKeysWindow = w;
             else if (BlackboardConnection == "BadConnectionWindow")
                 BadConnectionWindow = w;
+            else if (BlackboardConnection == "GalaxyBlasterWindow")
+                GalaxyBlasterWindow = w;
 
-        ToAdd.Add(w);
+            ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
             ToAdd[ToAdd.Count - 1].form.Show();
 

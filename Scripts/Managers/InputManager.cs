@@ -145,5 +145,7 @@ namespace MonoGame_Core.Scripts
 
             checkDoubleClick(gt);
         }
+
+
     }
 }

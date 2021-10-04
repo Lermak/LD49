@@ -126,6 +126,8 @@ namespace MonoGame_Core.Scripts
             ButtonData b = (ButtonData)c[1];
             AnimationData ad = (AnimationData)c[2];
             Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (NuclearLevel.Locked)
+                return;
 
             if (t.ContainsPoint(v) && CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton))
                 ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
@@ -152,12 +154,12 @@ namespace MonoGame_Core.Scripts
             float rot_start = MathHelper.ToRadians(70);
             float rot_end = MathHelper.ToRadians(-70);
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
-            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f), 0, 1);
+            float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f) * 2, 0, 1);
             float intensityScale = 5f;
             if (intensity > 0f)
             {
                 SoundManager.PlaySoundEffect("alert");
-                SoundManager.SoundEffects["alert"].Volume = intensity / 20;
+                SoundManager.SoundEffects["alert"].Volume = intensity * 0.15f;
             }
                 
             float r1 = intensity * intensityScale * ((float)r.NextDouble() - 0.5f);
@@ -221,6 +223,32 @@ namespace MonoGame_Core.Scripts
             {
                 AnimationData ad = (AnimationData)c[0];
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.UpdateNuclear(ad), "Updating", 0, true);
+            }
+        }
+        public static void UpdateSpinner(float gt, Component[] c)
+        {
+            if (NuclearLevel.Updating)
+            {
+                SpriteRenderer s = (SpriteRenderer)c[0];
+                s.Visible = true;
+                s.Transform.Rotate(-gt);
+            }
+            else {
+                SpriteRenderer s = (SpriteRenderer)c[0];
+                s.Visible = false;
+            }
+            
+        }
+
+        public static void LockoutUpdate(float gt, Component[] c) {
+            SpriteRenderer sd = (SpriteRenderer)c[0];
+            if (NuclearLevel.Locked)
+            {
+                sd.Visible = true;
+            }
+            else
+            {
+                sd.Visible = false;
             }
         }
     }

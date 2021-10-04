@@ -38,6 +38,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["HeatText"] = Content.Load<Texture2D>("Images/Nuclear/heat_text");
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Nuclear/background");
             ResourceManager.Textures["UpdateOverlay"] = Content.Load<Texture2D>("Images/Nuclear/UpdatingOverlay");
+            ResourceManager.Textures["UpdateSpinner"] = Content.Load<Texture2D>("Images/Nuclear/update_arrows");
+            ResourceManager.Textures["lock"] = Content.Load<Texture2D>("Images/Nuclear/lock_white");
             ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
 
             Vector2 dialSize = new Vector2(200, 200);
@@ -51,6 +53,13 @@ namespace MonoGame_Core.Scripts
             AnimationData oad = (AnimationData)overlay.ComponentHandler.AddComponent(new AnimationData(overlay, "AnimationData", overlay.SpriteRenderer, 2));
             overlay.BehaviorHandler.AddBehavior("Overlay", Behaviors.UpdateNuclear, new Component[] { oad });
 
+            WorldObject updateSpinner = new WorldObject("UpdateSpinner", "UpdateSpinner", new Vector2(80f, 80f), screenCenter, 10);
+            updateSpinner.SpriteRenderer.Visible = false;
+            updateSpinner.BehaviorHandler.AddBehavior("UpdateSpinner", Behaviors.UpdateSpinner, new Component[] { updateSpinner.SpriteRenderer });
+            GameObjects.Add(updateSpinner);
+
+
+
             GameObjects.Add(new WorldObject("HeatText", "HeatText", new Vector2(96, 32), screenCenter + new Vector2(0, 86), 1));
 
             Vector2 buttonCenterPos = screenCenter + new Vector2(0, -32);
@@ -62,6 +71,12 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add(dialBackObj);
             GameObjects.Add(dialArrowObj);
             GameObjects.Add(dialBorderObj);
+
+            Vector2 lockoutPos = buttonCenterPos + new Vector2(0f, 5f);
+            WorldObject visualLockout = new WorldObject("lock", "Lockout", new Vector2(100f, 100f), lockoutPos, 5);
+            visualLockout.Transform.SetScale(0.6f, 0.6f);
+            visualLockout.BehaviorHandler.AddBehavior("lockoutUpdate", Behaviors.LockoutUpdate, new Component[] { visualLockout.SpriteRenderer });
+            GameObjects.Add(visualLockout);
 
             Vector2 cooldownButtonSize = new Vector2(100, 100);
             Button cooldownButton = new Button("CoolantButton", "CoolantButtonPress", "NuclearButton", cooldownButtonSize, buttonCenterPos, 4, () =>
