@@ -968,6 +968,12 @@
 /processorParam:Quality=Best
 /build:Sound/error.wav
 
+#begin Sound/explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/explosion.wav
+
 #begin Sound/lock_out.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -979,6 +985,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/machine_starting.wav
+
+#begin Sound/machine_stopping.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/machine_stopping.wav
 
 #begin Sound/Relaque/message_notification.wav
 /importer:WavImporter
