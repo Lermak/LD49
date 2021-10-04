@@ -293,10 +293,34 @@ namespace MonoGame_Core.Scripts
             else
             {
                 d.TimeDead += gt;
-                if (d.TimeDead > 40)
+                if (d.TimeDead > 40 && w.SpriteRenderer.Animation < 6)
+                {
+                    foreach (GameObject g in WindowManager.DigiPetWindow.sceneManager.CurrentScene.GameObjects.Where(f => f.Tag == "Fly"))
+                        g.Destroy();
                     w.SpriteRenderer.Animation = 6;
-                else if (d.TimeDead > 20)
+                }
+                else if (d.TimeDead > 20 && w.SpriteRenderer.Animation < 5)
+                {
+                    Vector2 pos = ((WorldObject)d.GameObject).Transform.Position;
+                    WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
+                        new Fly(pos + new Vector2(-30, 60),
+                        new List<Vector2>()
+                        {
+                            pos + new Vector2(-15, 75),
+                            pos + new Vector2(-20, 55),
+                            pos + new Vector2(-30, 60)
+                        }));
+                    WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
+                        new Fly(pos + new Vector2(20, 80),
+                        new List<Vector2>()
+                        {
+                            pos + new Vector2(10, 70),
+                            pos + new Vector2(5, 75),
+                            pos + new Vector2(20, 80)
+                        }));
+
                     w.SpriteRenderer.Animation = 5;
+                }
 
             }
 
@@ -332,6 +356,22 @@ namespace MonoGame_Core.Scripts
         public static void Animate(float gt, Component[] c)
         {
             ((AnimationData)c[0]).Animate(gt);
+        }
+
+        public static void Fly(float gt, Component[] c)
+        {
+            FlyData f = (FlyData)c[0];
+            Transform t = (Transform)c[1];
+            f.TimeSinceLastMove += gt;
+            if(f.TimeSinceLastMove > 2)
+            {
+                f.TimeSinceLastMove = 0;
+
+                f.PositionIndex++;
+                if (f.PositionIndex >= f.Positions.Count)
+                    f.PositionIndex = 0;
+                t.Place(f.Positions[f.PositionIndex]);
+            }    
         }
     }
 }

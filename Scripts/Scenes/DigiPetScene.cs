@@ -20,6 +20,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["PlayUp"] = Content.Load<Texture2D>("Images/DigiPet/button_play");
             ResourceManager.Textures["PlayDown"] = Content.Load<Texture2D>("Images/DigiPet/button_play_press");
             ResourceManager.Textures["DigiPet"] = Content.Load<Texture2D>("Images/DigiPet/pet_sprite_sheet");
+            ResourceManager.Textures["Fly"] = Content.Load<Texture2D>("Images/DigiPet/fly");
             ResourceManager.SoundEffects["DigiPetWalk1"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_1");
             ResourceManager.SoundEffects["DigiPetWalk2"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_2");
             ResourceManager.SoundEffects["DigiPetWalk3"] = Content.Load<SoundEffect>("Sound/DigiPet/walk_3");
