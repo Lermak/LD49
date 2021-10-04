@@ -12,19 +12,19 @@
         "requiresId": "money",
         "filter": "(salary)|(money)|\\$",
         "event": "jude_money",
-        "msg": "I do not feel comfortable discussing exactly how much I make. You clearly know nothing."
+        "msg": "I do not feel comfortable discussing exactly how much I make. You clearly know nothing. Prove me wrong and tell me my exact salary."
     },
     {
         "requiresId": "money",
         "event": "jude_money",
         "filter": "(salary)|(money)|\\$",
-        "msg": "If you are attempting to get me to divulge my salary, your efforts are in vain. I have nothing to explain to you."
+        "msg": "If you are attempting to get me to divulge my salary, your efforts are in vain. I have nothing to explain to you. What do you think my salary is?"
     },
     {
         "requiresId": "money",
         "event": "jude_money",
         "filter": "(salary)|(money)|\\$",
-        "msg": "How much I make is none of your business. I am certain your estimation would be wildly incorrect."
+        "msg": "How much I make is none of your business. I am certain your estimation would be wildly incorrect but you are welcome to guess my salary."
     },
     {
         "uniqueId": "money",
