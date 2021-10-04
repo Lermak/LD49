@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
@@ -284,6 +285,12 @@ namespace MonoGame_Core.Scripts
             {
                 if (t.ContainsPoint(v) && !cd.Held)
                 {
+                    if (!cd.FirstPickup)
+                    {
+                        cd.FirstPickup = true;
+                        WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.EndTimeMusic(), "EndTimeLoop", 0, true);//SoundManager.PlaySong("EndTimes");
+                    }
+
                     sr.Texture = "UprightChalk";
                     cd.Held = true;
                     cd.Draw = false;
@@ -323,5 +330,44 @@ namespace MonoGame_Core.Scripts
                 t.Place(v);
             }
         }
+        public static void SpawnChalk(float gt, Component[] c)
+        {
+            if (Globals.CreateChalk && !Globals.PrepareForEndTimes)
+            {
+                SoundManager.PlaySong("OminousMusic");
+                WindowManager.MainWindow.sceneManager.CurrentScene.ToAdd.Add(new Chalk(new Vector2(-835, 415) + new Vector2(-100, -100)));
+                Globals.PrepareForEndTimes = true;
+            }
+        }
+
+        public static void FadeFinaleMusic(float gt, Component[] c)
+        {
+            if(Globals.FinalButtonPush)
+            {
+                if(MediaPlayer.Volume > 0)
+                {
+                    SoundManager.volume -= 1 * gt;
+                }    
+                else
+                {
+                    MediaPlayer.Stop();
+                    SoundManager.volume = 1;
+                }
+            }
+        }
+        public static void ChangeOverlay(float gt, Component[] c)
+        {
+            SpriteRenderer bg = (SpriteRenderer)c[0];
+            SpriteRenderer title = (SpriteRenderer)c[1];
+
+            if (GameManager.plotManager.remove_overlay)
+            {
+                bg.Texture = "EvilBackground";
+                title.Texture = "SoulsTitle";
+
+            }
+        }
+
+
     }
 }
