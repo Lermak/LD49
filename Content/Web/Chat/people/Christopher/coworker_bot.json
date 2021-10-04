@@ -1,5 +1,5 @@
 [
     "Yo.",
-	"You find any more info? I gotta say, I thought this job was just super boring but I know there’s something sus happening behind the scenes. There’s gotta be.",
-    { "wait": 5, "msg": "Check this- I messaged Aida and you’re never gonna believe this but I think she’s a robot. Seriously! She’s like an actual android or intelligent AI or something. Her responses don’t make a lot of sense most of the time. I’m gonna try sending some random commands to her. Also maybe Adrian knows something. He’s been here forever."}
+    "You find any more info? I gotta say, I thought this job was just super boring but I know there’s something sus happening behind the scenes. There’s gotta be.",
+    { "uniqueId": "wait_for_commands" }
 ]

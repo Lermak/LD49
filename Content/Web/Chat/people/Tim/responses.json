@@ -2,8 +2,16 @@
 	{
 		"uniqueId": "ask_it",
 		"condition": "return global_data.ask_it !== undefined",
+		"force": true,
+		"msg": "This is Tim in IT. What error did you receive?"
+	},
+	{
+		"uniqueId": "ask_it_2",
+		"force": true,
+		"requires": "return unique_id.ask_it",
+		"filter": "(493)|(unknown cause)|(never happen)",
 		"sequence": [
-			{ "wait": 5.5 },
+			{ "wait": 3.5 },
 			{ "msg": "..." },
 			{ "wait": 1.5, "typing": true, "msg": "They don’t pay you or me enough to deal with this error. Click on the button, hold it for 5 seconds, and get a drink- something hard if you got it. You’ll need it." }
 		]

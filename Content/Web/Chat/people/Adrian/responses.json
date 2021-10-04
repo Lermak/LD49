@@ -7,7 +7,16 @@
 	"Tim and I are going to go for drinks later if you want to join us.",
 	"Huh? Oh, whoops, wrong window.",
 	"Working hard or hardly working? As for me, I like to work smart.",
-	"I've been working on some art lately. I like to make models of people but switch out their heads for televisions. Abstract art kinda thing, I guess",
+    "I've been working on some art lately. I like to make models of people but switch out their heads for televisions. Abstract art kinda thing, I guess",
+    {
+        "uniqueId": "aida_bot",
+        "requires": "return global_data.adrian_aida !== undefined",
+        "filter": "(command)|(aida)",
+        "force": true,
+        "typing": true, 
+        "wait": 3, 
+        "msg": "Yes, Aida. She’s definitely an AI. I don’t have any solid evidence, of course, but she just suddenly showed up and has been working here ever since. I don’t think she’s actually a button masher like the rest of us though. I think Delores gives her secret commands or something. Again, I don’t exactly have any solid evidence to back this up but just talk to her yourself and you’ll see what I mean."
+    },
     {
         "filter": "(aida.*\\?)|(aida.\\?)$",
         "sequence": [

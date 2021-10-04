@@ -7,6 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class Globals
     {
+        public static bool HasUpdated = false;
         public static bool FirstLockout = false;
         public static bool FirstLocoutComplete = false;
         public static bool CreateChalk = false;

@@ -1,4 +1,3 @@
 [
-    "OMG I’m so happy you started working here! It’s always nice to chat with an old school friend! :) Speaking of friends, could you pretty please do me a solid and watch my DigiPal for me while I run to the bathroom? TYTY!"
-	
+	{ "read_game_event": "spawn_digipet", "msg":"OMG I’m so happy you started working here! It’s always nice to chat with an old school friend! :) Speaking of friends, could you pretty please do me a solid and watch my DigiPet for me while I run to the bathroom? TYTY!" }
 ]

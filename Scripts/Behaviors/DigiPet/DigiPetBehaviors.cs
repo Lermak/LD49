@@ -108,6 +108,7 @@ namespace MonoGame_Core.Scripts
             DigiPetData d = ((DigiPetData)c[1]);
             AnimationData ad = ((AnimationData)c[2]);
             AnimationData dpad = ((AnimationData)c[3]);
+
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
@@ -151,232 +152,270 @@ namespace MonoGame_Core.Scripts
         {
             DigiPetData d = ((DigiPetData)c[0]);
             AnimationData a = ((AnimationData)c[1]);
-            if (d.NeedsFood)
-                d.TimeSinceLastFeed += gt;
-            if(d.NeedsPlay)
-                d.TimeSinceLastPlay += gt;
-            if(d.NeedsWash)
-                d.TimeSinceLastWash += gt;
+            WorldObject w = ((WorldObject)a.GameObject);
 
-            List<char> code = d.Code.ToList<char>();
-            List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
-            List<char> gbSequence = new List<char>() { 'p', 'f', 'w', 'f', 'p' };
-
-            bool flag = true;
-            bool galaxyBlaster = true;
-            if (code.Count == 5)
+            if (!Globals.FinalButtonPush)
             {
-                for (int i = 0; i < 5; ++i)
-                    if (code[i] != sequence[i])
-                    {
-                        flag = false;
-                        break;
-                    }
-                for (int i = 0; i < 5; ++i)
-                    if (code[i] != gbSequence[i])
-                    {
-                        galaxyBlaster = false;
-                        break;
-                    }
-            }
-            else
-            {
-                galaxyBlaster = false;
-                flag = false;
-            }
-            if (d.CodeAccessed == false && flag)
-            {
-                WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
-                SoundManager.PlaySoundEffect("MysterySound");
-                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+                if (d.NeedsFood)
+                    d.TimeSinceLastFeed += gt;
+                if (d.NeedsPlay)
+                    d.TimeSinceLastPlay += gt;
+                if (d.NeedsWash)
+                    d.TimeSinceLastWash += gt;
 
-                GameManager.plotManager.digipet_secret = true;
+                List<char> code = d.Code.ToList<char>();
+                List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
 
-                d.CodeAccessed = true;
-                d.NeedsFood = false;
-                d.NeedsPlay = false;
-                d.NeedsWash = false;
-                d.TimeSinceLastFeed = 0;
-                d.TimeSinceLastPlay = 0;
-                d.TimeSinceLastWash = 0;
-                
-                CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, a), "CodeAnimate", 0, true);
-                //SoundManager.PlaySoundEffect("CodeConfirmation");
-                string fileName = @".\OverrideCommands.txt";
-
-                try
+                bool flag = true;
+                if (code.Count == 5)
                 {
-                    // Check if file already exists. If yes, delete it.     
-                    if (File.Exists(fileName))
-                    {
-                        File.Delete(fileName);
-                    }
-
-                    // Create a new file     
-                    using (StreamWriter sw = File.CreateText(fileName))
-                    {
-                        sw.WriteLine("     OVERRIDE COMMANDS" + 
-                            "\n--------------------------" +
-                            "\n  setsalary # - Set salary to given amount" +
-                            "\n   soulcounts - Display soul count info" +
-                            "\n   galaxyblaster - Play Galaxy Blaster" +
-                            "\nremoveoverlay - Remove fake overlay");
-                    }
+                    for (int i = 0; i < 5; ++i)
+                        if (code[i] != sequence[i])
+                        {
+                            flag = false;
+                            break;
+                        }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Console.WriteLine(Ex.ToString());
+                    flag = false;
                 }
-
-            }
-            else if(Globals.DigiPetAlive && !d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
-            {
-                d.CheckNeedsTimer += gt;
-                if (d.CheckNeedsTimer > 7)
+                if (d.CodeAccessed == false && flag)
                 {
-                    d.CheckNeedsTimer = 0;
-                    if (Globals.DigipetFirstWant)
+                    WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
+                    SoundManager.PlaySoundEffect("MysterySound");
+                    SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+
+                    GameManager.plotManager.digipet_secret = true;
+
+                    d.CodeAccessed = true;
+                    d.NeedsFood = false;
+                    d.NeedsPlay = false;
+                    d.NeedsWash = false;
+                    d.TimeSinceLastFeed = 0;
+                    d.TimeSinceLastPlay = 0;
+                    d.TimeSinceLastWash = 0;
+
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.RunAnimation(0, 0, a), "CodeAnimate", 0, true);
+                    //SoundManager.PlaySoundEffect("CodeConfirmation");
+                    string fileName = @".\OverrideCommands.txt";
+
+                    try
                     {
-                        SoundManager.PlaySoundEffect("DigiPetWant");
-                        SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
-                        d.Needs.SpriteRenderer.Animation = 3;
-                        d.NeedsWash = true;
-                        Globals.DigipetFirstWant = false;
+                        // Check if file already exists. If yes, delete it.     
+                        if (File.Exists(fileName))
+                        {
+                            File.Delete(fileName);
+                        }
+
+                        // Create a new file     
+                        using (StreamWriter sw = File.CreateText(fileName))
+                        {
+                            sw.WriteLine("     OVERRIDE COMMANDS" +
+                                "\n--------------------------" +
+                                "\n  setsalary # - Set salary to given amount" +
+                                "\n   soulcounts - Display soul count info" +
+                                "\ngalaxyblaster - Play Galaxy Blaster" +
+                                "\nremoveoverlay - Remove fake overlay");
+                        }
                     }
-                    else
+                    catch (Exception Ex)
                     {
-                        Random r = new Random();
-                        int i = r.Next(0, 100);
-                        if (i < 15)
-                        {
-                            d.Needs.SpriteRenderer.Animation = 1;
-                            d.NeedsFood = true;
-                        }
-                        else if (i < 25)
-                        {
-                            d.Needs.SpriteRenderer.Animation = 2;
-                            d.NeedsPlay = true;
-                        }
-                        else if (i < 35)
-                        {
-                            d.Needs.SpriteRenderer.Animation = 3;
-                            d.NeedsWash = true;
-                        }
-                        if (i < 30)
+                        Console.WriteLine(Ex.ToString());
+                    }
+
+                }
+                else if (Globals.DigiPetAlive && !d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
+                {
+                    d.CheckNeedsTimer += gt;
+                    if (d.CheckNeedsTimer > 15)
+                    {
+                        d.CheckNeedsTimer = 0;
+                        if (Globals.DigipetFirstWant)
                         {
                             SoundManager.PlaySoundEffect("DigiPetWant");
                             SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
+                            d.Needs.SpriteRenderer.Animation = 3;
+                            d.NeedsWash = true;
+                            Globals.DigipetFirstWant = false;
+                        }
+                        else
+                        {
+                            Random r = new Random();
+                            int i = r.Next(0, 100);
+                            if (i < 15)
+                            {
+                                d.Needs.SpriteRenderer.Animation = 1;
+                                d.NeedsFood = true;
+                            }
+                            else if (i < 25)
+                            {
+                                d.Needs.SpriteRenderer.Animation = 2;
+                                d.NeedsPlay = true;
+                            }
+                            else if (i < 35)
+                            {
+                                d.Needs.SpriteRenderer.Animation = 3;
+                                d.NeedsWash = true;
+                            }
+                            if (i < 30)
+                            {
+                                SoundManager.PlaySoundEffect("DigiPetWant");
+                                SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
 
+                            }
                         }
                     }
                 }
-            }
 
-            if ((d.TimeSinceLastPlay > 30 ||
-                d.TimeSinceLastFeed > 30 ||
-                d.TimeSinceLastWash > 30) &&
-                Globals.DigiPetAlive == true)
-            {
-                Globals.DigiPetAlive = false;
-                d.Needs.SpriteRenderer.Animation = 0;
-                a.ChangeAnimation(4);
-            }
-            WorldObject w = ((WorldObject)a.GameObject);
-
-            if (Globals.DigiPetAlive)
-            {
-                if (a.SpriteRenderer.Animation < 3)
+                if ((d.TimeSinceLastPlay > 30 ||
+                    d.TimeSinceLastFeed > 30 ||
+                    d.TimeSinceLastWash > 30) &&
+                    Globals.DigiPetAlive == true)
                 {
-                    d.TimeSinceAnimation += gt;
-                    if (d.TimeSinceAnimation > d.AnimationDuration)
+                    Globals.DigiPetAlive = false;
+                    d.Needs.SpriteRenderer.Animation = 0;
+                    a.ChangeAnimation(4);
+                }
+
+                if (Globals.DigiPetAlive)
+                {
+                    if (a.SpriteRenderer.Animation < 3)
                     {
-                        d.TimeSinceAnimation = 0;
-                        Random r = new Random();
-                        int i = r.Next(0, 100);
-                        if (i < 40)
+                        d.TimeSinceAnimation += gt;
+                        if (d.TimeSinceAnimation > d.AnimationDuration)
                         {
-                            if (w.Transform.Position.X <= -900)
-                                w.SpriteRenderer.Animation = 1;
-                            else if (w.Transform.Position.X >= -540)
-                                w.SpriteRenderer.Animation = 2;
-                            else if (i < 20)
-                                w.SpriteRenderer.Animation = 1;
-                            else
-                                w.SpriteRenderer.Animation = 2;
+                            d.TimeSinceAnimation = 0;
+                            Random r = new Random();
+                            int i = r.Next(0, 100);
+                            if (i < 40)
+                            {
+                                if (w.Transform.Position.X <= -900)
+                                    w.SpriteRenderer.Animation = 1;
+                                else if (w.Transform.Position.X >= -540)
+                                    w.SpriteRenderer.Animation = 2;
+                                else if (i < 20)
+                                    w.SpriteRenderer.Animation = 1;
+                                else
+                                    w.SpriteRenderer.Animation = 2;
+                            }
+                            else if (w.SpriteRenderer.Animation < 3)
+                                w.SpriteRenderer.Animation = 0;
                         }
-                        else if (w.SpriteRenderer.Animation < 3)
-                            w.SpriteRenderer.Animation = 0;
-                    }
 
-                    if (w.Transform.Position.X < -900 && w.SpriteRenderer.Animation == 2)
-                    {
-                        a.SpriteRenderer.Animation = 0;
-                    }
-
-                    if (w.Transform.Position.X > -540 && w.SpriteRenderer.Animation == 1)
-                    {
-                        a.SpriteRenderer.Animation = 0;
-                    }
-                }
-            }
-            else
-            {
-                d.TimeDead += gt;
-                if (d.TimeDead > 40 && w.SpriteRenderer.Animation < 6)
-                {
-                    foreach (GameObject g in WindowManager.DigiPetWindow.sceneManager.CurrentScene.GameObjects.Where(f => f.Tag == "Fly"))
-                        g.Destroy();
-                    w.SpriteRenderer.Animation = 6;
-                }
-                else if (d.TimeDead > 20 && w.SpriteRenderer.Animation < 5)
-                {
-                    Vector2 pos = ((WorldObject)d.GameObject).Transform.Position;
-                    WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
-                        new Fly(pos + new Vector2(-30, 60),
-                        new List<Vector2>()
+                        if (w.Transform.Position.X < -900 && w.SpriteRenderer.Animation == 2)
                         {
+                            a.SpriteRenderer.Animation = 0;
+                        }
+
+                        if (w.Transform.Position.X > -540 && w.SpriteRenderer.Animation == 1)
+                        {
+                            a.SpriteRenderer.Animation = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    d.TimeDead += gt;
+                    if (d.TimeDead > 40 && w.SpriteRenderer.Animation < 6)
+                    {
+                        foreach (GameObject g in WindowManager.DigiPetWindow.sceneManager.CurrentScene.GameObjects.Where(f => f.Tag == "Fly"))
+                            g.Destroy();
+                        w.SpriteRenderer.Animation = 6;
+                    }
+                    else if (d.TimeDead > 20 && w.SpriteRenderer.Animation < 5)
+                    {
+                        Vector2 pos = ((WorldObject)d.GameObject).Transform.Position;
+                        WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
+                            new Fly(pos + new Vector2(-30, 60),
+                            new List<Vector2>()
+                            {
                             pos + new Vector2(-15, 75),
                             pos + new Vector2(-20, 55),
                             pos + new Vector2(-30, 60)
-                        }));
-                    WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
-                        new Fly(pos + new Vector2(20, 80),
-                        new List<Vector2>()
-                        {
+                            }));
+                        WindowManager.DigiPetWindow.sceneManager.CurrentScene.ToAdd.Add(
+                            new Fly(pos + new Vector2(20, 80),
+                            new List<Vector2>()
+                            {
                             pos + new Vector2(10, 70),
                             pos + new Vector2(5, 75),
                             pos + new Vector2(20, 80)
-                        }));
+                            }));
 
-                    w.SpriteRenderer.Animation = 5;
+                        w.SpriteRenderer.Animation = 5;
+                    }
+
                 }
 
-            }
+                if (w.SpriteRenderer.Animation == 1)
+                    w.RigidBody.MoveVelocity = new Vector2(1, 0);
+                else if (w.SpriteRenderer.Animation == 2)
+                    w.RigidBody.MoveVelocity = new Vector2(-1, 0);
+                else
+                    w.RigidBody.MoveVelocity = new Vector2(0, 0);
 
-            if (w.SpriteRenderer.Animation == 1)
-                w.RigidBody.MoveVelocity = new Vector2(1, 0);
-            else if (w.SpriteRenderer.Animation == 2)
-                w.RigidBody.MoveVelocity = new Vector2(-1, 0);
-            else
-                w.RigidBody.MoveVelocity = new Vector2(0, 0);
-
-            if(w.RigidBody.MoveVelocity != new Vector2())
-            {
-                if (!SoundManager.SoundEffects.ContainsKey("Walk") || SoundManager.SoundEffects["Walk"].State != Microsoft.Xna.Framework.Audio.SoundState.Playing)
+                if (w.RigidBody.MoveVelocity != new Vector2())
                 {
-                    d.TimeSinceLastSound += gt;
-                    if (d.TimeSinceLastSound > .5f)
+                    if (!SoundManager.SoundEffects.ContainsKey("Walk") || SoundManager.SoundEffects["Walk"].State != Microsoft.Xna.Framework.Audio.SoundState.Playing)
                     {
-                        d.TimeSinceLastSound = 0;
-                        string[] sounds = { "DigiPetWalk1", "DigiPetWalk2", "DigiPetWalk3", "DigiPetWalk4" };
-                        int i = d.PrevWalkSound + 1;
-                        if (i >= 4)
+                        d.TimeSinceLastSound += gt;
+                        if (d.TimeSinceLastSound > .5f)
                         {
-                            i = 0;
+                            d.TimeSinceLastSound = 0;
+                            string[] sounds = { "DigiPetWalk1", "DigiPetWalk2", "DigiPetWalk3", "DigiPetWalk4" };
+                            int i = d.PrevWalkSound + 1;
+                            if (i >= 4)
+                            {
+                                i = 0;
+                            }
+                            SoundManager.PlaySoundEffect(sounds[i]);
+                            SoundManager.SoundEffects[sounds[i]].Volume = .1f;
+                            d.PrevWalkSound = i;
                         }
-                        SoundManager.PlaySoundEffect(sounds[i]);
-                        SoundManager.SoundEffects[sounds[i]].Volume = .1f;
-                        d.PrevWalkSound = i;
+                    }
+                }
+            }
+            else if (Globals.DigiPetAlive)       
+            {
+                if (a.SpriteRenderer.Animation < 3)
+                {
+                    a.SpriteRenderer.Animation = 7;
+                }
+
+                if (w.Transform.Position.X < -900 && w.SpriteRenderer.Animation == 8)
+                {
+                    a.SpriteRenderer.Animation = 7;
+                }
+
+                if (w.Transform.Position.X > -540 && w.SpriteRenderer.Animation == 7)
+                {
+                    a.SpriteRenderer.Animation = 8;
+                }
+
+                if (a.SpriteRenderer.Animation == 8)
+                    w.RigidBody.MoveVelocity = new Vector2(-150, 0) * gt;
+                if (a.SpriteRenderer.Animation == 7)
+                    w.RigidBody.MoveVelocity = new Vector2(150, 0) * gt;
+                
+                if (w.RigidBody.MoveVelocity != new Vector2())
+                {
+                    if (!SoundManager.SoundEffects.ContainsKey("Walk") || SoundManager.SoundEffects["Walk"].State != Microsoft.Xna.Framework.Audio.SoundState.Playing)
+                    {
+                        d.TimeSinceLastSound += gt;
+                        if (d.TimeSinceLastSound > .25f)
+                        {
+                            d.TimeSinceLastSound = 0;
+                            string[] sounds = { "DigiPetWalk1", "DigiPetWalk2", "DigiPetWalk3", "DigiPetWalk4" };
+                            int i = d.PrevWalkSound + 1;
+                            if (i >= 4)
+                            {
+                                i = 0;
+                            }
+                            SoundManager.PlaySoundEffect(sounds[i]);
+                            SoundManager.SoundEffects[sounds[i]].Volume = .1f;
+                            d.PrevWalkSound = i;
+                        }
                     }
                 }
             }
