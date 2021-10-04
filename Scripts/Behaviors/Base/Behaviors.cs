@@ -359,11 +359,15 @@ namespace MonoGame_Core.Scripts
         {
             SpriteRenderer bg = (SpriteRenderer)c[0];
             SpriteRenderer title = (SpriteRenderer)c[1];
-
+            ButtonData button = (ButtonData)c[2];
             if (GameManager.plotManager.remove_overlay)
             {
                 bg.Texture = "EvilBackground";
                 title.Texture = "SoulsTitle";
+                title.SetDrawArea(106, 32);
+                title.Transform.Resize(106, 32);
+                button.DeselectedTexID = "EvilButton";
+                button.SelectedTexID = "EvilButtonPress";
 
             }
         }

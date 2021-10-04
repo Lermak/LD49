@@ -37,6 +37,8 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.Textures["EvilBackground"] = Content.Load<Texture2D>("Images/Nuclear/background_evil");
             ResourceManager.Textures["SoulsTitle"] = Content.Load<Texture2D>("Images/Nuclear/souls_text");
+            ResourceManager.Textures["EvilButton"] = Content.Load<Texture2D>("Images/Nuclear/evil_button");
+            ResourceManager.Textures["EvilButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/evil_button_press");
 
             ResourceManager.Textures["CoolantButton"] = Content.Load<Texture2D>("Images/Nuclear/button");
             ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
@@ -65,13 +67,14 @@ namespace MonoGame_Core.Scripts
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
 
+
             GameObjects.Add(new GameObject("EndTimesDetection"));
             GameObject endTimes = GameObjects[^1];
             endTimes.BehaviorHandler.AddBehavior("DetectChalk", Behaviors.SpawnChalk, new Component[] { });
 
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(250, 250), screenCenter, 0));
-            
+            WorldObject background = (WorldObject)GameObjects[^1];
             GameObjects.Add(new WorldObject("UpdateOverlay", "UpdateOverlay", new Vector2(250, 250), screenCenter, 10));
             WorldObject overlay = (WorldObject)GameObjects[^1];
             overlay.SpriteRenderer.Visible = false;
@@ -85,7 +88,7 @@ namespace MonoGame_Core.Scripts
 
 
             GameObjects.Add(new WorldObject("HeatText", "HeatText", new Vector2(96, 32), screenCenter + new Vector2(0, 86), 1));
-
+            WorldObject text = (WorldObject)GameObjects[^1];
             Vector2 buttonCenterPos = screenCenter + new Vector2(0, -32);
 
             WorldObject dialBackObj = new WorldObject("DialBackDark", "DialBG", dialSize, buttonCenterPos, 1);
@@ -134,7 +137,11 @@ namespace MonoGame_Core.Scripts
             });
             //cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
             GameObjects.Add(cooldownButton);
-             
+
+
+            endTimes.BehaviorHandler.AddBehavior("ChangeOverlay", Behaviors.ChangeOverlay, new Component[] { background.SpriteRenderer, text.SpriteRenderer, cooldownButton.ComponentHandler.GetComponent("ButtonData") });
+
+
             base.loadContent(c);
         }
     }
