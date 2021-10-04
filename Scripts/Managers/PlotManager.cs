@@ -181,7 +181,7 @@ namespace MonoGame_Core.Scripts.Managers
         public static float MysteryVolume = 0;
         public IEnumerator SongStartCo()
         {
-            if (SoundManager.CurrentSong != "MysteryContact")
+            if (!remove_overlay)
             {
                 SoundManager.PlaySong("MysteryContact");
             }
@@ -397,7 +397,18 @@ namespace MonoGame_Core.Scripts.Managers
                 if (percent >= r.NextDouble())
                 {
                     SpawnRandomLockOut();
-                    percent = 0;
+
+                    while(WindowManager.ResetKeysWindow != null ||
+                       WindowManager.SecurityCheckWindow != null ||
+                       WindowManager.ITHelp != null ||
+                       WindowManager.UpdateWindow != null)
+                    {
+                        yield return false;
+                    }
+
+                    yield return Coroutines.WaitTime(5);
+
+                    percent = 0.1f;
                     continue;
                 }
                 percent += 0.05f;
@@ -574,8 +585,11 @@ namespace MonoGame_Core.Scripts.Managers
                 GameManager.chatWindow.runChat(s, "ritual_finished", false);
                 yield return Coroutines.WaitTime(rng.Next(3,6));
             }
-
-            while(MediaPlayer.PlayPosition.TotalSeconds < 40)
+            if(!Globals.HasUpdated)
+            {
+                WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+            }
+            while (MediaPlayer.PlayPosition.TotalSeconds < 40)
             {
                 yield return false;
             }
