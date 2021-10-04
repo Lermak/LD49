@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
     {
         public bool FirstPickup = false;
         public bool Draw = false;
-        public bool Held = false;
+        public static bool Held = false;
         public Vector2 LastDrawPos;
         public ChalkData(GameObject go, string name) : base(go, name)
         {

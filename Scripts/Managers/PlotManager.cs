@@ -158,7 +158,7 @@ namespace MonoGame_Core.Scripts.Managers
             SoundManager.PlaySong("MysteryContact");
             yield return Coroutines.WaitTime(0.1f);
 
-            while (MysteryVolume < 1)
+            while (MysteryVolume < .3f)
             {
                 MysteryVolume += 0.05f;
                 SoundManager.SetVolume(MysteryVolume);

@@ -123,17 +123,20 @@ namespace MonoGame_Core.Scripts
 
         public static void ButtonSwapImagesOnClick(float gt, Component[] c)
         {
-            Transform t = (Transform)c[0];
-            ButtonData b = (ButtonData)c[1];
-            AnimationData ad = (AnimationData)c[2];
-            Vector2 v = CurrentWindow.inputManager.MousePos;
-            if (NuclearLevel.Locked)
-                return;
+            if (!ChalkData.Held)
+            {
+                Transform t = (Transform)c[0];
+                ButtonData b = (ButtonData)c[1];
+                AnimationData ad = (AnimationData)c[2];
+                Vector2 v = CurrentWindow.inputManager.MousePos;
+                if (NuclearLevel.Locked)
+                    return;
 
-            if (t.ContainsPoint(v) && CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton))
-                ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
-            else
-                ad.ChangeSpriteSheet(b.DeselectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
+                if (t.ContainsPoint(v) && CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton))
+                    ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
+                else
+                    ad.ChangeSpriteSheet(b.DeselectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
+            }
         }
 
         public static void RunAnimation(float gt, Component[] c)
@@ -158,7 +161,7 @@ namespace MonoGame_Core.Scripts
                     return;
                 }
 
-                NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
+                NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed * 40;
             }
         }
         public static void NuclearRotate(float gt, Component[] c)
@@ -284,7 +287,7 @@ namespace MonoGame_Core.Scripts
             Vector2 v = CurrentWindow.inputManager.MousePos;
             if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
             {
-                if (t.ContainsPoint(v) && !cd.Held)
+                if (t.ContainsPoint(v) && !ChalkData.Held)
                 {
                     if (!cd.FirstPickup)
                     {
@@ -293,15 +296,15 @@ namespace MonoGame_Core.Scripts
                     }
 
                     sr.Texture = "UprightChalk";
-                    cd.Held = true;
+                    ChalkData.Held = true;
                     cd.Draw = false;
                 }
-                else if (cd.Held && box.ContainsPoint(v))
+                else if (ChalkData.Held && box.ContainsPoint(v))
                 {
                     cd.Draw = false;
                     t.Place(box.Position);
                     sr.Texture = "SideChalk";
-                    cd.Held = false;
+                    ChalkData.Held = false;
 
                     if (CurrentWindow.sceneManager.CurrentScene.GameObjects.Where(t => t.Tag == "Dust").Count() > 5)
                     {
@@ -320,7 +323,7 @@ namespace MonoGame_Core.Scripts
             bool down = CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton);
             if (down)
             {
-                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 6 && cd.Draw)
+                if (ChalkData.Held && Vector2.Distance(cd.LastDrawPos, v) > 6 && cd.Draw)
                 {
                     cd.LastDrawPos = v;
                     CurrentWindow.sceneManager.CurrentScene.ToAdd.Add(new Dust(v));
@@ -328,7 +331,7 @@ namespace MonoGame_Core.Scripts
 
             }
 
-            if (cd.Held)
+            if (ChalkData.Held)
             {
                 t.Place(v);
             }

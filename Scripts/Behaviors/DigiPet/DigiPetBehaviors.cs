@@ -160,7 +160,10 @@ namespace MonoGame_Core.Scripts
 
             List<char> code = d.Code.ToList<char>();
             List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
+            List<char> gbSequence = new List<char>() { 'p', 'f', 'w', 'f', 'p' };
+
             bool flag = true;
+            bool galaxyBlaster = true;
             if (code.Count == 5)
             {
                 for (int i = 0; i < 5; ++i)
@@ -169,10 +172,24 @@ namespace MonoGame_Core.Scripts
                         flag = false;
                         break;
                     }
+                for (int i = 0; i < 5; ++i)
+                    if (code[i] != gbSequence[i])
+                    {
+                        galaxyBlaster = false;
+                        break;
+                    }
             }
             else
+            {
+                galaxyBlaster = false;
                 flag = false;
-
+            }
+            if(galaxyBlaster && WindowManager.GalaxyBlasterWindow == null)
+            {
+                SoundManager.PlaySoundEffect("MysterySound");
+                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+                WindowManager.AddWindow(new NoCloseForm(), "GalaxyBlasterWindow", new GalaxyBlasterScene(), new Vector2(600, 400));
+            }
             if (d.CodeAccessed == false && flag)
             {
                 WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
@@ -220,22 +237,22 @@ namespace MonoGame_Core.Scripts
             else if(Globals.DigiPetAlive && !d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
             {
                 d.CheckNeedsTimer += gt;
-                if (d.CheckNeedsTimer > 20)
+                if (d.CheckNeedsTimer > 7)
                 {
                     d.CheckNeedsTimer = 0;
                     Random r = new Random();
                     int i = r.Next(0, 100);
-                    if (i < 10)
+                    if (i < 15)
                     {
                         d.Needs.SpriteRenderer.Animation = 1;
                         d.NeedsFood = true;
                     }
-                    else if (i < 20)
+                    else if (i < 25)
                     {
                         d.Needs.SpriteRenderer.Animation = 2;
                         d.NeedsPlay = true;
                     }
-                    else if (i < 30)
+                    else if (i < 35)
                     {
                         d.Needs.SpriteRenderer.Animation = 3;
                         d.NeedsWash = true;

@@ -1,0 +1,43 @@
+[
+    "Welcome! You're the friend of Christopher's, right?",
+    {
+        "filter": "(yes.*)|(yeah.*)|(yup.*)|(yea.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Christopher is a good egg. I'm glad he brought you on board and we didn't get another person like Jude. He's a real piece of work. \n I'll let you get back to it. Message me later if you want to chat or got any questions."
+            }
+        ]
+    },
+	{
+        "filter": "(no.*)|(nah.*)|(nope.*)|(negative.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Oh, is that right? I must have been mistaken then. Have a good day then. Nice to meet you."
+            }
+        ]
+    }
+]

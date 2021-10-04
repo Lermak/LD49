@@ -39,6 +39,7 @@ namespace MonoGame_Core.Scripts
             SceneState = State.SceneOut;
             CurrentScene.OnExit();
             NextScene = s;
+            NextScene.Initilize(cm, this);
         }
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
         public static PlotManager plotManager;
         public static ChatForm chatWindow;
 
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager _graphics;
         private static bool quit;
 
         public GameManager()

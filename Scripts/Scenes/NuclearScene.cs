@@ -117,22 +117,26 @@ namespace MonoGame_Core.Scripts
                 }
                 if (!NuclearLevel.Locked)
                 {
-                    Random r = new Random();
-                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
-                    if (!Globals.ButtonNotCool)
+                    if (!ChalkData.Held)
                     {
-                        NuclearLevel.buttonHit = true;
+                        Random r = new Random();
+                        SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                    
+                        if (!Globals.ButtonNotCool)
+                        {
+                            NuclearLevel.buttonHit = true;
 
-                        NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
+                            NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
 
-                        NuclearLevel.level -= NuclearLevel.reduceAmount;
-                        if (NuclearLevel.level < 0.0f)
-                            NuclearLevel.level = 0.0f;
-                    }
+                            NuclearLevel.level -= NuclearLevel.reduceAmount;
+                            if (NuclearLevel.level < 0.0f)
+                                NuclearLevel.level = 0.0f;
+                        }
 
-                    if(Globals.ExpectFinalButtonPush)
-                    {
-                        Globals.FinalButtonPush = true;
+                        if (Globals.ExpectFinalButtonPush)
+                        {
+                            Globals.FinalButtonPush = true;
+                        }
                     }
                 }
             });
