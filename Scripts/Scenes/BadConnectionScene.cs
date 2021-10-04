@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -12,6 +13,10 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {
             NuclearLevel.Locked = true;
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
 
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/BadConnection/MessageBox");
             ResourceManager.Textures["BadConnectionBG"] = Content.Load<Texture2D>(@"Images/BadConnection/BadConnectionBG");

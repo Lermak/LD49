@@ -782,6 +782,24 @@
 /processorParam:Quality=Best
 /build:Sound/arabian_harp.wav
 
+#begin Sound/click1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/click1.ogg
+
+#begin Sound/click2.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/click2.ogg
+
+#begin Sound/click3.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/click3.ogg
+
 #begin Sound/cooling.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -824,6 +842,18 @@
 /processorParam:Quality=Best
 /build:Sound/DigiPet/want.wav
 
+#begin Sound/error.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/error.wav
+
+#begin Sound/lock_out.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/lock_out.wav
+
 #begin Sound/Relaque/message_notification.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -847,6 +877,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/TestHit.wav
+
+#begin Sound/unlock.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/unlock.wav
+
+#begin Sound/unlock.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/unlock.wav
 
 #begin Tiled/Test.xml
 /copy:Tiled/Test.xml

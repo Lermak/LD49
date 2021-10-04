@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -12,6 +13,10 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {
             NuclearLevel.Locked = true;
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
 
             ResourceManager.Textures["CarretTexture"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
@@ -25,6 +30,8 @@ namespace MonoGame_Core.Scripts
             obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { 
                 if (NuclearLevel.ButtonHoldTime >= 5) { 
                     NuclearLevel.Locked = false;
+                    SoundManager.PlaySoundEffect("Unlock");
+                    SoundManager.SoundEffects["Unlock"].Volume = .5f;
                     if (WindowManager.ITHelp != null)
                     {
                         WindowManager.killIT = true;

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -11,6 +12,11 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent(List<Camera> c)
         {
             NuclearLevel.Locked = true;
+            ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
+            ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
+            SoundManager.PlaySoundEffect("Lockout");
+            SoundManager.SoundEffects["Lockout"].Volume = .3f;
+
             ResourceManager.Textures["CarretTexture"] = Content.Load<Texture2D>(@"Images/Test");
             ResourceManager.Textures["Test"] = Content.Load<Texture2D>(@"Images/Test");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
@@ -23,18 +29,14 @@ namespace MonoGame_Core.Scripts
             ((TextBox)tb).OnEnterPressed += (TextBox tb) =>        
                 {
                     if (tb.Text == "aaa")
+                    {
                         NuclearLevel.Locked = false;
+                        SoundManager.PlaySoundEffect("Unlock");
+                        SoundManager.SoundEffects["Unlock"].Volume = .5f;
+                    }
                     WindowManager.RemoveWindow(CurrentWindow.windowData);
                 };
 
-        }
-
-        TextBoxEvent confirmSub(TextBox tb)
-        {
-            if (tb.Text == "aaa")
-                NuclearLevel.Locked = false;
-
-            return null;
         }
     }
 }
