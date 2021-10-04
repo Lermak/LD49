@@ -397,7 +397,18 @@ namespace MonoGame_Core.Scripts.Managers
                 if (percent >= r.NextDouble())
                 {
                     SpawnRandomLockOut();
-                    percent = 0;
+
+                    while(WindowManager.ResetKeysWindow != null ||
+                       WindowManager.SecurityCheckWindow != null ||
+                       WindowManager.ITHelp != null ||
+                       WindowManager.UpdateWindow != null)
+                    {
+                        yield return false;
+                    }
+
+                    yield return Coroutines.WaitTime(5);
+
+                    percent = 0.1f;
                     continue;
                 }
                 percent += 0.05f;
