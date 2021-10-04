@@ -147,6 +147,8 @@ namespace MonoGame_Core.Scripts
 
         public static void IncreaseNuclearLevelOverTime(float gt, Component[] c)
         {
+            if (Globals.FinalButtonPush) return;
+
             if (NuclearLevel.started)
             {
                 if (NuclearLevel.buttonHit)

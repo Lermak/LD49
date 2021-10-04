@@ -47,7 +47,7 @@ namespace MonoGame_Core.Scripts
         {
             if(restartReady)
             {
-
+                GameManager.Quit();
             }
         }
     }

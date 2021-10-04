@@ -619,6 +619,7 @@ body::-webkit-scrollbar-thumb {
 
 .displayName {
   overflow: hidden;
+  user-select: none;
 }
 
 .direct-messages-selected {
@@ -650,6 +651,7 @@ body::-webkit-scrollbar-thumb {
   line-height: 16px;
   margin-left: auto;
   padding: 0 9px;
+  user-select: none;
 }
 
 .active {

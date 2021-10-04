@@ -602,7 +602,7 @@ Object.defineProperty(Array.prototype, "random", {
       }
 
       dm_contacts.innerHTML += `
-      <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
+      <a style="cursor: pointer" id="dm_contact_${idx}" onmousedown='switchToChat(${idx})'>
           <li>
               <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")} ${ (person.unread != 0 && !JUDE_MODE) ? `<span class="mention-badge">${person.unread}</span>` : "" }
           </li>
