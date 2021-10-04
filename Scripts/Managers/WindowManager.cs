@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
+using System.Runtime.InteropServices;
 
 namespace MonoGame_Core.Scripts
 {
@@ -118,6 +119,9 @@ namespace MonoGame_Core.Scripts
 
     public static class WindowManager
     {
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
         public static List<Window> Windows;
         public static Window MainWindow;
 
@@ -147,6 +151,26 @@ namespace MonoGame_Core.Scripts
         public static Window SecurityCheckWindow;
 
         public static List<Window> ToAdd = new List<Window>();
+
+        public static int DoingActications = 0;
+        public static void DoActivations()
+        {
+            if (DoingActications > 0) return;
+
+            DoingActications = 10;
+            foreach (Window w in Windows)
+            {
+                if (w.form != null)
+                {
+                    w.form.Activate();
+                }
+                else
+                {
+                    SetForegroundWindow(GameManager.Instance.Window.Handle);
+                }
+            }
+            GameManager.chatWindow.Activate();
+        }
 
         private static ContentManager contentManager;
         public static void Initilize(ContentManager cm, Scene s)
@@ -220,6 +244,14 @@ namespace MonoGame_Core.Scripts
                 int y = r.Next(0, (int)(screen.Bounds.Height - (size.Y + 250) * GameManager.HeightScale));
                 f.Location = new System.Drawing.Point(x, y);
                 f.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                f.Activated += (object owner, EventArgs e) =>
+                {
+                    if (DoingActications > 0) return;
+
+                    DoActivations();
+                    f.Activate();
+                };
             }
             ToAdd[ToAdd.Count - 1].form.Show();
 
@@ -299,7 +331,9 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
-            foreach(Window w in WindowManager.Windows)
+            DoingActications -= 1;
+
+            foreach (Window w in WindowManager.Windows)
             {
                 CurrentWindow._window = w;
                 w.inputManager.Update(gt);

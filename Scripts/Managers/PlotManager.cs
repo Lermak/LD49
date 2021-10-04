@@ -190,7 +190,7 @@ namespace MonoGame_Core.Scripts.Managers
 
             if (ev == "Stranger_great_old_one")
             {
-                //Globals.
+                Globals.CreateChalk = true;
             }
         }
 

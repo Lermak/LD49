@@ -123,6 +123,13 @@ namespace MonoGame_Core.Scripts
                     }));
                 }
             };
+
+            Activated += (object owner, EventArgs e) =>
+            {
+                if (WindowManager.DoingActications > 0) return;
+                WindowManager.DoActivations();
+                Activate();
+            };
         }
 
         public void runChat(string person, string chat, bool forceWatch)

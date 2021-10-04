@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Text;
 using System.Windows.Input;
 using System.Collections.Generic;
+using MonoGame_Core.Scripts;
 
 namespace EventInput
 {
@@ -162,6 +163,7 @@ namespace EventInput
         const int WM_GETDLGCODE = 0x87;
         const int WM_IME_COMPOSITION = 0x10f;
         const int DLGC_WANTALLKEYS = 4;
+        const int WM_WM_ACTIVATEAPP = 0x001C;
 
         //Win32 functions that we're using
         [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
@@ -175,6 +177,9 @@ namespace EventInput
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtrW")]
         private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
 
 
         /// <summary>
@@ -205,6 +210,17 @@ namespace EventInput
 
             switch (msg)
             {
+                case WM_WM_ACTIVATEAPP:
+                    if(wParam.ToInt32() == 1 && hWnd == GameManager.Instance.Window.Handle)
+                    {
+                        if (WindowManager.DoingActications <= 0)
+                        {
+                            WindowManager.DoActivations();
+                            SetForegroundWindow(GameManager.Instance.Window.Handle);
+                        }
+                    }
+                    break;
+
                 case WM_GETDLGCODE:
                     returnCode = (IntPtr)(returnCode.ToInt32() | DLGC_WANTALLKEYS);
                     break;
