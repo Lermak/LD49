@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         public static void Update(float gt)
         {
             MediaPlayer.Volume = volume;
-            SoundEffect.MasterVolume = volume;
+            //SoundEffect.MasterVolume = volume;
         }
 
         public static void SetVolume(float v)

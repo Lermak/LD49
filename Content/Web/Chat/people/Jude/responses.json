@@ -12,19 +12,12 @@
         "requiresId": "money",
         "filter": "(salary)|(money)|\\$",
         "event": "jude_money",
-        "msg": "I do not feel comfortable discussing exactly how much I make. You clearly know nothing. Prove me wrong and tell me my exact salary."
-    },
-    {
-        "requiresId": "money",
-        "event": "jude_money",
-        "filter": "(salary)|(money)|\\$",
-        "msg": "If you are attempting to get me to divulge my salary, your efforts are in vain. I have nothing to explain to you. What do you think my salary is?"
-    },
-    {
-        "requiresId": "money",
-        "event": "jude_money",
-        "filter": "(salary)|(money)|\\$",
-        "msg": "How much I make is none of your business. I am certain your estimation would be wildly incorrect but you are welcome to guess my salary."
+        "force": true,
+        "random_set": [
+            { "msg": "I do not feel comfortable discussing exactly how much I make. You clearly know nothing. Prove me wrong and tell me my exact salary." },
+            { "msg": "If you are attempting to get me to divulge my salary, your efforts are in vain. I have nothing to explain to you. What do you think my salary is?" },
+            { "msg": "How much I make is none of your business. I am certain your estimation would be wildly incorrect but you are welcome to guess my salary." }
+        ]
     },
     {
         "uniqueId": "money",
@@ -42,7 +35,7 @@
         "msg": "I don't have time for your questions."
     },
     {
-        "condition": "return msg.length > 15",
+        "condition": "return msg.length > 250",
         "sequence": [
             {
                 "typing": false,

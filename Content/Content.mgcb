@@ -764,6 +764,12 @@
 /processorParam:Quality=Best
 /build:Music/final_ritual_opening.mp3
 
+#begin Music/mysterious_contact_music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/mysterious_contact_music.mp3
+
 #begin Music/ominous_piano.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -859,6 +865,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/explosion.wav
+
+#begin Sound/hacking.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/hacking.wav
 
 #begin Sound/lock_out.wav
 /importer:WavImporter

@@ -348,6 +348,10 @@ Object.defineProperty(Array.prototype, "random", {
         await (handleResponseObject(person, s))
       }
     }
+
+    if(response.random_set !== undefined) {
+      await handleResponseObject(person, response.random_set.random())
+    }
   }
 
   function generateResponseObjects(list) {
@@ -520,6 +524,13 @@ Object.defineProperty(Array.prototype, "random", {
   function switchToPerson(person) {
     if(lockSwitching) return;
     SelectedPerson = person
+
+    if(person.idName == "Stranger") {
+      game.sendEvent("onStrangerScreen")
+    }
+    else {
+      game.sendEvent("offStrangerScreen")
+    }
 
     let header = document.getElementById("channel-name")
     header.innerHTML =  `${generateNameHTML(person)}`
@@ -784,6 +795,8 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   window.toggleJudeMode = () => {
+    game.playSound("Hack")
+
     JUDE_MODE = !JUDE_MODE
     let button = document.getElementById("jude_button")
     if(JUDE_MODE) {
