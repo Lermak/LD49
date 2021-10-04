@@ -13,6 +13,8 @@ namespace MonoGame_Core.Scripts
         static float countdown = 120;
         protected override void loadContent(List<Camera> c)
         {
+            countdown = 120;
+
             ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
             ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
             ResourceManager.Textures["CarretTexture"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
