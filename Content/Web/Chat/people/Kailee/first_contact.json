@@ -1,33 +1,7 @@
 [
     "HEYYYYYY!! Christopher told me you were coming to work here but I didn't know it would be so soon! How have you been??",
-    {
-        "filter": "(good.*)|(well.*)|(great.*)|(excellent.*)",
-        "sequence": [
-            {
-                "typing": false,
-                "wait": 1
-            },
-            {
-                "typing": true,
-                "wait": 1.5
-            },
-            {
-                "msg": "That's so great to hear! It's been way too long since we've seen each other. We should hang out soon! Christopher has these awesome gummies that you really need to try. The three of us can eat them and hang out just like after we shipped a game when we were in school. I'M SO GLAD YOU'RE HERE!"
-            },
-			{
-                "typing": false,
-                "wait": 2
-            },
-            {
-                "typing": true,
-                "wait": 1
-            },
-            {
-                "msg": "OH! I'm so sorry but my heat level is rising so I gotta fly to cool down my reactor. But don't be a stranger! Message me anytime! Talk to you soon!"
-            }
-			
-        ]
-    },
+    { "uniqueId": "first_contact" },
+	
 	{
         "filter": "(okay.*)|(ok.*)|(so so.*)|(alright.*)",
         "sequence": [
