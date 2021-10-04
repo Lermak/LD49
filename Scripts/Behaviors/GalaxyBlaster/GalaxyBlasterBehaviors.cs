@@ -16,9 +16,9 @@ namespace MonoGame_Core.Scripts
 
             Vector2 v = new Vector2();
 
-            if (ShipData.aDown)
+            if (ShipData.aDown && t.Position.X > -920)
                 v.X = -(m.Speed * gt);
-            else if (ShipData.dDown)
+            else if (ShipData.dDown && t.Position.X < -400)
                 v.X = (m.Speed * gt);
             else
                 v = new Vector2();
@@ -45,6 +45,21 @@ namespace MonoGame_Core.Scripts
 
             if (t.Position.Y > 560)
                 t.GameObject.Destroy();
+            List<Enemy> remove = new List<Enemy>();
+            foreach (Enemy e in EnemyData.Enemies)
+            {
+                if (Vector2.Distance(t.Position, e.Transform.Position) <= 10)
+                {
+                    remove.Add(e);
+                    e.Destroy();
+                    t.GameObject.Destroy();
+                    ShipData.Score += (int)(ShipData.Level * ShipData.Level/2) + 5;
+                }
+            }
+            foreach(Enemy e in remove)
+            {
+                EnemyData.Enemies.Remove(e);
+            }
         }
 
         public static void EnemyAction(float gt, Component[] c)
@@ -52,16 +67,32 @@ namespace MonoGame_Core.Scripts
             RigidBody rb = (RigidBody)c[0];
             Transform t = (Transform)c[1];
 
-            rb.MoveVelocity = EnemyData.moveVelocity * TimeManager.DeltaTime;
 
-            if ((t.Position.X < -900 && EnemyData.moveVelocity.X < 0) || (t.Position.X > -540 && EnemyData.moveVelocity.X > 0))
+            if ((t.Position.X < -940 && EnemyData.moveVelocity.X < 0) || (t.Position.X > -380 && EnemyData.moveVelocity.X > 0))
             {
                 EnemyData.moveVelocity *= -1;
                 foreach(Enemy e in EnemyData.Enemies)
                 {
-                    e.Transform.Place(e.Transform.Position - new Vector2(0, 40));
+                    e.Transform.Place(e.Transform.Position +- new Vector2(0, 10));
                 }
             }
+            rb.MoveVelocity = EnemyData.moveVelocity * TimeManager.DeltaTime * ShipData.Level * 24/EnemyData.Enemies.Count/4;
+
+        }
+
+        public static void NextLevel(float gt, Component[] c)
+        {
+            if (EnemyData.Enemies.Count == 0)
+            {
+                ((GalaxyBlasterScene)WindowManager.GalaxyBlasterWindow.sceneManager.CurrentScene).SpawnHorde();
+                ShipData.Level++;
+            }
+        }
+
+        public static void ShowScore(float gt, Component[] c)
+        {
+            FontRenderer fr = (FontRenderer)c[0];
+            fr.Text = "Score: " + ShipData.Score;
         }
     }
 }
