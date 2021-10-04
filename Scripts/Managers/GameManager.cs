@@ -56,6 +56,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Initilize();
 
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
+            ResourceManager.SoundEffects["MessagePopMe"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop_me");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
             chatWindow = new ChatForm();
             chatWindow.Show();

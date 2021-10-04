@@ -704,6 +704,12 @@
 /processorParam:Quality=Best
 /build:Sound/Relaque/message_pop.mp3
 
+#begin Sound/Relaque/message_pop_me.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Relaque/message_pop_me.mp3
+
 #begin Sound/TestHit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
