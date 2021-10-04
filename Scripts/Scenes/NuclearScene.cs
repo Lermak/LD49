@@ -52,6 +52,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
             ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.SoundEffects["Boot"] = Content.Load<SoundEffect>("Sound/machine_starting");
+            ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
