@@ -29,7 +29,7 @@ namespace MonoGame_Core.Scripts
         public static void Scroll(float gt, Component[] c)
         {
             RigidBody rb = (RigidBody)c[0];
-            Transform t = (Transform)c[0];
+            Transform t = (Transform)c[1];
             if (!restartReady)
             {              
                 rb.MoveVelocity = new Vector2(0, 100) * gt;
