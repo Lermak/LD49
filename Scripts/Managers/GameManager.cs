@@ -33,15 +33,6 @@ namespace MonoGame_Core.Scripts
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Instance = this;
-
-            Screen screen = Screen.FromHandle(Window.Handle);
-            float widthScale = (screen.Bounds.Width / 1920.0f);
-            float heightScale = (screen.Bounds.Height / 1080.0f);
-
-            if(widthScale == heightScale)
-            {
-                WidthScale = HeightScale = widthScale;
-            }
         }
 
         protected override void Initialize()

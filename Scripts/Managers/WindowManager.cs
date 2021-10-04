@@ -269,8 +269,8 @@ namespace MonoGame_Core.Scripts
             {
                 Screen screen = Screen.FromHandle(GameManager.Instance.Window.Handle);
                 Random r = new Random();
-                int x = r.Next(0, (int)(screen.Bounds.Width - (size.X + 250) * GameManager.WidthScale));
-                int y = r.Next(0, (int)(screen.Bounds.Height - (size.Y + 250) * GameManager.HeightScale));
+                int x = r.Next(0, Math.Max(0, (int)(screen.Bounds.Width - (size.X + 250) * GameManager.WidthScale)));
+                int y = r.Next(0, Math.Max(0, (int)(screen.Bounds.Height - (size.Y + 250) * GameManager.HeightScale)));
                 f.Location = new System.Drawing.Point(x, y);
                 f.FormBorderStyle = FormBorderStyle.FixedSingle;
 
