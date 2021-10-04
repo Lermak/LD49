@@ -178,7 +178,6 @@ namespace MonoGame_Core.Scripts
                 }
                 else
                 {
-                    galaxyBlaster = false;
                     flag = false;
                 }
                 if (d.CodeAccessed == false && flag)
