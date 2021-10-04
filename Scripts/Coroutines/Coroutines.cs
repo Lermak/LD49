@@ -198,6 +198,15 @@ namespace MonoGame_Core.Scripts
 
         public static IEnumerator EndTimeMusic()
         {
+            while (SoundManager.volume > 0)
+            {
+                float v = SoundManager.volume - TimeManager.DeltaTime;
+                if (v < 0)
+                    v = 0;
+                SoundManager.volume = v;
+                yield return false;
+            }
+            SoundManager.volume = 1;
             SoundManager.PlaySong("EndTimesOpening");
             MediaPlayer.IsRepeating = false;
             while (MediaPlayer.State == MediaState.Playing)
