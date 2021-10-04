@@ -176,7 +176,7 @@ namespace MonoGame_Core.Scripts
             }
             else if (BlackboardConnection == "UpdateWindow")
             {
-                f.Text = "Software Update";
+                f.Text = "Software Update Required";
                 UpdateWindow = w;
             }
             else if (BlackboardConnection == "ReauthWindow")
@@ -196,7 +196,7 @@ namespace MonoGame_Core.Scripts
             }
             else if (BlackboardConnection == "BadConnectionWindow")
             {
-                f.Text = "Bad Connection";
+                f.Text = "ERROR 312: Disconnected From Server";
                 BadConnectionWindow = w;
             }
             else if (BlackboardConnection == "GalaxyBlasterWindow")
