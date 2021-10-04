@@ -165,22 +165,14 @@ namespace MonoGame_Core.Scripts
 
                 List<char> code = d.Code.ToList<char>();
                 List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
-                List<char> gbSequence = new List<char>() { 'p', 'f', 'w', 'f', 'p' };
 
                 bool flag = true;
-                bool galaxyBlaster = true;
                 if (code.Count == 5)
                 {
                     for (int i = 0; i < 5; ++i)
                         if (code[i] != sequence[i])
                         {
                             flag = false;
-                            break;
-                        }
-                    for (int i = 0; i < 5; ++i)
-                        if (code[i] != gbSequence[i])
-                        {
-                            galaxyBlaster = false;
                             break;
                         }
                 }
