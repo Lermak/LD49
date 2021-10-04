@@ -170,10 +170,6 @@ Object.defineProperty(Array.prototype, "random", {
     return msg
   }
 
-  let you = addPerson("Player");
-  you.displayName = "Player (You)"
-  you.icon = "people/Player/icon.png"
-
   addPerson("Administrator")
   addPerson("Adrian")
   let tim = addPerson("Tim")
@@ -184,7 +180,13 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Christopher")
   addPerson("Delores")
   addPerson("Janey")
+  
   let jude = addPerson("Jude")
+  let you = addPerson("Player")
+  you.name = "New Hire"
+  you.displayName = "New Hire (You)"
+  you.icon = "people/Player/icon.png"
+
   addPerson("Kailee")
   addPerson("Quinn")
 
@@ -246,6 +248,13 @@ Object.defineProperty(Array.prototype, "random", {
 
   function recieveMessage(person, text) {
     let response_msg = addMessage(person, person, text, "now")
+
+    if(person == jude) {
+      you.messagesToJude.push({
+        from: person,
+        text: text
+      })
+    }
 
     if(person == SelectedPerson) {
       let mainfeed = document.getElementById("mainfeed")
@@ -382,6 +391,13 @@ Object.defineProperty(Array.prototype, "random", {
     let msg = addMessage(toPerson, you, text, "now")
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
+    if(toPerson == jude) {
+      you.messagesToJude.push({
+        from: you,
+        text: text
+      })
+    }
+
     game.playSound("MessagePopMe")
 
     if(toPerson == you && text.startsWith("/")) {
@@ -476,20 +492,30 @@ Object.defineProperty(Array.prototype, "random", {
     switchToPerson(person)
   }
 
-  let dm_contacts = document.getElementById("dm_contacts")
+  
+  function generateContacts() {
+    let dm_contacts = document.getElementById("dm_contacts")
+    dm_contacts.innerHTML = ""
+    for(let idx in People) {
+      let person = People[idx]
 
-  dm_contacts.innerHTML = ""
-  for(let idx in People) {
-    let person = People[idx]
+      if(JUDE_MODE && person == jude) {
+        continue
+      }
+      else if(!JUDE_MODE && person == you) {
+        continue
+      }
 
-    dm_contacts.innerHTML += `
-    <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
-        <li>
-            <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")}
-        </li>
-    </a>
-    `
+      dm_contacts.innerHTML += `
+      <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
+          <li>
+              <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")}
+          </li>
+      </a>
+      `
+    }
   }
+  generateContacts()
 
   switchToChat(0)
 
@@ -659,6 +685,11 @@ Object.defineProperty(Array.prototype, "random", {
       document.documentElement.style.setProperty("--slack-background", "#221322")
       document.documentElement.style.setProperty("--slack-other-bckground", "#1b131b")
       document.documentElement.style.setProperty("--slack-background-selected", "#5b355c")
+      document.getElementById("textBox").setAttribute("contenteditable", "false")
+
+      if(SelectedPerson == jude) {
+        SelectedPerson = you
+      }
     }
     else {
       button.classList.remove("jude_button2")
@@ -666,9 +697,14 @@ Object.defineProperty(Array.prototype, "random", {
       document.documentElement.style.setProperty("--slack-background", "#350d36")
       document.documentElement.style.setProperty("--slack-other-bckground", "#3f0e40")
       document.documentElement.style.setProperty("--slack-background-selected", "#832187")
+      document.getElementById("textBox").setAttribute("contenteditable", "true")
+
+      if(SelectedPerson == you) {
+        SelectedPerson = jude
+      }
     }
 
-
+    generateContacts()
 
     document.body.classList.remove("generic_glitch_oneshot")
     void document.body.offsetWidth;
