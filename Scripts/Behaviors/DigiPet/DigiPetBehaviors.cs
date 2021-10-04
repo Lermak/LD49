@@ -178,6 +178,8 @@ namespace MonoGame_Core.Scripts
                 SoundManager.PlaySoundEffect("MysterySound");
                 SoundManager.SoundEffects["MysterySound"].Volume = .1f;
 
+                GameManager.plotManager.digipet_secret = true;
+
                 d.CodeAccessed = true;
                 d.NeedsFood = false;
                 d.NeedsPlay = false;
