@@ -641,6 +641,6 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
   //runCustomChat("Delores", "intro_chat", true)
-  runCustomChat("Christopher", "security_check", true)
+  //runCustomChat("Christopher", "security_check", true)
 
 })();

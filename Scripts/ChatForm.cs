@@ -12,6 +12,29 @@ using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
+    public class CustomMenuHandler : CefSharp.IContextMenuHandler
+    {
+        public void OnBeforeContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model)
+        {
+            model.Clear();
+        }
+
+        public bool OnContextMenuCommand(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags)
+        {
+
+            return false;
+        }
+
+        public void OnContextMenuDismissed(IWebBrowser browserControl, IBrowser browser, IFrame frame)
+        {
+
+        }
+
+        public bool RunContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
+        {
+            return false;
+        }
+    }
     public class CallbackObjectForJs
     {
         public void ready()
@@ -49,12 +72,15 @@ namespace MonoGame_Core.Scripts
 
         public ChatForm()
         {
+            Text = "Relaque";
+
             //Size = new System.Drawing.Size(0,0);
             Size = new System.Drawing.Size((int)(700 * GameManager.WidthScale), (int)(800 * GameManager.HeightScale));
 
             //Create a new instance in code or add via the designer
             //Set the ChromiumWebBrowser.Address property to your Url if you use the designer.
             browser = new ChromiumWebBrowser("localfolder://cefsharp/");
+            browser.MenuHandler = new CustomMenuHandler();
 
             browser.ConsoleMessage += (sender, args) =>
             {
