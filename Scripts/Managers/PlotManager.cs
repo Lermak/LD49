@@ -207,7 +207,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(7);
 
-            WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
+            WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
 
             while (NuclearLevel.Locked == true) yield return false;
             firstLockout = true;
