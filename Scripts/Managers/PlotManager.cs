@@ -89,7 +89,7 @@ namespace MonoGame_Core.Scripts.Managers
                 christopher_strange = true;
             }
 
-            if (ev == "Kailee_digipet_initial")
+            if (ev == "Kailee_digipet_chat")
             {
                 digipet_initial = true;
             }
@@ -155,7 +155,7 @@ namespace MonoGame_Core.Scripts.Managers
                 yield return Coroutines.WaitTime(5);
             }
 
-            GameManager.chatWindow.runChat("Kailee", "digipet_initial", false);
+            GameManager.chatWindow.runChat("Kailee", "digipet_chat", false);
 
             yield return true;
         }
