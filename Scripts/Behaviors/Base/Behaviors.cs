@@ -126,6 +126,8 @@ namespace MonoGame_Core.Scripts
             ButtonData b = (ButtonData)c[1];
             AnimationData ad = (AnimationData)c[2];
             Vector2 v = CurrentWindow.inputManager.MousePos;
+            if (NuclearLevel.Locked)
+                return;
 
             if (t.ContainsPoint(v) && CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton))
                 ad.ChangeSpriteSheet(b.SelectedTexID, 0);//((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
@@ -221,6 +223,32 @@ namespace MonoGame_Core.Scripts
             {
                 AnimationData ad = (AnimationData)c[0];
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.UpdateNuclear(ad), "Updating", 0, true);
+            }
+        }
+        public static void UpdateSpinner(float gt, Component[] c)
+        {
+            if (NuclearLevel.Updating)
+            {
+                SpriteRenderer s = (SpriteRenderer)c[0];
+                s.Visible = true;
+                s.Transform.Rotate(-gt);
+            }
+            else {
+                SpriteRenderer s = (SpriteRenderer)c[0];
+                s.Visible = false;
+            }
+            
+        }
+
+        public static void LockoutUpdate(float gt, Component[] c) {
+            SpriteRenderer sd = (SpriteRenderer)c[0];
+            if (NuclearLevel.Locked)
+            {
+                sd.Visible = true;
+            }
+            else
+            {
+                sd.Visible = false;
             }
         }
     }
