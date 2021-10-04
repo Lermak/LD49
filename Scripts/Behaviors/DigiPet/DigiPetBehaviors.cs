@@ -217,7 +217,7 @@ namespace MonoGame_Core.Scripts
                 }
 
             }
-            else if(!d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
+            else if(Globals.DigiPetAlive && !d.NeedsFood && !d.NeedsPlay && !d.NeedsWash)
             {
                 d.CheckNeedsTimer += gt;
                 if (d.CheckNeedsTimer > 20)
