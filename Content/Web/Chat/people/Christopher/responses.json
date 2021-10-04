@@ -136,5 +136,21 @@
 				{"wait": 5, "msg": "This is really freaky. I totally didn’t have “employer turns out to be a cult feeding souls to an ancient evil to force the apocalypse” on my disaster bingo card."
             }
         ]
+    },
+	{
+        "filter": "(pay log.*)|(paylog.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 3
+            },
+            {
+                "msg": "Jude is making how much?! That is definitely suspicious. No one should be making that much at this job. It does explain his yacht and penthouse though. \n Gotta go button mash more. Keep me updated."
+            }
+        ]
     }
 ]

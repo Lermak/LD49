@@ -8,6 +8,22 @@
 			{ "wait": 1.5, "typing": true, "msg": "They don’t pay you or me enough to deal with this error. Click on the button, hold it for 5 seconds, and get a drink- something hard if you got it. You’ll need it." }
 		]
 	},
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 3
+            },
+            {
+                "msg": "I… "
+            }
+        ]
+    },
     "This is Tim in IT. What error did you receive?  I’d normally tell you to turn it off and back on again but you’re a button masher. Just sit back and take a break or something.",
     "This is Tim in IT. What error did you receive? You tried turning it off and back on again, eh? No, you can’t, because you’re a cooldown operator. Just try something and hope for the best.",
     "Not this again. I’ve reported this bug so many times… *sigh* Just ignore it like the bug they keep ignoring.",
