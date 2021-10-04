@@ -14,6 +14,11 @@ namespace MonoGame_Core.Scripts
 {
     public class CallbackObjectForJs
     {
+        public void ready()
+        {
+            GameManager.chatWindow.ready = true;
+        }
+
         public string readFile(string path)
         {
             path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/" + path;
@@ -30,10 +35,18 @@ namespace MonoGame_Core.Scripts
         {
             SoundManager.PlaySoundEffect(sound);
         }
+
+        public void sendEvent(string ev)
+        {
+            GameManager.plotManager.SendEvent(ev);
+        }
     }
 
     public class ChatForm : NoCloseForm
     {
+        ChromiumWebBrowser browser;
+        public bool ready = false;
+
         public ChatForm()
         {
             //Size = new System.Drawing.Size(0,0);
@@ -41,7 +54,7 @@ namespace MonoGame_Core.Scripts
 
             //Create a new instance in code or add via the designer
             //Set the ChromiumWebBrowser.Address property to your Url if you use the designer.
-            var browser = new ChromiumWebBrowser("localfolder://cefsharp/");
+            browser = new ChromiumWebBrowser("localfolder://cefsharp/");
 
             browser.ConsoleMessage += (sender, args) =>
             {
@@ -84,6 +97,11 @@ namespace MonoGame_Core.Scripts
                     }));
                 }
             };
+        }
+
+        public void runChat(string person, string chat, bool forceWatch)
+        {
+            browser.ExecuteScriptAsync("runCustomChat", new object[] { person, chat, forceWatch });
         }
     }
 }

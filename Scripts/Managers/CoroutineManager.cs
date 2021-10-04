@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,13 +16,13 @@ namespace MonoGame_Core.Scripts
         public enum CoroutineState { Paused, Running }
 
 
-        public struct Coroutine
+        public class Coroutine
         {
             public string Name;
             public CoroutineState State;
             public float TimeSinceLast;
             public float TimeBetweenSteps;
-            public IEnumerator<bool> Routine;
+            public Stack<IEnumerator> Routines = new Stack<IEnumerator>();
 
             /// <summary>
             /// Create a new coroutine
@@ -30,13 +31,14 @@ namespace MonoGame_Core.Scripts
             /// <param name="name">The coroutine name</param>
             /// <param name="timeBetween">Delay in seconds between iterations</param>
             /// <param name="start">Start immediately</param>
-            public Coroutine(IEnumerator<bool> routine, string name, float timeBetween, bool start)
+            public Coroutine(IEnumerator routine, string name, float timeBetween, bool start)
            {
                 if (start)
                     State = CoroutineState.Running;
                 else
                     State = CoroutineState.Paused;
-                Routine = routine;
+                
+              Routines.Push(routine);
               Name = name;
                TimeBetweenSteps = timeBetween;
                 TimeSinceLast = 0;
@@ -54,7 +56,7 @@ namespace MonoGame_Core.Scripts
             coroutines.Clear();
         }
 
-        public void AddCoroutine(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
+        public void AddCoroutine(IEnumerator coroutine, string name, float timeBetween, bool start)
         {
             if (!coroutines.ContainsKey(name))
             {
@@ -137,10 +139,21 @@ namespace MonoGame_Core.Scripts
                     c.TimeSinceLast += gt;
                     if (c.TimeSinceLast > c.TimeBetweenSteps)
                     {
-                        c.Routine.MoveNext();
-                        if (c.Routine.Current)
+                        c.Routines.Peek().MoveNext();
+                        if (c.Routines.Peek().Current is bool status)
                         {
-                            toRemove.Add(c.Name);
+                            if(status == true)
+                            {
+                                c.Routines.Pop();
+                                if (c.Routines.Count == 0)
+                                {
+                                    toRemove.Add(c.Name);
+                                }
+                            }
+                        }
+                        else if (c.Routines.Peek().Current is IEnumerator enumerator)
+                        {
+                            c.Routines.Push(enumerator);
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -121,5 +122,17 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
+        public static IEnumerator WaitTime(float time)
+        {
+            float t = 0;
+
+            while(t <= time)
+            {
+                t += TimeManager.DeltaTime;
+                yield return false;
+            }
+
+            yield return true;
+        }
     }
 }
