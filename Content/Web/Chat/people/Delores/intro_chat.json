@@ -2,5 +2,5 @@
     { "waitAfter": 0.1, "msg": "Welcome to Forward Thinking Energy - we’re happy to have you here! Your role is critical to our success so please pay attention to the following instructions." },
     { "wait": 2.5, "typing": true, "waitAfter": 0.1, "msg": "In front of you is a button. If you press this button by clicking it with your mouse, you will cool down the reactor. You must press this button to prevent the reactor from overheating. <b>DO NOT allow the reactor to reach the critical heat level!</b> If this happens, the reactor will enter meltdown protocol and this scenario is grounds for immediate employment termination." },
     { "wait": 5.5, "typing": true, "waitAfter": 0.1, "msg": "This should be simple enough but feel free to reach out to one of your co-workers if you have any questions. You can do this by clicking on the name of one of your co-workers in the chat window. Any meetings or messages from your co-workers will appear here as well." },
-    { "wait": 3.5, "typing": true, "waitAfter": 0.1, "msg": "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button." }
+    { "wait": 3.5, "typing": true, "waitAfter": 0.1, "msg": "I think that’s all for now! Keep an eye on those heat levels and don’t forget to press that button. Got everything? Good!" }
 ]
