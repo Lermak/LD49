@@ -19,15 +19,35 @@ namespace MonoGame_Core.Scripts
             var random = new Random();
             for (int y = 0; y < 26; ++y)
                 for (int x = 0; x < 10; ++x)
-                {                  
-                    var chars = "0123456789";
-
-
-                    for (int i = 0; i < 2; i++)
+                {
+                    if (x == 9 && y == 0)
+                        codes[y, x] = "M";
+                    else if (x == 9 && y == 1)
+                        codes[y, x] = "O";
+                    else if (x == 9 && y == 2)
+                        codes[y, x] = "R";
+                    else if (x == 9 && y == 4)
+                        codes[y, x] = "S";
+                    else if (x == 9 && y == 5)
+                        codes[y, x] = "E";
+                    else if (x == 7 && y == 7)
+                        codes[y, x] = "CO";
+                    else if (x == 8 && y == 7)
+                        codes[y, x] = "DE";
+                    else if (x == 2 && y == 24)
+                        codes[y, x] = "VO";
+                    else if (x == 3 && y == 24)
+                        codes[y, x] = "ID";
+                    else
                     {
-                        codes[y, x] = "";
-                        codes[y, x] += chars[random.Next(chars.Length)];
-                        codes[y, x] += chars[random.Next(chars.Length)];
+                        var chars = "0123456789";
+
+                        for (int i = 0; i < 2; i++)
+                        {
+                            codes[y, x] = "";
+                            codes[y, x] += chars[random.Next(chars.Length)];
+                            codes[y, x] += chars[random.Next(chars.Length)];
+                        }
                     }
                 }
 
