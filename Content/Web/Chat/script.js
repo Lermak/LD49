@@ -881,7 +881,7 @@ Object.defineProperty(Array.prototype, "random", {
   //runCustomChat("Christopher", "morse_code", false)
   //runCustomChat("Christopher", "coworker_bot", false)
 
-  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
+  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 0)
   //document.getElementById("jude_button").style.visibility = "visible"
   //global_data.remove_overlay = true
 
