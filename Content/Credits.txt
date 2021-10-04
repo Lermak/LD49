@@ -1,0 +1,18 @@
+Credits
+
+Alexander Wilkinson - Designer
+Wesley Pesetti - Programmer
+Rhen Niles - Programmer
+Corbin Mcbride - Programmer
+Helen Zbihlyj - Writer
+
+Art
+- game-icons/net
+
+Sound Effects
+- mixkit.co
+- Bfxr
+
+Music
+- Piano Horror by mixkit.co
+- Epic Cut by Damiano Baldoni
