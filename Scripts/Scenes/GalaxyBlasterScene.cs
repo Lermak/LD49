@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace MonoGame_Core.Scripts
             };
             ResourceManager.Textures["Enemy"] = Content.Load<Texture2D>("Images/Enemy");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.SoundEffects["Error"] = Content.Load<SoundEffect>(@"Sound/error");
 
             ResourceManager.Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
             ResourceManager.Textures["Bullet"] = Content.Load<Texture2D>("Images/Bullet");
