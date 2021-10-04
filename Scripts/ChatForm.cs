@@ -134,5 +134,10 @@ namespace MonoGame_Core.Scripts
         {
             browser.ExecuteScriptAsync("setGlobalValue", new object[] { var, value });
         }
+
+        public void sendEvent(string ev)
+        {
+            browser.ExecuteScriptAsync("recieveGameEvent", new object[] { ev });
+        }
     }
 }
