@@ -41,14 +41,14 @@ namespace MonoGame_Core.Scripts
         public override void Draw(SpriteBatch spriteBatch, Camera c)
         {
             var font = ResourceManager.Fonts[fontId];
-            var caretTexture = ResourceManager.Textures["CarretTexture"];
+            var caretTexture = ResourceManager.Textures["Carret"];
             var textboxTexture = ResourceManager.Textures[Texture];
 
             bool caretVisible = true;
 
             timePasssed += TimeManager.DeltaTime;
 
-            if ((timePasssed % 1000) < 500)
+            if ((timePasssed % .5f) < .25f)
                 caretVisible = false;
             else
                 caretVisible = true;
@@ -72,7 +72,7 @@ namespace MonoGame_Core.Scripts
 
             Vector2 size = font.MeasureString(toDraw);
 
-            if (caretVisible && Selected)
+            if (caretVisible)
                 spriteBatch.Draw(caretTexture, new Vector2(X + (int)size.X + 2, Y + 2), Color.White); //my caret texture was a simple vertical line, 4 pixels smaller than font size.Y
 
             //shadow first, then the actual text

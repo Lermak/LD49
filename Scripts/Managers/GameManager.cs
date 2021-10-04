@@ -8,6 +8,7 @@ using System;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
 using MonoGame_Core.Scripts.Managers;
+using System.IO;
 
 namespace MonoGame_Core.Scripts
 {
@@ -39,6 +40,9 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            if (!File.Exists("./SecurityCodes.txt"))
+                File.Delete("./SecurityCodes.txt");
+
             _graphics.PreferredBackBufferWidth = (int)(250 * WidthScale);
             _graphics.PreferredBackBufferHeight = (int)(250 * HeightScale);
 
