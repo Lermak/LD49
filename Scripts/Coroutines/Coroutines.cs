@@ -93,9 +93,7 @@ namespace MonoGame_Core.Scripts
             ad.SpriteRenderer.Visible = false;
             yield return true;
         }
-
-        
-
+     
         public static IEnumerator<bool> UpdateLater()
         {
             float timeElapsed = 0;
@@ -136,6 +134,21 @@ namespace MonoGame_Core.Scripts
             while(t <= time)
             {
                 t += TimeManager.DeltaTime;
+                yield return false;
+            }
+
+            yield return true;
+        }
+
+        public static IEnumerator<bool> BootUp()
+        {
+            float timeElapsed = 0;
+
+            while (timeElapsed < 12)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                if(timeElapsed % 4 < 2)
+
                 yield return false;
             }
 

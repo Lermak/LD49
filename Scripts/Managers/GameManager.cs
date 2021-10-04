@@ -45,6 +45,14 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            if (File.Exists("./DataKeys.txt"))
+                File.Delete("./DataKeys.txt");
+            if (File.Exists("./PayLog.txt"))
+                File.Delete("./PayLog.txt");
+            if (File.Exists("./OverrideCommands.txt"))
+                File.Delete("./OverrideCommands.txt");
+            if (File.Exists("./SecurityCodes.txt"))
+                File.Delete("./SecurityCodes.txt");
             if (File.Exists("./SecurityCodes.txt"))
                 File.Delete("./SecurityCodes.txt");
 

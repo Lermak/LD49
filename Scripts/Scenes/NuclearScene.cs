@@ -85,7 +85,9 @@ namespace MonoGame_Core.Scripts
             Button cooldownButton = new Button("CoolantButton", "CoolantButtonPress", "NuclearButton", cooldownButtonSize, buttonCenterPos, 4, () =>
             {
                 if (!NuclearLevel.started)
+                {
                     NuclearLevel.started = true;
+                }
                 if (!NuclearLevel.Locked)
                 {
                     Random r = new Random();
