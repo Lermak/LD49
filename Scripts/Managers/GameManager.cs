@@ -7,14 +7,19 @@ using System.Diagnostics;
 using System;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
+using MonoGame_Core.Scripts.Managers;
 
 namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
+        public static bool DO_STORY = false;
+
         public static GameManager Instance;
         public static float WidthScale = 1;
         public static float HeightScale = 1;
+        public static PlotManager plotManager;
+        public static ChatForm chatWindow;
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
@@ -47,16 +52,22 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
-            var c = new ChatForm();
-            c.Show();
+            chatWindow = new ChatForm();
+            chatWindow.Show();
 
-            WindowManager.Initilize(Content, new NuclearScene()); 
-            WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480,330));
-            WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
-            WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
-            //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
-            //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            WindowManager.Initilize(Content, new NuclearScene());
+
+            if (!DO_STORY)
+            {
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
+                WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
+                //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+                //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            }
+
+            plotManager = new PlotManager();
 
             base.Initialize();
         }
@@ -74,6 +85,8 @@ namespace MonoGame_Core.Scripts
         {
             if (quit)
                 Exit();
+
+            plotManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);

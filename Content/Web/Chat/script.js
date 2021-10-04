@@ -1,11 +1,12 @@
+let SUPER_SPEED = 1
+
 function waitTime(time) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve()
-    }, time * 1000)
+    }, time * 1000 * (1 / SUPER_SPEED))
   })
 }
-
 
 /*
 some way of running code in response
@@ -35,7 +36,9 @@ Object.defineProperty(Array.prototype, "random", {
 
     game = {}
     game.notify = () => {}
+    game.ready = () => {}
     game.playSound = () => {}
+    game.sendEvent = () => {}
     game.readFile = (path) => {
       return new Promise((resolve) => {
         var rawFile = new XMLHttpRequest();
@@ -179,11 +182,10 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Kailee")
   addPerson("Quinn")
 
-  let stranger = addPerson("Stranger")
-  stranger.cthulhu = true
-  stranger.name = "?????"
-  stranger.displayName = "?????"
-
+  //let stranger = addPerson("Stranger")
+  //stranger.cthulhu = true
+  //stranger.name = "?????"
+  //stranger.displayName = "?????"
 
   let SelectedPerson = People[0]
 
@@ -265,7 +267,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   async function sendAsyncResponse(person, msg) {
     setTyping(person, true)
-    await waitTime(msg.length * 0.01)
+    await waitTime(0.25 + msg.length * 0.005)
     setTyping(person, false)
     recieveMessage(person, msg)
   }
@@ -482,12 +484,17 @@ Object.defineProperty(Array.prototype, "random", {
 
 
 
-  function runCustomChat(person, name) {
+  function runCustomChat(person, name, force) {
+    if(force === undefined) { force = false }
+
     person = getPerson(person)
-    //switchToPerson(person)
-    //lockSwitching = true
+    if(force) {
+      switchToPerson(person)
+      lockSwitching = true
+    }
+
     let doing_slash = DOING_SLASH_COMMAND
-    game.readFile(`Content/Web/Chat/people/${person.name}/${name}.json`).then(async (r) => {
+    game.readFile(`Content/Web/Chat/people/${person.idName}/${name}.json`).then(async (r) => {
       if(r != "") {
         if(doing_slash) {
           recieveMessage(you, `Running Content/Web/Chat/people/${person.idName}/${name}.json`)
@@ -505,8 +512,11 @@ Object.defineProperty(Array.prototype, "random", {
           }
         }
 
-        //lockSwitching = false
-        person.inCustomChat = false
+        if(force) {
+          lockSwitching = false
+          person.inCustomChat = false
+        }
+        game.sendEvent(`${person.idName}_${name}`)
       }
     })
   }
@@ -609,6 +619,12 @@ Object.defineProperty(Array.prototype, "random", {
       }
     }
   }, 666)
+
+  window.runCustomChat = (person, chat, force) => {
+    runCustomChat(person, chat, force)
+  }
+
+  game.ready()
 
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 0)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 1000)
