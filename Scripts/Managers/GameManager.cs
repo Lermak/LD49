@@ -45,6 +45,14 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            if (File.Exists("./DataKeys.txt"))
+                File.Delete("./DataKeys.txt");
+            if (File.Exists("./PayLog.txt"))
+                File.Delete("./PayLog.txt");
+            if (File.Exists("./OverrideCommands.txt"))
+                File.Delete("./OverrideCommands.txt");
+            if (File.Exists("./SecurityCodes.txt"))
+                File.Delete("./SecurityCodes.txt");
             if (File.Exists("./SecurityCodes.txt"))
                 File.Delete("./SecurityCodes.txt");
 
@@ -69,11 +77,11 @@ namespace MonoGame_Core.Scripts
 
             if (!DO_STORY)
             {
-                //WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
                 //WindowManager.AddWindow(new NoCloseForm(), "RoboTestchaWindow", new RoboTestchaScene(), new Vector2(600, 240));
                 //WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
                 //WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
-                WindowManager.AddWindow(new NoCloseForm(), "BadConnectionWindow", new BadConnectionScene(), new Vector2(600, 600));
+                //WindowManager.AddWindow(new NoCloseForm(), "BadConnectionWindow", new BadConnectionScene(), new Vector2(600, 600));
                 //WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
                 //WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
                 //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());

@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
 {
     public class UpdateRequiredScene : Scene
     {
-        static float countdown = 5;
+        static float countdown = 120;
         protected override void loadContent(List<Camera> c)
         {
             ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
@@ -86,7 +86,7 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                fr.Text = "Update Required\nAutomatic update in: " + (int)countdown;
+                fr.Text = "              Update Required\n" + (int)countdown + " seconds before update begins.";
             }
         }
     }

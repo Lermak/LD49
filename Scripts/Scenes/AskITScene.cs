@@ -22,10 +22,15 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
+            GameManager.chatWindow.setGlobal("ask_it", true);
+
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             obj.ComponentHandler.AddComponent(new FontRenderer(obj, 
-                "Error: This should NEVER\nhappen, contact Tim", 
+                "          Error Code: 493\n" +
+                "Unknown cause.\n" +
+                "This should NEVER happen.\n" +
+                "Contact Tim immediately.", 
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
             obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { 
                 if (NuclearLevel.ButtonHoldTime >= 5) { 

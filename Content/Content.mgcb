@@ -236,6 +236,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/DigiPet/fly.png
 
+#begin Images/DigiPet/fly.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/DigiPet/fly.png
+
 #begin Images/DigiPet/pet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -367,6 +379,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/dial_back.png
+
+#begin Images/Nuclear/dial_back_darkened.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/dial_back_darkened.png
 
 #begin Images/Nuclear/dial_border.png
 /importer:TextureImporter
@@ -901,6 +925,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/lock_out.wav
+
+#begin Sound/machine_starting.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/machine_starting.wav
 
 #begin Sound/Relaque/message_notification.wav
 /importer:WavImporter
