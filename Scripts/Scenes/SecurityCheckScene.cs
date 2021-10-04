@@ -34,9 +34,9 @@ namespace MonoGame_Core.Scripts
             
             int yindex = random.Next(0, 26);
             char letter = (char)(yindex+65);
-            int num = random.Next(0, 10);
-            message = "Please input code \n" + letter + (num + 1) + " from SecurityCodes.txt";
-            key = codes[yindex, num];
+            int xindex = random.Next(0, 10);
+            message = "Please input code \n" + letter + (xindex + 1) + " from SecurityCodes.txt";
+            key = codes[yindex, xindex];
 
             for (int x = 0; x < 10; ++x)
                 s += "\t" + (x + 1);
