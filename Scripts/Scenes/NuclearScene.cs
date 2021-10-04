@@ -60,6 +60,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
             ResourceManager.SoundEffects["Shutdown"] = Content.Load<SoundEffect>("Sound/machine_stopping");
             ResourceManager.SoundEffects["Explosion"] = Content.Load<SoundEffect>("Sound/explosion");
+            ResourceManager.SoundEffects["Roar"] = Content.Load<SoundEffect>("Sound/monster_roar");
             ResourceManager.Songs["OminousMusic"] = Content.Load<Song>("Music/ominous_piano");
             ResourceManager.Songs["EndTimes"] = Content.Load<Song>("Music/final_ritual_loop");
             ResourceManager.Songs["EndTimesOpening"] = Content.Load<Song>("Music/final_ritual_opening");
