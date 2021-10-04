@@ -357,7 +357,15 @@ namespace MonoGame_Core.Scripts
         }
         public static void ChangeOverlay(float gt, Component[] c)
         {
+            SpriteRenderer bg = (SpriteRenderer)c[0];
+            SpriteRenderer title = (SpriteRenderer)c[1];
 
+            if (GameManager.plotManager.remove_overlay)
+            {
+                bg.Texture = "EvilBackground";
+                title.Texture = "SoulsTitle";
+
+            }
         }
 
 

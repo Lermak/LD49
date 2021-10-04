@@ -35,6 +35,9 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["ChalkBox"] = Content.Load<Texture2D>("Images/Nuclear/chalk_box");
             ResourceManager.Textures["Dust"] = Content.Load<Texture2D>("Images/Nuclear/chalk_smudge");
 
+            ResourceManager.Textures["EvilBackground"] = Content.Load<Texture2D>("Images/Nuclear/background_evil");
+            ResourceManager.Textures["SoulsTitle"] = Content.Load<Texture2D>("Images/Nuclear/souls_text");
+
             ResourceManager.Textures["CoolantButton"] = Content.Load<Texture2D>("Images/Nuclear/button");
             ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
             ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/button_press");
