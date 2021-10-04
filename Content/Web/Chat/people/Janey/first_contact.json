@@ -1,5 +1,5 @@
 [
-    "Hey newbie! Hey newbie! Christopher mentioned you’d be coming on board. Any friend of Christopher’s and Kailee’s has got to be pretty cool. Didn't y'all go to school for game design together?",
+    "Hey newbie! Christopher mentioned you’d be coming on board. Any friend of Christopher’s and Kailee’s has got to be pretty cool. Didn't y'all go to school for game design together?",
     {
         "filter": "(yes.*)|(yeah.*)|(yup.*)|(yea.*)",
         "sequence": [
