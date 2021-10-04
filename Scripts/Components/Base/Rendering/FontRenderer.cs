@@ -11,6 +11,7 @@ namespace MonoGame_Core.Scripts
         private string text;
         float textScale = 1;
         public string Text { get { return text; } set { text = value; } }
+        public float TextScale { get { return TextScale; } set { textScale = value} }
         public override string Texture
         {
             get { return texture; }

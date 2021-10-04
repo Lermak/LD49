@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
             FontRenderer fr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj,
                 "Server Disconnected: Select new server",
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-
+            
             Random r = new Random();
             int[] goodServers = new int[] { r.Next(0, 16), r.Next(0, 16), r.Next(0, 16) };
             for (int y = 0; y < 4; ++y)
