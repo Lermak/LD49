@@ -140,18 +140,30 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
-        public static IEnumerator<bool> BootUp()
+        public static IEnumerator<bool> BootUp(SpriteRenderer sr)
         {
             float timeElapsed = 0;
-
-            while (timeElapsed < 12)
+            SoundManager.PlaySoundEffect("Boot");
+            Random r = new Random();
+            while (timeElapsed < 8)
             {
                 timeElapsed += TimeManager.DeltaTime;
-                if(timeElapsed % 4 < 2)
+                if (timeElapsed % .75f < .45f)
+                {
+                    if(r.Next(0,100) < 50)
+                    {
+                        if(sr.Texture == "DialBack")
+                            sr.Texture = "DialBackDark";
+                        else
+                            sr.Texture = "DialBack";
+
+                    }
+                }
 
                 yield return false;
             }
-
+            sr.Texture = "DialBack";
+            NuclearLevel.started = true;
             yield return true;
         }
     }

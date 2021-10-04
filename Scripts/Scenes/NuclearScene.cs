@@ -33,6 +33,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
             ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/button_press");
             ResourceManager.Textures["DialArrow"] = Content.Load<Texture2D>("Images/Nuclear/dial_arrow");
+            ResourceManager.Textures["DialBackDark"] = Content.Load<Texture2D>("Images/Nuclear/dial_back_darkened");
             ResourceManager.Textures["DialBack"] = Content.Load<Texture2D>("Images/Nuclear/dial_back");
             ResourceManager.Textures["DialBorder"] = Content.Load<Texture2D>("Images/Nuclear/dial_border");
             ResourceManager.Textures["HeatText"] = Content.Load<Texture2D>("Images/Nuclear/heat_text");
@@ -44,6 +45,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
             ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
             ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
+            ResourceManager.SoundEffects["Boot"] = Content.Load<SoundEffect>("Sound/machine_starting");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
@@ -67,7 +69,7 @@ namespace MonoGame_Core.Scripts
 
             Vector2 buttonCenterPos = screenCenter + new Vector2(0, -32);
 
-            WorldObject dialBackObj = new WorldObject("DialBack", "DialBG", dialSize, buttonCenterPos, 1);
+            WorldObject dialBackObj = new WorldObject("DialBackDark", "DialBG", dialSize, buttonCenterPos, 1);
             NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, buttonCenterPos, 2);
             WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, buttonCenterPos, 3);
             dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
@@ -86,7 +88,8 @@ namespace MonoGame_Core.Scripts
             {
                 if (!NuclearLevel.started)
                 {
-                    NuclearLevel.started = true;
+                    CurrentWindow.coroutineManager.AddCoroutine(Coroutines.BootUp(dialBackObj.SpriteRenderer), "BootUp", 0, true);
+                    
                 }
                 if (!NuclearLevel.Locked)
                 {
