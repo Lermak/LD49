@@ -11,8 +11,6 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent(List<Camera> c)
         {
-            NuclearLevel.Locked = true;
-
             ResourceManager.Textures["CarretTexture"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Textures["UpdateNow"] = Content.Load<Texture2D>(@"Images/UpdateRequired/UpdateNow");
@@ -41,7 +39,7 @@ namespace MonoGame_Core.Scripts
             { 
                 if (!NuclearLevel.Updated)
                 {
-                    NuclearLevel.Updating = true;
+                    
                 }
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
             }
