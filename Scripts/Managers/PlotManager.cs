@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts.Managers
 
         // Plot flags (false is uncompleted, true is completed)
         bool deloresChat = false;
-        bool supervisorTutotial = true;
+        bool supervisorTutotial = false;
         IEnumerator<bool> supervisorCo = null;
 
         bool firstLockout = false;

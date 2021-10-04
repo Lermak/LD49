@@ -273,6 +273,8 @@ namespace MonoGame_Core.Scripts
                     d.TimeSinceLastWash > 30) &&
                     Globals.DigiPetAlive == true)
                 {
+                    GameManager.chatWindow.runChat("Kailee", "coming_back", false);
+
                     Globals.DigiPetAlive = false;
                     d.Needs.SpriteRenderer.Animation = 0;
                     a.ChangeAnimation(4);
