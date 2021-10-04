@@ -242,6 +242,9 @@ Object.defineProperty(Array.prototype, "random", {
         global_data.met_stranger = true
         game.sendEvent("met_stranger")
       }
+      else if(msgObj.read_game_event == "adrian_aida") {
+        global_data["adrian_aida"] = true
+      }
       else {
         game.sendEvent(msgObj.read_game_event)
       }
@@ -364,6 +367,10 @@ Object.defineProperty(Array.prototype, "random", {
       }
     }
 
+    if(response.set_global !== undefined) {
+      global_data[response.set_global] = true
+    }
+
     if(response.random_set !== undefined) {
       await handleResponseObject(person, response.random_set.random())
     }
@@ -430,7 +437,9 @@ Object.defineProperty(Array.prototype, "random", {
       if(v.requires) {
         let conditionFn = new Function('msg', 'global_data', 'unique_id', v.requires)
         let conditionRet = conditionFn(message, global_data, person.uniqueIds)
-        return conditionRet
+        if(conditionRet == false) {
+          return false
+        }
       }
 
       if(v.uniqueId !== undefined) {
@@ -923,5 +932,6 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
   //document.getElementById("jude_button").style.visibility = "visible"
   //global_data.remove_overlay = true
+  //global_data.ask_it = true
 
 })();
