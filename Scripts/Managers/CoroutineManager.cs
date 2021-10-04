@@ -128,7 +128,9 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt">Game Time</param>
         public void Update(float gt)
         {
-            List<string> k = new List<string>(coroutines.Keys);
+            List<string> k = new List<string>();
+            k.AddRange(coroutines.Keys);
+
             List<string> toRemove = new List<string>();
 
             for (int i = 0; i < coroutines.Count; ++i)
