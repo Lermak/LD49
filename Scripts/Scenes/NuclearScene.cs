@@ -129,6 +129,11 @@ namespace MonoGame_Core.Scripts
                         if (NuclearLevel.level < 0.0f)
                             NuclearLevel.level = 0.0f;
                     }
+
+                    if(Globals.ExpectFinalButtonPush)
+                    {
+                        Globals.FinalButtonPush = true;
+                    }
                 }
             });
             cooldownButton.BehaviorHandler.AddBehavior("clickSwapAnim", Behaviors.ButtonSwapImagesOnClick, new Component[] {

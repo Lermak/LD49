@@ -302,6 +302,15 @@ namespace MonoGame_Core.Scripts
                     t.Place(box.Position);
                     sr.Texture = "SideChalk";
                     cd.Held = false;
+
+                    if (CurrentWindow.sceneManager.CurrentScene.GameObjects.Where(t => t.Tag == "Dust").Count() > 5)
+                    {
+                        if(!Globals.ReadyForEndTimes)
+                        {
+                            Globals.ReadyForEndTimes = true;
+                            GameManager.chatWindow.runChat("Stranger", "press_the_button", false);
+                        }
+                    }
                 }
                 else
                 {
@@ -311,17 +320,10 @@ namespace MonoGame_Core.Scripts
             bool down = CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton);
             if (down)
             {
-                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 20 && cd.Draw)
+                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 6 && cd.Draw)
                 {
                     cd.LastDrawPos = v;
                     CurrentWindow.sceneManager.CurrentScene.ToAdd.Add(new Dust(v));
-                    if(!Globals.ReadyForEndTimes)
-                    {
-                        if(CurrentWindow.sceneManager.CurrentScene.GameObjects.Where(t => t.Tag == "Dust").Count() > 5)
-                        {
-                            Globals.ReadyForEndTimes = true;
-                        }
-                    }
                 }
 
             }

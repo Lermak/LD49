@@ -231,6 +231,11 @@ namespace MonoGame_Core.Scripts.Managers
                 coroutines.Stop("SongCo");
                 coroutines.AddCoroutine(SongEndCo(), "SongCo", 0, true);
             }
+
+            if (ev == "Stranger_press_the_button")
+            {
+                Globals.ExpectFinalButtonPush = true;
+            }
         }
 
 
