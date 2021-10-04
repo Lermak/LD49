@@ -216,7 +216,7 @@ namespace MonoGame_Core.Scripts
                                 "\n--------------------------" +
                                 "\n  setsalary # - Set salary to given amount" +
                                 "\n   soulcounts - Display soul count info" +
-                                "\n   galaxyblaster - Play Galaxy Blaster" +
+                                "\ngalaxyblaster - Play Galaxy Blaster" +
                                 "\nremoveoverlay - Remove fake overlay");
                         }
                     }
