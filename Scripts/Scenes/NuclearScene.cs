@@ -53,6 +53,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.SoundEffects["Boot"] = Content.Load<SoundEffect>("Sound/machine_starting");
             ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
+            ResourceManager.SoundEffects["Shutdown"] = Content.Load<SoundEffect>("Sound/machine_stopping");
+            ResourceManager.SoundEffects["Explosion"] = Content.Load<SoundEffect>("Sound/explosion");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
@@ -77,6 +79,7 @@ namespace MonoGame_Core.Scripts
             Vector2 buttonCenterPos = screenCenter + new Vector2(0, -32);
 
             WorldObject dialBackObj = new WorldObject("DialBackDark", "DialBG", dialSize, buttonCenterPos, 1);
+            dialBackObj.BehaviorHandler.AddBehavior("NuclearDeath", Behaviors.NuclearDeath, new Component[] { dialBackObj.SpriteRenderer });
             NuclearDial dialArrowObj = new NuclearDial("DialArrow", "NuclearDial", dialSize, buttonCenterPos, 2);
             WorldObject dialBorderObj = new WorldObject("DialBorder", "DialBorder", dialSize, buttonCenterPos, 3);
             dialArrowObj.Transform.AttachToTransform(dialBackObj.Transform);
@@ -96,20 +99,22 @@ namespace MonoGame_Core.Scripts
                 if (!NuclearLevel.started)
                 {
                     CurrentWindow.coroutineManager.AddCoroutine(Coroutines.BootUp(dialBackObj.SpriteRenderer), "BootUp", 0, true);
-                    
+
                 }
                 if (!NuclearLevel.Locked)
                 {
                     Random r = new Random();
                     SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                    if (!Globals.ButtonNotCool)
+                    {
+                        NuclearLevel.buttonHit = true;
 
-                    NuclearLevel.buttonHit = true;
+                        NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
 
-                    NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
-
-                    NuclearLevel.level -= NuclearLevel.reduceAmount;
-                    if (NuclearLevel.level < 0.0f)
-                        NuclearLevel.level = 0.0f;
+                        NuclearLevel.level -= NuclearLevel.reduceAmount;
+                        if (NuclearLevel.level < 0.0f)
+                            NuclearLevel.level = 0.0f;
+                    }
                 }
             });
             cooldownButton.BehaviorHandler.AddBehavior("clickSwapAnim", Behaviors.ButtonSwapImagesOnClick, new Component[] {

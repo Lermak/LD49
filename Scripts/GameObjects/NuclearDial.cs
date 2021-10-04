@@ -10,8 +10,7 @@ namespace MonoGame_Core.Scripts
             Transform.Radians = MathHelper.ToRadians(70);
 
             BehaviorHandler.AddBehavior("increasingNuclear", Behaviors.IncreaseNuclearLevelOverTime, new Component[] {  });
-            BehaviorHandler.AddBehavior("NuclearRotate", Behaviors.NuclearRotate, new Component[] { Transform });
-            BehaviorHandler.AddBehavior("NuclearDeath", Behaviors.NuclearDeath, new Component[] { });
+            BehaviorHandler.AddBehavior("NuclearRotate", Behaviors.NuclearRotate, new Component[] { Transform });           
             BehaviorHandler.AddBehavior("isButtonHeld", Behaviors.isButtonHeld, new Component[] { Transform });
         }
 

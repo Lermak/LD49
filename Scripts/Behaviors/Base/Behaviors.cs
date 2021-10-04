@@ -170,7 +170,7 @@ namespace MonoGame_Core.Scripts
             t.Radians = rot_start - MathHelper.Clamp(NuclearLevel.level, 0, 1) * (rot_start - rot_end);
             float intensity = MathHelper.Clamp((NuclearLevel.level - 0.5f) * 2, 0, 1);
             float intensityScale = 5f;
-            if (intensity > 0f)
+            if (intensity > 0f && NuclearLevel.level < 1.1)
             {
                 SoundManager.PlaySoundEffect("alert");
                 SoundManager.SoundEffects["alert"].Volume = intensity * 0.15f;
@@ -183,7 +183,9 @@ namespace MonoGame_Core.Scripts
 
         public static void NuclearDeath(float gt, Component[] c)
         {
-            if (NuclearLevel.level >= 1.1) { }
+            if (NuclearLevel.level >= 1.1 && !Globals.OverheatGameOver) {
+                WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.GameOver((SpriteRenderer)c[0]), "GameOver", 0, true);
+            }
             //GameManager.Quit(); //TODO() this is bad, make it into a game over screen
         }
 
