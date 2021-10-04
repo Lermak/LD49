@@ -28,7 +28,9 @@ namespace MonoGame_Core.Scripts
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             ReauthData rad = (ReauthData)obj.ComponentHandler.AddComponent(new ReauthData(obj, "ReauthData", 60));
             FontRenderer fr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj,
-                "Server Disconnected: Select new server",
+                "                 Error Code: 312\n" +
+                "Disconnected from Server.\n" +
+                "Please select new server with better connection.\n",
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
             
             Random r = new Random();

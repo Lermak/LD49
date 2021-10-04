@@ -9,7 +9,9 @@ namespace MonoGame_Core.Scripts
 {
     public class RoboTestchaScene : Scene
     {
-        string message = "Please prove you are human.\nEnter the code below.";
+        string message = "                    Error Code: 184\n" +
+            "Please prove you are human.\n" +
+            "Enter the code below. It is case sensitive.";
         bool error = false;
         string code = "";
         protected override void loadContent(List<Camera> c)
@@ -35,7 +37,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 0));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
-            FontRenderer objfr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(), new Vector2(600, 100), 1, Color.White));
+            FontRenderer objfr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj, message, "TestFont", obj.Transform, new Vector2(0, 20), new Vector2(600, 100), 1, Color.White));
             obj.BehaviorHandler.AddBehavior("ErrorMessage", ShowError, new Component[] { objfr });
 
             Random r = new Random();

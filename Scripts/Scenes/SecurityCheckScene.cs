@@ -87,7 +87,9 @@ namespace MonoGame_Core.Scripts
             int yindex = random.Next(0, 26);
             char letter = (char)(yindex + 65);
             int xindex = random.Next(0, 10);
-            message = "Please input code \n" + letter + (xindex + 1) + " from SecurityCodes.txt and confirm";
+            message = "          Security Screening\n"
+                + "Please check SecurityCodes.txt\n"
+                + "Input code " + letter + (xindex + 1) + " and confirm.";
             key = codes[yindex, xindex];
 
             ResourceManager.SoundEffects["Unlock"] = Content.Load<SoundEffect>(@"Sound/unlock");
