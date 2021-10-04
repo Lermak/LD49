@@ -161,7 +161,7 @@ namespace MonoGame_Core.Scripts
                     return;
                 }
 
-                NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed * 40;
+                NuclearLevel.level = NuclearLevel.level + gt * NuclearLevel.speed;
             }
         }
         public static void NuclearRotate(float gt, Component[] c)

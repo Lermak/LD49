@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('p');
 
                     Random r = new Random();
-                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
                 }
                 ad.ChangeSpriteSheet("PlayDown", 0);
 
@@ -73,7 +73,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('w');
 
                     Random r = new Random();
-                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
                 }
                 ad.ChangeSpriteSheet("WashDown", 0);
                 if (!Globals.DigiPetAlive)
@@ -118,7 +118,7 @@ namespace MonoGame_Core.Scripts
                     d.Code.Enqueue('f');
 
                     Random r = new Random();
-                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
                 }
 
                 ad.ChangeSpriteSheet("FeedDown", 0);
