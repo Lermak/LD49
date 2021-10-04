@@ -181,9 +181,10 @@ namespace MonoGame_Core.Scripts.Managers
         public static float MysteryVolume = 0;
         public IEnumerator SongStartCo()
         {
-            if (SoundManager.CurrentSong != "MysteryContact")
+            if (!remove_overlay)
             {
                 SoundManager.PlaySong("MysteryContact");
+                SoundManager.volume = .5f;
             }
             yield return Coroutines.WaitTime(0.1f);
 
@@ -355,32 +356,34 @@ namespace MonoGame_Core.Scripts.Managers
 
             bool found = false;
             Random r = rng;
-
-            int iter = 0;
-            while (iter < 100 && !found)
+            if (!Globals.CreateChalk)
             {
-                ++iter;
-                int value = r.Next(0, 10);
+                int iter = 0;
+                while (iter < 100 && !found)
+                {
+                    ++iter;
+                    int value = r.Next(0, 10);
 
-                if (value < 3 && WindowManager.ResetKeysWindow == null)
-                {
-                    WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
-                    found = true;
-                }
-                else if (value < 6 && WindowManager.SecurityCheckWindow == null)
-                {
-                    WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
-                    found = true;
-                }
-                else if (value < 7 && WindowManager.ITHelp == null)
-                {
-                    WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
-                    found = true;
-                }
-                else if (value < 10 && WindowManager.UpdateWindow == null)
-                {
-                    WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
-                    found = true;
+                    if (value < 3 && WindowManager.ResetKeysWindow == null)
+                    {
+                        WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                        found = true;
+                    }
+                    else if (value < 6 && WindowManager.SecurityCheckWindow == null)
+                    {
+                        WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
+                        found = true;
+                    }
+                    else if (value < 7 && WindowManager.ITHelp == null)
+                    {
+                        WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
+                        found = true;
+                    }
+                    else if (value < 10 && WindowManager.UpdateWindow == null)
+                    {
+                        WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+                        found = true;
+                    }
                 }
             }
         }
@@ -558,7 +561,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             coroutines.Stop("SongCo");
             SoundManager.PlaySong("Ritual");
-            SoundManager.SetVolume(1);
+            SoundManager.SetVolume(0.5f);
             MediaPlayer.IsRepeating = false;
 
             List<string> coworkers = new List<string>
