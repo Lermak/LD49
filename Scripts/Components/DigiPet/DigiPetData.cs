@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
         public float TimeSinceLastFeed = 0;
         public float TimeSinceLastPlay = 0;
         public float TimeSinceLastWash = 0;
-        public float CheckNeedsTimer = 0;
+        public float CheckNeedsTimer = 4;
         public float AnimationDuration = 1;
         public float TimeSinceAnimation = 0;
         public float TimeDead = 0;

@@ -8,6 +8,7 @@
 	"Do you not have better things to do? Quit wasting my time.",
 	"Don’t you ever give up? Do not answer that. I need to work. Goodbye.",
     "I need to work and so do you. Bye.",
+
     {
         "requiresId": "money",
         "filter": "(salary)|(money)|\\$",
@@ -58,7 +59,52 @@
             }
         ]
     },
+	{
+		"requires": "return unique_id.first_contact",
+		"force": true,
+		"filter": "(yes.*)|(yeah.*)|(yup.*)|(yea.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Here's a free piece of advice, new hire: don't get in my way. I'm rising through the ranks of this company faster than a SpaceX rocket. Your friend Christopher would do well to do the same. Now get back to work."
+            }
+			
+        ]
 
+	},
+	{
+        "requires": "return unique_id.first_contact",
+		"force": true,
+		"filter": "(no.*)|(nah.*)|(nope.*)|(negative.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Whatever. Just know that I'm the top dog around here and Delores' right-hand man. Stick with me and I'll take you to the top. Now get back to work."
+            }
+        ]
+    },
     {
         "uniqueId": 1,
         "msg": "I do not have time for you. Message someone else."

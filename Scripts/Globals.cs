@@ -7,6 +7,8 @@ namespace MonoGame_Core.Scripts
 {
     public static class Globals
     {
+        public static bool FirstLockout = false;
+        public static bool FirstLocoutComplete = false;
         public static bool CreateChalk = false;
         public static bool ButtonNotCool = false;
         public static bool OverheatGameOver = false;
@@ -16,6 +18,8 @@ namespace MonoGame_Core.Scripts
         public static bool FinalButtonPush = false;
         public static bool DigiPetAlive = true;
         public static string[] ClickSounds = new string[] { "Click1", "Click2" };
+        public static bool DigipetFirstWant = true;
+
         public static void CreateFile(string name, string contents)
         {
             string fileName = @".\"+name+".txt";

@@ -1,59 +1,6 @@
 [
-    "Hey newbie! Hey newbie! Christopher mentioned you’d be coming on board. Any friend of Christopher’s and Kailee’s has got to be pretty cool. Didn't y'all go to school for game design together?",
-    {
-        "filter": "(yes.*)|(yeah.*)|(yup.*)|(yea.*)",
-        "sequence": [
-            {
-                "typing": false,
-                "wait": 1
-            },
-            {
-                "typing": true,
-                "wait": 1.5
-            },
-            {
-                "msg": "That's pretty cool! I'm really into gaming. It's one of my passions. I'll try out pretty much any game to see what it's like."
-            },
-			{
-                "typing": false,
-                "wait": 1.5
-            },
-            {
-                "typing": true,
-                "wait": 2
-            },
-			{
-				"msg": "My favorite game right now is this indie game that was done by students called Lucha or Lose It. I'm not generally into fighting games that much but this one is so much fun. There's also this game one of our co-workers here made called Galaxy Blaster but you can tell it's still in development. Don't get me wrong, though, it's still a lot of fun to play."},
-			{
-					"typing": true,
-					"wait": 2,
-					"msg": "Alright, I'll let you go back to the joke that they call orientation here. Pop me a message anytime, especially if you want to talk about games. See ya!"
-			}
-			
-        ]
-    },
-	{
-        "filter": "(no.*)|(nah.*)|(nope.*)|(negative.*)",
-        "sequence": [
-            {
-                "typing": false,
-                "wait": 1.5
-            },
-            {
-                "typing": true,
-                "wait": 1
-            },
-            {
-                "typing": false,
-                "wait": 1.5
-            },
-            {
-                "typing": true,
-                "wait": 1.5
-            },
-            {
-                "msg": "Huh. I thought Christopher told me that. I guess I must be mistaken or something. Oh well. I'll let you get back to the joke that is orientation here. Message me anytime if you get bored and trust me, you will get bored. See ya!"
-            }
-        ]
-    }
+    "Hey newbie! Christopher mentioned you’d be coming on board. Any friend of Christopher’s and Kailee’s has got to be pretty cool.",
+    { "wait": 2, "msg": "I'm really into gaming. It's one of my passions. I'll try out pretty much any game to see what it's like."},
+	{ "wait": 1.5, "msg":"My favorite game right now is this indie game that was done by students called Lucha or Lose It. I'm not generally into fighting games that much but this one is so much fun. There's also this game one of our co-workers here made called Galaxy Blaster but you can tell it's still in development. Don't get me wrong, though, it's still a lot of fun to play."},
+	{ "wait": 1.5, "msg":"Alright, I'll let you go back to the joke that they call orientation here. Pop me a message anytime, especially if you want to talk about games. See ya!"}
 ]
