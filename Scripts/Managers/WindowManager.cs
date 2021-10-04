@@ -162,21 +162,45 @@ namespace MonoGame_Core.Scripts
         {
             Window w = new Window(f);
             if (BlackboardConnection == "DigiPetWindow")
+            {
+                f.Text = "DigiPet";
                 DigiPetWindow = w;
+            }
             else if (BlackboardConnection == "ITHelp")
+            {
+                f.Text = "IT Help";
                 ITHelp = w;
+            }
             else if (BlackboardConnection == "UpdateWindow")
+            {
+                f.Text = "Software Update";
                 UpdateWindow = w;
+            }
             else if (BlackboardConnection == "ReauthWindow")
+            {
+                f.Text = "Re-Authorization";
                 ReauthWindow = w;
+            }
             else if (BlackboardConnection == "ResetKeysWindow")
+            {
+                f.Text = "Data Keys Required";
                 ResetKeysWindow = w;
+            }
             else if (BlackboardConnection == "BadConnectionWindow")
+            {
+                f.Text = "Bad Connection";
                 BadConnectionWindow = w;
+            }
             else if (BlackboardConnection == "GalaxyBlasterWindow")
+            {
+                f.Text = "Galaxy Blaster";
                 GalaxyBlasterWindow = w;
+            }
             else if (BlackboardConnection == "SecruityCheckWindow")
+            {
+                f.Text = "Security Check";
                 SecruityCheckWindow = w;
+            }
 
             ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
@@ -187,6 +211,7 @@ namespace MonoGame_Core.Scripts
                 int x = r.Next(0, (int)(screen.Bounds.Width - (size.X + 250) * GameManager.WidthScale));
                 int y = r.Next(0, (int)(screen.Bounds.Height - (size.Y + 250) * GameManager.HeightScale));
                 f.Location = new System.Drawing.Point(x, y);
+                f.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
             ToAdd[ToAdd.Count - 1].form.Show();
 

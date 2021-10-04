@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
-        public static bool DO_STORY = false;
+        public static bool DO_STORY = true;
 
         public static GameManager Instance;
         public static float WidthScale = 1;
@@ -66,10 +66,10 @@ namespace MonoGame_Core.Scripts
             if (!DO_STORY)
             {
                 WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
-                //WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
-                //WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
-                //WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
-                //WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+                WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
+                WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
+                WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
                 //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
             }
 
@@ -92,7 +92,10 @@ namespace MonoGame_Core.Scripts
             if (quit)
                 Exit();
 
-            plotManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (DO_STORY)
+            {
+                plotManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
