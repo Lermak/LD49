@@ -241,7 +241,7 @@ namespace MonoGame_Core.Scripts.Managers
 
         public IEnumerator<bool> SupervisorCo()
         {
-            GameManager.chatWindow.runChat("Delores", "intro_chat", false);
+            GameManager.chatWindow.runChat("Delores", "intro_chat", true);
             while(deloresChat == false || NuclearLevel.started == false) yield return false;
             supervisorTutotial = true;
             yield return true;
