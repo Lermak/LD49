@@ -163,7 +163,7 @@ namespace MonoGame_Core.Scripts.Managers
         public void SpawnRandomLockOut()
         {
             if(WindowManager.ResetKeysWindow != null ||
-               WindowManager.SecruityCheckWindow != null ||
+               WindowManager.SecurityCheckWindow != null ||
                WindowManager.ITHelp != null ||
                WindowManager.UpdateWindow != null)
             {
@@ -184,9 +184,9 @@ namespace MonoGame_Core.Scripts.Managers
                     WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
                     found = true;
                 }
-                else if (value == 1 && WindowManager.SecruityCheckWindow == null)
+                else if (value == 1 && WindowManager.SecurityCheckWindow == null)
                 {
-                    WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
+                    WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
                     found = true;
                 }
                 else if (value == 2 && WindowManager.ITHelp == null)

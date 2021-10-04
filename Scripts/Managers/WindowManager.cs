@@ -138,10 +138,13 @@ namespace MonoGame_Core.Scripts
         public static Window ResetKeysWindow;
         public static bool KillResetKeys = false;
 
+        public static Window RoboTestchaWindw;
+        public static bool KillRoboTestcha = false;
+
         public static Window GalaxyBlasterWindow;
         public static bool KillGalaxyBlaster = false;
 
-        public static Window SecruityCheckWindow;
+        public static Window SecurityCheckWindow;
 
         public static List<Window> ToAdd = new List<Window>();
 
@@ -183,8 +186,13 @@ namespace MonoGame_Core.Scripts
             }
             else if (BlackboardConnection == "ResetKeysWindow")
             {
-                f.Text = "Data Keys Required";
+                f.Text = "ERROR 257: Data Keys Need Reset";
                 ResetKeysWindow = w;
+            }
+            else if (BlackboardConnection == "RoboTestchaWindow")
+            {
+                f.Text = "ERROR 184: RoboTestcha Check Required";
+                RoboTestchaWindw = w;
             }
             else if (BlackboardConnection == "BadConnectionWindow")
             {
@@ -196,10 +204,10 @@ namespace MonoGame_Core.Scripts
                 f.Text = "Galaxy Blaster";
                 GalaxyBlasterWindow = w;
             }
-            else if (BlackboardConnection == "SecruityCheckWindow")
+            else if (BlackboardConnection == "SecurityCheckWindow")
             {
-                f.Text = "Security Check";
-                SecruityCheckWindow = w;
+                f.Text = "Security Screening";
+                SecurityCheckWindow = w;
             }
 
             ToAdd.Add(w);
