@@ -1,0 +1,86 @@
+[
+    "Yo. What you up to? Oh crap, my heat level's rising. Gotta go!",
+    "Try typing the word “void” in Morse code with your button. There’s definitely something weird going on here.",
+    "(AFK) In the bathroom. Brb.",
+    "Ugh. Wish I could chat but gotta bring down the heat.",
+    "Busy right now but let's chat over a game of M:tG later.",
+	"Can't chat now but we'll grab dinner soon.",
+	"Really wish I could chat right now but I've gotta cool down this reactor",
+	"Buttons, man...",
+	"Have you ever wondered why you drive on a parkway but park on a driveway? Words are weird.",
+	"You should challenge Janey to a game of Lucha or Lose It. She will totally pwn you but it'll be worth it.",
+	"The other night when Kailee and I ate some gummies, she mentioned there was something hidden in her DigiPal. I wonder what that was about.",
+	"Did you see the latest episode of BAP: Criminal Intent? It was intense. Oh crap, gotta hit the button some more.",
+    {
+        "filter": "(aida.*\\?)|(aida.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "There is definitely something almost robotic about her. That's really all I got."
+            }
+        ]
+    },
+	{
+        "filter": "(salary.*\\?)|(salary.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I always wondered how Jude was able to afford that expensive apartment of his."
+            }
+        ]
+    },
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I never thought between the two of us that I’d turn out to be the conspiracy theorist. Heh."
+            }
+        ]
+    }
+]

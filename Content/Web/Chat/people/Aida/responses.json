@@ -1,0 +1,17 @@
+[
+    "Hello! I am Aida.",
+    "My apologies, I must get back to work. Goodbye.",
+	"I have many paperclips. Does that excite you? Ha. Ha. Ha. We should return to work.",
+	"What is the purpose of cottage cheese? I must go back to work so do not answer.",
+	"I had a dream last night about electric sheep. It was not a baaaad dream, however. Ha. Ha. Ha. Let us return to work.",
+	"I know what a meme is.",
+	"J'aime les pommes de terre.",
+	"Je voudrais conquérir tout le monde.",
+	"Je parle français.",
+    {"filter": "(aida.*\\?)|(aida.\\?)$","msg": "I am Aida. I work at Forward Thinking Energy. My primary directive is to press the button to cool the reactor’s temperature."   
+    },
+	{"filter": "(salary.*\\?)|(salary.\\?)$","msg": "Salary system activated. How can I help you?"
+    },
+	{"filter": "(conspiracy.*\\?)|(conspiracy.\\?)$","msg": "Forward Thinking Energy is a legitimate company with honorable goals. Company loyalty is valued at Forward Thinking Energy and will be rewarded."
+    }
+]

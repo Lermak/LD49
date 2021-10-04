@@ -1,0 +1,106 @@
+[
+    "Hihi! I found the cutest cat cake recipe on Good Food Stories. By cat cake, I mean a cake FOR CATS! Isn’t that the coolest? Now this is only a treat so don’t go making this as your cat’s main food every day, okay?? \n 1 5oz. can Albacore tuna in water with NO SALT added \n ½ cup finely diced cooked chicken \n ½ cup sweet potato puree \n Rice flour \n Potato, mashed \n Line a small rimmed baking sheet with waxed paper. Open the tuna can. Drain the tuna of any water, then scoop the tuna into a medium mixing bowl. Flake the tuna into small bits. \n Add the diced chicken to the bowl, then stir in the sweet potato puree- add just enough to keep the mixture together. You may not need the entire 1/2 cup. If your sweet potato is a little loose and watery, add rice flour 1 teaspoon at a time to soak up the excess moisture. \n Place a 1-inch round cookie cutter on a plate and then scoop the mix into the cutter, smoothing it to the edges. Lift the cutter and voila: you have a perfect, little round of “cake.” \n To frost the cake, pipe the mashed potatoes with a pastry bag fitted with a large piping tip or you can just dollop a bit on top. If your cat doesn’t like potatoes, you can use meat puree mixed with a little bit of the rice flour to stiffen it. Mewjoy!",
+    "Did you know that the first recorded cat name we’ve discovered translates to “Sweetie”? It’s true! My friend Helen has a cat named Sweetie and her kitty is soooooo cute. We should all hang out sometime soon!",
+    "Sometimes when I get really bored with pressing the button I’ll pretend that I’m an archaeologist and the button is actually how I’m digging up interesting new relics and fossils. Other times I’ll put on my favorite song and jam out to the beat by pressing the button in time with the music. Try it sometime- it makes the day go by so much faster! :)",
+    "My friend Ziah makes the best macaroni and cheese. I'll see if I can bring some to you sometime!",
+	"Did you know that Klaire and Conaugh are dating now? They are such an incredibly cute couple!",
+	"My friend Geoff is super cool and I really think you two would get along so well. We need to get together soon!",
+	"Have you heard from Eric lately? Last time I checked he was doing some really cool stuff with this game mod.",
+	"I wish I could get my hair to look as good as Tristan's!",
+	"Matt just built this amazing model of some famous bridge. I'm not sure which one but all of his model builds are really impressive!",
+    "Are you going to play board games at Alex's house on Sunday? I'll be there!",
+	"I visited Jonathan up at his work the other night and he cut some fresh lumber for me! I'm not sure what I'm going to do with this 4x4 though. LOL!",
+	"Did you see that Cloudy just did an alpha release of his game Dragon Drop? Those dragons are soooooo cute!",
+	"I've been thinking about getting another cat but I think having more than 4 officially puts me in 'Crazy Cat Lady' status. LOL!",
+	"Are you going to the M:tG draft? You know I'll be there! I hope I also get some good cards for my new commander deck.",
+	"I am sooooo happy for Wes and Helen! I have never seen a happier couple ever. I hope I have a love like that someday. Le sigh!",
+	"I heard the funniest joke from Rhen the other day. He has such a great sense of humor! And his bunny sounds so adorable!",
+	"I finally got to hang out with Corbin and you were right, he is really cool! I hope we can hang again soon.",
+	"(AFK) Firmware update for my water bottle. Be back soon!",
+	"Next time we hang out, you have got to try these brownies I made. They will totally blow your mind and take you to new heights!",
+	"You should get drinks with us sometime! Tim and Adrian are lots of fun. You know, I bet those two could make a really awesome video game if they worked together on it. They're both so talented!",
+	"Pineapple belongs on pizza. Don't @ me. LOL!",
+	"I've never understood why some people have really strong opinions on the orientation of toilet paper rolls. I mean, it's just toilet paper.",
+	"My friend Jason is the king of dad jokes. He should write a book of them! I'll ask him if I can send them to you. They're hilarious!",
+	"I really wish Greg would start livestreaming again. His streams were always so much fun!",
+	"(AFK) Getting bubble tea with my friend Tommo! Be back soon!",
+	"Peter told me to tell you that he says hi!",
+	"Marc told me to tell you that he still has that booster box for you.",
+	"I really miss hanging out with Razz and Prof! Their kitties are so floofy and sweet, too!",
+	"(AFK) IT'S FRUIT JUICE TIME! BRB!",
+	"I love it when I have dreams where I'm flying. It just feels so cool and it's just so freeing! I wish I had those dreams more often.",
+	"Alex & I are going to get cinnamon rolls this weekend. All that gooey sweetness just melting in my mouth is pure bliss!",
+
+    {
+        "filter": "(aida.*\\?)|(aida.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "She’s super polite but she doesn’t really say anything about herself. Well, except for that one time that she mentioned she was really into computers. Like REALLY into them, if you get my drift. But you know I don’t kink-shame. If computers are her thing, more power to her! :) She also mentioned something weird about souls and counts but wouldn’t say anything else. She might be religious or something, I dunno."
+            }
+        ]
+    },
+	{
+        "filter": "(salary.*\\?)|(salary.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I mean, it’s pretty good for just pressing a button all day. It’s not my ideal job but I gotta keep a roof over my cats’ heads. :)  I guess my purrfect job would be working on video games. I’ve always wanted to make a game!"
+            }
+        ]
+    },
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I… There’s so much I wish I could tell you but I really need this job. I’m really sorry that I can’t help you."
+            }
+        ]
+    }
+]
