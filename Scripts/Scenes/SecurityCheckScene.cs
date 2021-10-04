@@ -17,6 +17,9 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadContent(List<Camera> c)
         {
+            if (!Globals.FirstLocoutComplete)
+                Globals.FirstLockout = true;
+            
             NuclearLevel.Locked = true;
             
             string s = "";
@@ -115,10 +118,12 @@ namespace MonoGame_Core.Scripts
                 if (tb.Text == key)
                 {
                     error = false;
+                    if (Globals.FirstLockout)
+                        Globals.FirstLocoutComplete = true;
                     NuclearLevel.Locked = false;
                     SoundManager.PlaySoundEffect("Unlock");
                     SoundManager.SoundEffects["Unlock"].Volume = .5f;
-                    WindowManager.RemoveWindow(WindowManager.SecurityCheckWindow);
+                    WindowManager.KillSecurityCheckWindow = true;
                 }
                 else
                 {

@@ -149,7 +149,7 @@ namespace MonoGame_Core.Scripts
         {
             if (Globals.FinalButtonPush) return;
 
-            if (NuclearLevel.started)
+            if (NuclearLevel.started && !Globals.FirstLockout)
             {
                 if (NuclearLevel.buttonHit)
                 {

@@ -213,7 +213,7 @@ namespace EventInput
                 case WM_WM_ACTIVATEAPP:
                     if(wParam.ToInt32() == 1 && hWnd == GameManager.Instance.Window.Handle)
                     {
-                        if (WindowManager.DoingActications <= 0)
+                        if (WindowManager.ShouldDoActivations())
                         {
                             WindowManager.DoActivations();
                             SetForegroundWindow(GameManager.Instance.Window.Handle);

@@ -549,6 +549,9 @@ namespace MonoGame_Core.Scripts.Managers
 
             foreach(string s in coworkers)
             {
+                if (s == "Christopher")
+                    SoundManager.PlaySoundEffect("Roar");
+
                 GameManager.chatWindow.runChat(s, "ritual_finished", false);
                 yield return Coroutines.WaitTime(rng.Next(3,6));
             }
