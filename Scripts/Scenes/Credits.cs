@@ -38,7 +38,6 @@ namespace MonoGame_Core.Scripts
             {
                 rb.MoveVelocity = new Vector2(0,0);
                 restartReady = true;
-
             }
             
         }
