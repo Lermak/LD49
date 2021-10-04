@@ -181,7 +181,7 @@ namespace MonoGame_Core.Scripts.Managers
         public static float MysteryVolume = 0;
         public IEnumerator SongStartCo()
         {
-            if (!remove_overlay)
+            if (remove_overlay == false && SoundManager.CurrentSong != "MysteryContact")
             {
                 SoundManager.PlaySong("MysteryContact");
             }
@@ -197,6 +197,11 @@ namespace MonoGame_Core.Scripts.Managers
 
         public IEnumerator SongEndCo()
         {
+            if(SoundManager.CurrentSong != "MysteryContact")
+            {
+                yield return true;
+            }
+
             while (MysteryVolume > 0)
             {
                 MysteryVolume -= 0.1f;
