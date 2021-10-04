@@ -88,7 +88,7 @@ namespace MonoGame_Core.Scripts
             message = "Please input code \n" + letter + (xindex + 1) + " from SecurityCodes.txt and confirm";
             key = codes[yindex, xindex];
 
-            ResourceManager.Textures["Carret"] = Content.Load<Texture2D>(@"Images/Test");
+            ResourceManager.Textures["Carret"] = Content.Load<Texture2D>(@"Images/Caret");
             ResourceManager.Textures["Textbox"] = Content.Load<Texture2D>(@"Images/SecurityCode/Textbox");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/SecurityCode/MessageBox");
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");

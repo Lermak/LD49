@@ -104,6 +104,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Bullet.png
 
+#begin Images/Caret.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Caret.png
+
 #begin Images/DigiPet/background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -199,6 +211,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/DigiPet/chat_sprite_sheet.png
+
+#begin Images/DigiPet/fly.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/DigiPet/fly.png
 
 #begin Images/DigiPet/fly.png
 /importer:TextureImporter
@@ -380,6 +404,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/evil_button.png
 
+#begin Images/Nuclear/evil_button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/evil_button.png
+
 #begin Images/Nuclear/evil_button_hover.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -391,6 +427,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/evil_button_hover.png
+
+#begin Images/Nuclear/evil_button_hover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/evil_button_hover.png
+
+#begin Images/Nuclear/evil_button_press.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/evil_button_press.png
 
 #begin Images/Nuclear/evil_button_press.png
 /importer:TextureImporter
@@ -428,6 +488,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/lock_black.png
 
+#begin Images/Nuclear/lock_black.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_black.png
+
 #begin Images/Nuclear/lock_black_open.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -439,6 +511,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/lock_black_open.png
+
+#begin Images/Nuclear/lock_black_open.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_black_open.png
+
+#begin Images/Nuclear/lock_red.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_red.png
 
 #begin Images/Nuclear/lock_red.png
 /importer:TextureImporter
@@ -464,6 +560,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/lock_red_open.png
 
+#begin Images/Nuclear/lock_red_open.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_red_open.png
+
 #begin Images/Nuclear/lock_white.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -475,6 +583,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Nuclear/lock_white.png
+
+#begin Images/Nuclear/lock_white.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_white.png
+
+#begin Images/Nuclear/lock_white_open.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Nuclear/lock_white_open.png
 
 #begin Images/Nuclear/lock_white_open.png
 /importer:TextureImporter
