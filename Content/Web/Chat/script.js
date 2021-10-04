@@ -137,11 +137,13 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   let currentCthulhuName = ""
-  function generateNameHTML(person, extraClass) {
+  function generateNameHTML(person, extraClass, time) {
+    if(time === undefined) time = ""
+
     let name = person.name
     if(person.cthulhu !== undefined) name = currentCthulhuName
     
-    return `<div class="${extraClass}"> <span ${person.cthulhu !== undefined ? `class="cthulhu" data-text="${currentCthulhuName}"` : ""}">${name}</span> </div>`
+    return `<div class="${extraClass}"> <span ${person.cthulhu !== undefined ? `class="cthulhu" data-text="${currentCthulhuName}"` : ""}">${name}</span> <span class="time-stamp">${time}</span> </div>`
   }
 
   function setTyping(person, isTyping) {
@@ -222,8 +224,7 @@ Object.defineProperty(Array.prototype, "random", {
     */
 
 
-  function createMessageHTML(fromPerson, message) {
-
+  function createMessageHTML(fromPerson, message, time) {
     return `
     <article class="feed">
       <section class="feeds-user-avatar">
@@ -231,7 +232,7 @@ Object.defineProperty(Array.prototype, "random", {
       </section>
       <section class="feed-content">
         <section class="feed-user-info">
-          <h4>${generateNameHTML(fromPerson)}</h4>
+          <h4>${generateNameHTML(fromPerson, "", time)}</h4>
         </section>
         <div>
           <p class="feed-text">
@@ -244,7 +245,7 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   function recieveMessage(person, text) {
-    let response_msg = addMessage(person, person, text, "now")
+    let response_msg = addMessage(person, person, text)
 
     if(person == jude) {
       you.messagesToJude.push({
@@ -418,7 +419,7 @@ Object.defineProperty(Array.prototype, "random", {
     let mainfeed = document.getElementById("mainfeed")
 
     let toPerson = SelectedPerson
-    let msg = addMessage(toPerson, you, text, "now")
+    let msg = addMessage(toPerson, you, text)
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
     if(toPerson == jude) {
@@ -484,7 +485,7 @@ Object.defineProperty(Array.prototype, "random", {
     }
 
     for(let msg of messages) {
-      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
+      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
     }
 
     if(!JUDE_MODE) {
@@ -796,7 +797,7 @@ Object.defineProperty(Array.prototype, "random", {
             text = m.from_msg;
             fromPerson = p
           }
-          p.messagesToJude.push({from: fromPerson, text: text});
+          p.messagesToJude.push({from: fromPerson, text: text, time: m.time});
         }
       }
     }
@@ -814,6 +815,7 @@ Object.defineProperty(Array.prototype, "random", {
   //runCustomChat("Christopher", "morse_code", false)
   //runCustomChat("Christopher", "coworker_bot", true)
 
-  setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
+  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
+  //document.getElementById("jude_button").style.visibility = "visible"
 
 })();
