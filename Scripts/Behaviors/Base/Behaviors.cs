@@ -365,7 +365,7 @@ namespace MonoGame_Core.Scripts
             SpriteRenderer bg = (SpriteRenderer)c[0];
             SpriteRenderer title = (SpriteRenderer)c[1];
             ButtonData button = (ButtonData)c[2];
-            if (GameManager.plotManager.remove_overlay)
+            if (GameManager.plotManager.remove_overlay && bg.Texture != "EvilBackground")
             {
                 bg.Texture = "EvilBackground";
                 title.Texture = "SoulsTitle";
@@ -374,6 +374,7 @@ namespace MonoGame_Core.Scripts
                 button.DeselectedTexID = "EvilButton";
                 button.SelectedTexID = "EvilButtonPress";
                 SoundManager.PlaySong("OminousMusic");
+                SoundManager.SetVolume(1);
             }
         }
 
