@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts
             ButtonData b = (ButtonData)componentHandler.AddComponent(new ButtonData(this, "ButtonData", selectedTex, deselectedTex));
             Component ad = componentHandler.AddComponent(new AnimationData(this, "AnimationData", SpriteRenderer, 0));
             behaviorHandler.AddBehavior("Animate", Behaviors.RunAnimation, new Component[] { ad });
-            behaviorHandler.AddBehavior("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b, ad });
+            //behaviorHandler.AddBehavior("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b, ad });
             if (onClick != null)
             {
                 behaviorHandler.AddBehavior("OnClick", (float gt, Component[] c) =>

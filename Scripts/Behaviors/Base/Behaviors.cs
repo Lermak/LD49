@@ -233,8 +233,9 @@ namespace MonoGame_Core.Scripts
         }
         public static void UpdateNuclear(float gt, Component[] c)
         {
-            if (NuclearLevel.Updating)
+            if (NuclearLevel.NeedsUpdate)
             {
+                NuclearLevel.Updating = true;
                 AnimationData ad = (AnimationData)c[0];
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.UpdateNuclear(ad), "Updating", 0, true);
             }

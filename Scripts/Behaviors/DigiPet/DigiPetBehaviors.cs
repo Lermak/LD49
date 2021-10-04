@@ -20,13 +20,15 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if(CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                if (ad.SpriteRenderer.Texture == "PlayUp")
                 {
                     if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('p');
-                }
 
+                    Random r = new Random();
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                }
                 ad.ChangeSpriteSheet("PlayDown", 0);
 
                 if (!Globals.DigiPetAlive)
@@ -64,14 +66,15 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-
-                if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                if (ad.SpriteRenderer.Texture == "WashUp")
                 {
                     if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('w');
-                }
 
+                    Random r = new Random();
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                }
                 ad.ChangeSpriteSheet("WashDown", 0);
                 if (!Globals.DigiPetAlive)
                 {
@@ -108,11 +111,14 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
-                if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+                if (ad.SpriteRenderer.Texture == "FeedUp")
                 {
                     if (d.Code.Count > 4)
                         d.Code.Dequeue();
                     d.Code.Enqueue('f');
+
+                    Random r = new Random();
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
                 }
 
                 ad.ChangeSpriteSheet("FeedDown", 0);

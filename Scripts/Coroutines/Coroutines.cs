@@ -84,6 +84,7 @@ namespace MonoGame_Core.Scripts
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
             }
+            NuclearLevel.NeedsUpdate = false;
             NuclearLevel.Updating = false;
             NuclearLevel.Updated = true;
             NuclearLevel.Locked = false;

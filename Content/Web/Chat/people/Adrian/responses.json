@@ -1,0 +1,83 @@
+[
+    "If only life had a backspace key…",
+    "If you haven’t visited Australia, you totally should. It’s great!",
+    "Creativity fuels the soul.",
+    "(BUSY) At a meeting. Be back at some point.",
+    "I have to do this thing really quickly. Chat at me later.",
+	"Tim and I are going to go for drinks later if you want to join us.",
+	"Huh? Oh, whoops, wrong window.",
+	"Working hard or hardly working? As for me, I like to work smart.",
+	"I've been working on some art lately. I like to make models of people but switch out their heads for televisions. Abstract art kinda thing, I guess",
+    {
+        "filter": "(aida.*\\?)|(aida.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "You should talk to her if you haven’t already. She’s living in the uncanny valley, if you get my drift."
+            }
+        ]
+    },
+	{
+        "filter": "(salary.*\\?)|(salary.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "Some of us who have been here longer make more- I know that much. Though Jude… There’s something suspicious there because he bought his own yacht last year. Apparently he lives in some fancy penthouse downtown as well. There’s no way he could bring in enough money on even a senior button masher salary. I wouldn’t be surprised if Delores is playing favorites."
+            }
+        ]
+    },
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I have been saying for years that there’s something afoot here but everyone just dismisses me as a conspiracy theorist. What company hires people to push a button? For that matter, what company controls their nuclear reactor’s cooling system by having humans push a button? It just doesn’t make sense. Then there’s the Mysterious Person but… nevermind. Forget I said anything."
+            }
+        ]
+    }
+]

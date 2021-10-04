@@ -85,8 +85,11 @@ namespace MonoGame_Core.Scripts
                     NuclearLevel.started = true;
                 if (!NuclearLevel.Locked)
                 {
-                    NuclearLevel.buttonHit = true;
                     Random r = new Random();
+                    SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+
+                    NuclearLevel.buttonHit = true;
+
                     NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
 
                     NuclearLevel.level -= NuclearLevel.reduceAmount;
@@ -99,7 +102,7 @@ namespace MonoGame_Core.Scripts
                     cooldownButton.ComponentHandler.GetComponent("ButtonData"),
                     cooldownButton.ComponentHandler.GetComponent("AnimationData")
             });
-            cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
+            //cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
             GameObjects.Add(cooldownButton);
              
             base.loadContent(c);

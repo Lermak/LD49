@@ -1,0 +1,6 @@
+[
+    "Hello.",
+    { "wait": 5, "msg": "Oh really? Where did you get that information?"},
+    { "typing": true, "wait": 3, "msg": "You really shouldn’t be spreading gossip like this." },
+    "Whatever. You clearly have communication issues. I’m obviously not making that much money. I have work to do. Goodbye."
+]

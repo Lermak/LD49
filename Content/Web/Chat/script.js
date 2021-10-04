@@ -1,4 +1,5 @@
 let SUPER_SPEED = 1
+let JUDE_MODE = false
 
 function waitTime(time) {
   return new Promise(resolve => {
@@ -116,7 +117,8 @@ Object.defineProperty(Array.prototype, "random", {
       inCustomChat: false,
       isTyping: false,
       uniqueIds: {},
-      messages: []
+      messages: [],
+      messagesToJude: []
     }
 
     person.loadResponses = () => {
@@ -182,7 +184,7 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Christopher")
   addPerson("Delores")
   addPerson("Janey")
-  addPerson("Jude")
+  let jude = addPerson("Jude")
   addPerson("Kailee")
   addPerson("Quinn")
 
@@ -344,7 +346,7 @@ Object.defineProperty(Array.prototype, "random", {
     for(let r of responseList) {
       if(r.filter !== undefined) {
         let filter = new RegExp(r.filter)
-        if(filter.test(message) == true) {
+        if(filter.test(message.toLowerCase()) == true) {
           matchedFilters.push(r)
         }
       }
@@ -372,6 +374,8 @@ Object.defineProperty(Array.prototype, "random", {
   let DOING_SLASH_COMMAND = false
 
   function sendMessage(text) {
+    if(JUDE_MODE) return;
+
     let mainfeed = document.getElementById("mainfeed")
 
     let toPerson = SelectedPerson
@@ -428,10 +432,21 @@ Object.defineProperty(Array.prototype, "random", {
     let mainfeed = document.getElementById("mainfeed")
     mainfeed.innerHTML = `<div style="flex: 1"></div>`
     
-    for(let msg of person.messages) {
+    let messages = person.messages
+    if(JUDE_MODE) {
+      messages = person.messagesToJude
+    }
+
+    for(let msg of messages) {
       mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
     }
-    mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
+
+    if(!JUDE_MODE) {
+      mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
+    }
+    else {
+      mainfeed.scrollTop = 0;
+    }
 
     //Add the selected tab class to the right one
     let dm_contacts = document.getElementById("dm_contacts")
@@ -479,6 +494,8 @@ Object.defineProperty(Array.prototype, "random", {
   switchToChat(0)
 
   window.sendChatMessage = () => {
+    if(JUDE_MODE) return;
+
     let textBox = document.getElementById("textBox")
     if(textBox.textContent != "") {
       sendMessage(textBox.textContent)
@@ -632,6 +649,55 @@ Object.defineProperty(Array.prototype, "random", {
   window.runCustomChat = (person, chat, force) => {
     runCustomChat(person, chat, force)
   }
+
+  window.toggleJudeMode = () => {
+    JUDE_MODE = !JUDE_MODE
+    let button = document.getElementById("jude_button")
+    if(JUDE_MODE) {
+      button.classList.remove("jude_button")
+      button.classList.add("jude_button2")
+      document.documentElement.style.setProperty("--slack-background", "#221322")
+      document.documentElement.style.setProperty("--slack-other-bckground", "#1b131b")
+      document.documentElement.style.setProperty("--slack-background-selected", "#5b355c")
+    }
+    else {
+      button.classList.remove("jude_button2")
+      button.classList.add("jude_button")
+      document.documentElement.style.setProperty("--slack-background", "#350d36")
+      document.documentElement.style.setProperty("--slack-other-bckground", "#3f0e40")
+      document.documentElement.style.setProperty("--slack-background-selected", "#832187")
+    }
+
+
+
+    document.body.classList.remove("generic_glitch_oneshot")
+    void document.body.offsetWidth;
+    document.body.classList.add("generic_glitch_oneshot")
+
+    switchToChat(SelectedPerson.id)
+  }
+
+  game.readFile(`Content/Web/Chat/people/Jude/logs.json`).then((r) => {
+    if(r != "") {
+      let jude_logs = JSON.parse(r)
+      for(let person in jude_logs) {
+        let p = getPerson(person)
+        let chat = jude_logs[person]
+        for(let m of chat) {
+          let text = ""
+          let fromPerson = jude;
+          if(m.to_msg !== undefined) {
+            text = m.to_msg;
+          }
+          if(m.from_msg !== undefined) {
+            text = m.from_msg;
+            fromPerson = p
+          }
+          p.messagesToJude.push({from: fromPerson, text: text});
+        }
+      }
+    }
+  })
 
   game.ready()
 

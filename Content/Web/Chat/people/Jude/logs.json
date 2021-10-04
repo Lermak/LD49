@@ -1,0 +1,12 @@
+{
+    "Delores": [
+        {  "to_msg": "Hello, Delores. Do you have a few minutes?"},
+        {  "from_msg": "Yes but I only have a few minutes. What can I do you for?"},
+        {  "to_msg": "The new person harassed me by asking me questions."},
+        {  "from_msg": "Jude, what did I tell you about complaining that everyone is harassing you? You’ve complained about every one of your co-workers and so far I’ve seen no evidence at all."},
+        {  "to_msg": "It’s different this time, Delores. They asked me about my salary."},
+        {  "from_msg": "Oh? That does make it different. Have you told anyone else?"},
+        {  "to_msg": "Of course not. I told them to stop gossiping and disengaged with them."},
+        {  "from_msg": "Good. I’ll have a talk with them and remind them that we have a no-tolerance policy regarding harassment. That should get them to stop snooping. Thanks for letting me know. Gotta run!"}
+    ]
+}
