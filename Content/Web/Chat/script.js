@@ -392,6 +392,10 @@ Object.defineProperty(Array.prototype, "random", {
       global_data.remove_overlay = true
       setTimeout(async () => { await sendAsyncResponse(person, `Overlay Removed.`) }, 0);
     }
+    else if(ev == "aida_galaxy_blaster") {
+      game.sendEvent("galaxy_blaster")
+      setTimeout(async () => { await sendAsyncResponse(person, `Running Galaxy Blaster.`) }, 0);
+    }
   }
 
   function handleResponse(person, message) {
