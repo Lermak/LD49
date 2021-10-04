@@ -69,13 +69,13 @@ namespace MonoGame_Core.Scripts
 
             if (!DO_STORY)
             {
-                //WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
                 //WindowManager.AddWindow(new NoCloseForm(), "RoboTestchaWindow", new RoboTestchaScene(), new Vector2(600, 240));
                 //WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
                 //WindowManager.AddWindow(new NoCloseForm(), "SecurityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
                 //WindowManager.AddWindow(new NoCloseForm(), "BadConnectionWindow", new BadConnectionScene(), new Vector2(600, 600));
                 //WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
-                WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
                 //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
             }
 

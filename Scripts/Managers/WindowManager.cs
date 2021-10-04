@@ -171,7 +171,7 @@ namespace MonoGame_Core.Scripts
             }
             else if (BlackboardConnection == "ITHelp")
             {
-                f.Text = "IT Help";
+                f.Text = "ERROR 493: Fatal Error";
                 ITHelp = w;
             }
             else if (BlackboardConnection == "UpdateWindow")
