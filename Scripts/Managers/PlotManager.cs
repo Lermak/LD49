@@ -125,7 +125,7 @@ namespace MonoGame_Core.Scripts.Managers
                 coroutines.AddCoroutine(meetStrangerCo, "meetStrangerCo", 0, true);
             }
 
-            if(meet_stranger)
+            if(digipet_secret)
             {
                 if(christopher_aida == null)
                 {
@@ -345,20 +345,8 @@ namespace MonoGame_Core.Scripts.Managers
 
         public IEnumerator SupervisorAngryCo()
         {
-            yield return Coroutines.WaitTime(10);
-
             Random r = new Random();
-
-            float percent = 0.1f;
-            while (true)
-            {
-                if (percent >= r.NextDouble())
-                {
-                    break;
-                }
-                percent += 0.02f;
-                yield return Coroutines.WaitTime(6);
-            }
+            yield return Coroutines.WaitTime(r.Next(15, 30));
 
             GameManager.chatWindow.runChat("Delores", "salary_chat", false);
 
