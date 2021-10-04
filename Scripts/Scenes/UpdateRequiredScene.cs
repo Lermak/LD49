@@ -22,7 +22,6 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
             ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
             ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
-            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
 
             GameObjects.Add(new WorldObject("MessageBox", "SecurityMessage", new Vector2(600, 200), new Vector2(-660, 440), 1));
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
@@ -47,7 +46,7 @@ namespace MonoGame_Core.Scripts
                 t.ContainsPoint(v))
             {
                 Random r = new Random();
-                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
 
                 if (!NuclearLevel.Updated)
                 {
@@ -65,7 +64,7 @@ namespace MonoGame_Core.Scripts
                 t.ContainsPoint(v))
             {
                 Random r = new Random();
-                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
 
                 WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.UpdateLater(), "UpdateLater", 0, true);
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);

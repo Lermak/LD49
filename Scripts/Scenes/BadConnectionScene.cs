@@ -21,7 +21,6 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
             ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
-            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/BadConnection/MessageBox");
             ResourceManager.Textures["BadConnectionBG"] = Content.Load<Texture2D>(@"Images/BadConnection/BadConnectionBG");
             ResourceManager.Textures["BadServer"] = Content.Load<Texture2D>(@"Images/BadConnection/BadServer");
@@ -97,7 +96,7 @@ namespace MonoGame_Core.Scripts
                 t.ContainsPoint(v))
             {
                 Random r = new Random();
-                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
 
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ConnectToServer(fr), "Connect", 0, true);
             }

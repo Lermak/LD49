@@ -812,12 +812,6 @@
 /processorParam:Quality=Best
 /build:Sound/click2.ogg
 
-#begin Sound/click3.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/click3.ogg
-
 #begin Sound/cooling.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
