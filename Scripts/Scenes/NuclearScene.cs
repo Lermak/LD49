@@ -99,7 +99,7 @@ namespace MonoGame_Core.Scripts
                     cooldownButton.ComponentHandler.GetComponent("ButtonData"),
                     cooldownButton.ComponentHandler.GetComponent("AnimationData")
             });
-            cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
+            //cooldownButton.BehaviorHandler.Behaviors.Remove(cooldownButton.BehaviorHandler.GetBehavior("Hover"));
             GameObjects.Add(cooldownButton);
              
             base.loadContent(c);
