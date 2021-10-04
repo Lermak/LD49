@@ -18,6 +18,8 @@ namespace MonoGame_Core.Scripts.Managers
         bool firstLockout = false;
         IEnumerator firstLockoutCo = null;
 
+        IEnumerator generalLockOutCo = null;
+
         bool christopher_strange = false;
         IEnumerator christopher_strangeCo = null;
 
@@ -55,6 +57,12 @@ namespace MonoGame_Core.Scripts.Managers
                 return;
             }
 
+            if(generalLockOutCo == null)
+            {
+                generalLockOutCo = GeneralLockOutCo();
+                coroutines.AddCoroutine(generalLockOutCo, "generalLockOutCo", 0, true);
+            }
+
             if(christopher_strangeCo == null)
             {
                 christopher_strangeCo = ChritopherStrangeCo();
@@ -63,7 +71,7 @@ namespace MonoGame_Core.Scripts.Managers
 
             if (digipet_initialCo == null)
             {
-                digipet_initialCo = DigipenInitialCo();
+                digipet_initialCo = DigipetInitialCo();
                 coroutines.AddCoroutine(digipet_initialCo, "digipet_initialCo", 0, true);
             }
         }
@@ -113,14 +121,14 @@ namespace MonoGame_Core.Scripts.Managers
             Random r = new Random();
 
             float percent = 0.1f;
-            while(false)
+            while(true)
             {
                 if(percent >= r.NextDouble())
                 {
                     break;
                 }
-                percent += 0.1f;
-                Coroutines.WaitTime(5);
+                percent += 0.05f;
+                yield return Coroutines.WaitTime(5);
             }
 
             GameManager.chatWindow.runChat("Christopher", "security_check", false);
@@ -128,26 +136,88 @@ namespace MonoGame_Core.Scripts.Managers
             yield return true;
         }
 
-        public IEnumerator DigipenInitialCo()
+        public IEnumerator DigipetInitialCo()
         {
             yield return Coroutines.WaitTime(10);
 
             Random r = new Random();
 
-            float percent = 0.5f;
-            while (false)
+            float percent = 0.1f;
+            while (true)
             {
                 if (percent >= r.NextDouble())
                 {
                     break;
                 }
-                percent += 0.1f;
-                Coroutines.WaitTime(5);
+                percent += 0.05f;
+                yield return Coroutines.WaitTime(5);
             }
 
             GameManager.chatWindow.runChat("Kailee", "digipet_initial", false);
 
             yield return true;
+        }
+
+        public void SpawnRandomLockOut()
+        {
+            if(WindowManager.ResetKeysWindow != null &&
+               WindowManager.ResetKeysWindow != null &&
+               WindowManager.ResetKeysWindow != null &&
+               WindowManager.ResetKeysWindow != null)
+            {
+                return;
+            }
+
+            bool found = false;
+            Random r = new Random();
+
+            int iter = 0;
+            while (iter < 100 && !found)
+            {
+                ++iter;
+                int value = r.Next(0, 4);
+
+                if (value == 0 && WindowManager.ResetKeysWindow == null)
+                {
+                    WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                    found = true;
+                }
+                else if (value == 1 && WindowManager.SecruityCheckWindow == null)
+                {
+                    WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckWindow", new SecurityCheckScene(), new Vector2(600, 240));
+                    found = true;
+                }
+                else if (value == 2 && WindowManager.ITHelp == null)
+                {
+                    WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
+                    found = true;
+                }
+                else if (value == 3 && WindowManager.UpdateWindow == null)
+                {
+                    WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+                    found = true;
+                }
+            }
+        }
+
+        public IEnumerator GeneralLockOutCo()
+        {
+            yield return Coroutines.WaitTime(3);
+
+            float percent = 0.1f;
+
+            Random r = new Random();
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    SpawnRandomLockOut();
+                    percent = 0;
+                    continue;
+                }
+                percent += 0.05f;
+                yield return Coroutines.WaitTime(5);
+            }
         }
     }
 }

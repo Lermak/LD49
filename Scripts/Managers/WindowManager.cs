@@ -141,6 +141,8 @@ namespace MonoGame_Core.Scripts
         public static Window GalaxyBlasterWindow;
         public static bool KillGalaxyBlaster = false;
 
+        public static Window SecruityCheckWindow;
+
         public static List<Window> ToAdd = new List<Window>();
 
         private static ContentManager contentManager;
@@ -173,9 +175,12 @@ namespace MonoGame_Core.Scripts
                 BadConnectionWindow = w;
             else if (BlackboardConnection == "GalaxyBlasterWindow")
                 GalaxyBlasterWindow = w;
+            else if (BlackboardConnection == "SecruityCheckWindow")
+                SecruityCheckWindow = w;
 
             ToAdd.Add(w);
             f.Size = new System.Drawing.Size((int)(size.X * GameManager.WidthScale), (int)(size.Y * GameManager.HeightScale));
+            //if(f is Fo)
             ToAdd[ToAdd.Count - 1].form.Show();
 
             w.swapChainTarget = new SwapChainRenderTarget(RenderingManager.GraphicsDevice,
@@ -270,26 +275,31 @@ namespace MonoGame_Core.Scripts
             {
                 killIT = false;
                 WindowManager.RemoveWindow(WindowManager.ITHelp);
+                WindowManager.ITHelp = null;
             }
             if (KillUpdate)
             {
                 KillUpdate = false;
                 WindowManager.RemoveWindow(WindowManager.UpdateWindow);
+                WindowManager.UpdateWindow = null;
             }
             if (KillReauth)
             {
                 KillReauth = false;
                 WindowManager.RemoveWindow(WindowManager.ReauthWindow);
+                WindowManager.ReauthWindow = null;
             }
             if (KillBadConnection)
             {
                 KillBadConnection = false;
                 WindowManager.RemoveWindow(WindowManager.BadConnectionWindow);
+                WindowManager.BadConnectionWindow = null;
             }
             if (KillResetKeys)
             {
                 KillResetKeys = false;
                 WindowManager.RemoveWindow(WindowManager.ResetKeysWindow);
+                WindowManager.ResetKeysWindow = null;
             }
         }
     }
