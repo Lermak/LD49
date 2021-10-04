@@ -118,7 +118,7 @@ namespace MonoGame_Core.Scripts
                     NuclearLevel.Locked = false;
                     SoundManager.PlaySoundEffect("Unlock");
                     SoundManager.SoundEffects["Unlock"].Volume = .5f;
-                    WindowManager.RemoveWindow(WindowManager.SecurityCheckWindow);
+                    WindowManager.KillSecurityCheckWindow = true;
                 }
                 else
                 {

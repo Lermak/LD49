@@ -149,6 +149,7 @@ namespace MonoGame_Core.Scripts
         public static bool KillGalaxyBlaster = false;
 
         public static Window SecurityCheckWindow;
+        public static bool KillSecurityCheckWindow = false;
 
         public static List<Window> ToAdd = new List<Window>();
 
@@ -397,6 +398,12 @@ namespace MonoGame_Core.Scripts
                 KillResetKeys = false;
                 WindowManager.RemoveWindow(WindowManager.ResetKeysWindow);
                 WindowManager.ResetKeysWindow = null;
+            }
+            if(KillSecurityCheckWindow)
+            {
+                KillSecurityCheckWindow = false;
+                WindowManager.RemoveWindow(WindowManager.SecurityCheckWindow);
+                WindowManager.SecurityCheckWindow = null;
             }
         }
     }
