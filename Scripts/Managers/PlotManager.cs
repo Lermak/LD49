@@ -12,6 +12,7 @@ namespace MonoGame_Core.Scripts.Managers
         CoroutineManager coroutines = new CoroutineManager();
 
         // Plot flags (false is uncompleted, true is completed)
+        bool deloresChat = false;
         bool supervisorTutotial = false;
         IEnumerator<bool> supervisorCo = null;
 
@@ -78,9 +79,9 @@ namespace MonoGame_Core.Scripts.Managers
 
         public void SendEvent(string ev)
         {
-            if(supervisorTutotial == false && ev == "Delores_intro_chat")
+            if(ev == "Delores_intro_chat")
             {
-                supervisorTutotial = true;
+                deloresChat = true;
             }
 
             if (ev == "Christopher_security_check")
@@ -98,7 +99,8 @@ namespace MonoGame_Core.Scripts.Managers
         public IEnumerator<bool> SupervisorCo()
         {
             GameManager.chatWindow.runChat("Delores", "intro_chat", true);
-            while(supervisorTutotial == false) yield return false;
+            while(deloresChat == false || NuclearLevel.started == false) yield return false;
+            supervisorTutotial = true;
             yield return true;
         }
 

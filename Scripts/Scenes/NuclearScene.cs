@@ -85,6 +85,10 @@ namespace MonoGame_Core.Scripts
                     NuclearLevel.started = true;
                 if (!NuclearLevel.Locked)
                 {
+                    NuclearLevel.buttonHit = true;
+                    Random r = new Random();
+                    NuclearLevel.ButtonHitStopTime = 1.0f + (float)r.NextDouble() * 2.0f;
+
                     NuclearLevel.level -= NuclearLevel.reduceAmount;
                     if (NuclearLevel.level < 0.0f)
                         NuclearLevel.level = 0.0f;
