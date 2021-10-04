@@ -128,7 +128,7 @@ namespace MonoGame_Core.Scripts
             {
                 if (!WindowManager.ShouldDoActivations()) return;
                 WindowManager.DoActivations();
-                Activate();
+                WindowManager.ForceWindowActive = Handle;
             };
         }
 

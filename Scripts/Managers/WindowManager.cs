@@ -122,6 +122,9 @@ namespace MonoGame_Core.Scripts
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        private static extern bool BringWindowToTop(IntPtr hWnd);
+
         public static List<Window> Windows;
         public static Window MainWindow;
 
@@ -158,6 +161,9 @@ namespace MonoGame_Core.Scripts
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
         static IntPtr LastForegroundWindow;
+        public static IntPtr ForceWindowActive;
+
+        public static bool MaybeFocusMainWindow = false;
 
         public static bool ShouldDoActivations()
         {
@@ -185,14 +191,14 @@ namespace MonoGame_Core.Scripts
             {
                 if (w.form != null)
                 {
-                    w.form.Activate();
+                    SetForegroundWindow(w.form.Handle);
                 }
                 else
                 {
                     SetForegroundWindow(GameManager.Instance.Window.Handle);
                 }
             }
-            GameManager.chatWindow.Activate();
+            SetForegroundWindow(GameManager.chatWindow.Handle);
         }
 
         private static ContentManager contentManager;
@@ -273,7 +279,7 @@ namespace MonoGame_Core.Scripts
                     if (!ShouldDoActivations()) return;
 
                     DoActivations();
-                    f.Activate();
+                    ForceWindowActive = (owner as Form).Handle;
                 };
             }
             ToAdd[ToAdd.Count - 1].form.Show();
@@ -356,6 +362,16 @@ namespace MonoGame_Core.Scripts
         {
             LastForegroundWindow = GetForegroundWindow();
             DoingActications -= 1;
+            if(DoingActications > 0)
+            {
+                SetForegroundWindow(ForceWindowActive);
+            }
+            else if(MaybeFocusMainWindow)
+            {
+                WindowManager.DoActivations();
+                WindowManager.ForceWindowActive = GameManager.Instance.Window.Handle;
+            }
+            MaybeFocusMainWindow = false;
 
             foreach (Window w in WindowManager.Windows)
             {
