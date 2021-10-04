@@ -37,6 +37,12 @@ namespace MonoGame_Core.Scripts.Managers
 
         bool meet_stranger = false;
         IEnumerator meetStrangerCo = null;
+
+        public bool digipet_secret = false;
+
+        IEnumerator christopher_aida = null;
+
+        public bool remove_overlay = false;
         //
 
         public PlotManager()
@@ -110,6 +116,20 @@ namespace MonoGame_Core.Scripts.Managers
                 meetStrangerCo = MeetStrangerCo();
                 coroutines.AddCoroutine(meetStrangerCo, "meetStrangerCo", 0, true);
             }
+
+            if(meet_stranger)
+            {
+                if(christopher_aida == null)
+                {
+                    christopher_aida = ChritopherAidaCo();
+                    coroutines.AddCoroutine(christopher_aida, "christopher_aida", 0, true);
+                }
+            }
+
+            if(remove_overlay)
+            {
+
+            }
         }
 
         public void SendEvent(string ev)
@@ -142,6 +162,11 @@ namespace MonoGame_Core.Scripts.Managers
             if(ev == "met_stranger")
             {
                 meet_stranger = true;
+            }
+
+            if(ev == "remove_overlay")
+            {
+                remove_overlay = true;
             }
         }
 
@@ -334,6 +359,28 @@ namespace MonoGame_Core.Scripts.Managers
             }
 
             GameManager.chatWindow.sendEvent("meet_stranger");
+
+            yield return true;
+        }
+
+        public IEnumerator ChritopherAidaCo()
+        {
+            yield return Coroutines.WaitTime(13);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Christopher", "coworker_bot", false);
 
             yield return true;
         }
