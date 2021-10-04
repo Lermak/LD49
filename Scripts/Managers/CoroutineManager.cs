@@ -47,6 +47,7 @@ namespace MonoGame_Core.Scripts
 
         List<string> keys = new List<string>();
         Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
+        bool doingCoroutines = false;
 
         /// <summary>
         /// Remove all coroutines from the list
@@ -108,11 +109,21 @@ namespace MonoGame_Core.Scripts
         /// Removes a coroutine from the list of coroutines
         /// </summary>
         /// <param name="coroutine">The coroutine's name</param>
+        /// 
+
+        List<string> toRemove = new List<string>();
         public void Stop(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
             {
-                coroutines.Remove(coroutine);
+                if (doingCoroutines)
+                {
+                    toRemove.Add(coroutine);
+                }
+                else
+                {
+                    coroutines.Remove(coroutine);
+                }
             }
         }
 
@@ -130,12 +141,20 @@ namespace MonoGame_Core.Scripts
         {
             List<string> k = new List<string>();
             k.AddRange(coroutines.Keys);
-
-            List<string> toRemove = new List<string>();
+            doingCoroutines = true;
 
             for (int i = 0; i < coroutines.Count; ++i)
             {
                 Coroutine c = coroutines[k[i]];
+                
+                foreach(string name in toRemove)
+                {
+                    if(c.Name == name)
+                    {
+                        continue;
+                    }
+                }
+
                 if (c.State == CoroutineState.Running)
                 {
                     c.TimeSinceLast += gt;
@@ -162,8 +181,9 @@ namespace MonoGame_Core.Scripts
 
                 coroutines[k[i]] = c;
             }
+            doingCoroutines = false;
 
-            for(int i = 0; i < toRemove.Count; ++i)
+            for (int i = 0; i < toRemove.Count; ++i)
             {
                 coroutines.Remove(toRemove[i]);
             }

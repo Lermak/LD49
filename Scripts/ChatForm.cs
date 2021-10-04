@@ -126,7 +126,7 @@ namespace MonoGame_Core.Scripts
 
             Activated += (object owner, EventArgs e) =>
             {
-                if (WindowManager.DoingActications > 0) return;
+                if (!WindowManager.ShouldDoActivations()) return;
                 WindowManager.DoActivations();
                 Activate();
             };

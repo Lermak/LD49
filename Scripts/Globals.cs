@@ -17,7 +17,7 @@ namespace MonoGame_Core.Scripts
         public static bool ExpectFinalButtonPush = false;
         public static bool FinalButtonPush = false;
         public static bool DigiPetAlive = true;
-        public static string[] ClickSounds = new string[] { "Click1", "Click2", "Click3" };
+        public static string[] ClickSounds = new string[] { "Click1", "Click2" };
         public static void CreateFile(string name, string contents)
         {
             string fileName = @".\"+name+".txt";

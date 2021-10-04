@@ -56,7 +56,6 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
             ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
             ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
-            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.SoundEffects["Boot"] = Content.Load<SoundEffect>("Sound/machine_starting");
             ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
             ResourceManager.SoundEffects["Shutdown"] = Content.Load<SoundEffect>("Sound/machine_stopping");
@@ -120,7 +119,7 @@ namespace MonoGame_Core.Scripts
                     if (!ChalkData.Held)
                     {
                         Random r = new Random();
-                        SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+                        SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
                     
                         if (!Globals.ButtonNotCool)
                         {
