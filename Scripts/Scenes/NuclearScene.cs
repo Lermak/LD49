@@ -55,9 +55,16 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["MysterySound"] = Content.Load<SoundEffect>("Sound/arabian_harp");
             ResourceManager.SoundEffects["Shutdown"] = Content.Load<SoundEffect>("Sound/machine_stopping");
             ResourceManager.SoundEffects["Explosion"] = Content.Load<SoundEffect>("Sound/explosion");
+            ResourceManager.Songs["OminousMusic"] = Content.Load<Song>("Music/ominous_piano");
+            ResourceManager.Songs["EndTimes"] = Content.Load<Song>("Music/explosion");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
+
+            GameObjects.Add(new GameObject("EndTimesDetection"));
+            GameObject endTimes = GameObjects[^1];
+            endTimes.BehaviorHandler.AddBehavior("DetectChalk", Behaviors.SpawnChalk, new Component[] { });
+
 
             GameObjects.Add(new WorldObject("BG", "Background", new Vector2(250, 250), screenCenter, 0));
             
@@ -72,7 +79,6 @@ namespace MonoGame_Core.Scripts
             updateSpinner.BehaviorHandler.AddBehavior("UpdateSpinner", Behaviors.UpdateSpinner, new Component[] { updateSpinner.SpriteRenderer });
             GameObjects.Add(updateSpinner);
 
-            GameObjects.Add(new Chalk(screenCenter + new Vector2(-100, -100)));
 
             GameObjects.Add(new WorldObject("HeatText", "HeatText", new Vector2(96, 32), screenCenter + new Vector2(0, 86), 1));
 

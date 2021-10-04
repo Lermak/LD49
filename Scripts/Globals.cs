@@ -7,8 +7,10 @@ namespace MonoGame_Core.Scripts
 {
     public static class Globals
     {
+        public static bool CreateChalk = false;
         public static bool ButtonNotCool = false;
         public static bool OverheatGameOver = false;
+        public static bool PrepareForEndTimes = false;
         public static bool ReadyForEndTimes = false;
         public static bool DigiPetAlive = true;
         public static string[] ClickSounds = new string[] { "Click1", "Click2", "Click3" };

@@ -284,6 +284,12 @@ namespace MonoGame_Core.Scripts
             {
                 if (t.ContainsPoint(v) && !cd.Held)
                 {
+                    if (!cd.FirstPickup)
+                    {
+                        cd.FirstPickup = true;
+                        SoundManager.PlaySong("EndTimes");
+                    }
+
                     sr.Texture = "UprightChalk";
                     cd.Held = true;
                     cd.Draw = false;
@@ -321,6 +327,15 @@ namespace MonoGame_Core.Scripts
             if (cd.Held)
             {
                 t.Place(v);
+            }
+        }
+        public static void SpawnChalk(float gt, Component[] c)
+        {
+            if (Globals.CreateChalk && !Globals.PrepareForEndTimes)
+            {
+                SoundManager.PlaySong("OminousMusic");
+                WindowManager.MainWindow.sceneManager.CurrentScene.ToAdd.Add(new Chalk(new Vector2(-835, 415) + new Vector2(-100, -100)));
+                Globals.PrepareForEndTimes = true;
             }
         }
     }
