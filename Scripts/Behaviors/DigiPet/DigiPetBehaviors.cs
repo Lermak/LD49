@@ -394,9 +394,9 @@ namespace MonoGame_Core.Scripts
                 }
 
                 if (a.SpriteRenderer.Animation == 8)
-                    w.RigidBody.MoveVelocity = new Vector2(-150, 0) * gt;
+                    w.RigidBody.MoveVelocity = new Vector2(-75, 0) * gt;
                 if (a.SpriteRenderer.Animation == 7)
-                    w.RigidBody.MoveVelocity = new Vector2(150, 0) * gt;
+                    w.RigidBody.MoveVelocity = new Vector2(75, 0) * gt;
                 
                 if (w.RigidBody.MoveVelocity != new Vector2())
                 {
