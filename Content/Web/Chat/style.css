@@ -617,8 +617,8 @@ body::-webkit-scrollbar-thumb {
   padding: 0.25rem;
 }
 
-.direct-messages.displayName {
-  flex: 1;
+.displayName {
+  overflow: hidden;
 }
 
 .direct-messages-selected {
