@@ -337,7 +337,6 @@ namespace MonoGame_Core.Scripts
         {
             if (Globals.CreateChalk && !Globals.PrepareForEndTimes)
             {
-                SoundManager.PlaySong("OminousMusic");
                 WindowManager.MainWindow.sceneManager.CurrentScene.ToAdd.Add(new Chalk(new Vector2(-835, 415) + new Vector2(-100, -100)));
                 Globals.PrepareForEndTimes = true;
             }
@@ -371,7 +370,7 @@ namespace MonoGame_Core.Scripts
                 title.Transform.Resize(106, 32);
                 button.DeselectedTexID = "EvilButton";
                 button.SelectedTexID = "EvilButtonPress";
-
+                SoundManager.PlaySong("OminousMusic");
             }
         }
 
