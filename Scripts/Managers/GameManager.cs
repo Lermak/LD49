@@ -14,7 +14,7 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
-        public static bool DO_STORY = false;
+        public static bool DO_STORY = true;
 
         public static GameManager Instance;
         public static float WidthScale = 1;
