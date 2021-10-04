@@ -17,7 +17,11 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
             SoundManager.PlaySoundEffect("Lockout");
             SoundManager.SoundEffects["Lockout"].Volume = .3f;
+            ResourceManager.SoundEffects["Error"] = Content.Load<SoundEffect>(@"Sound/error");
 
+            ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
+            ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
+            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/BadConnection/MessageBox");
             ResourceManager.Textures["BadConnectionBG"] = Content.Load<Texture2D>(@"Images/BadConnection/BadConnectionBG");
             ResourceManager.Textures["BadServer"] = Content.Load<Texture2D>(@"Images/BadConnection/BadServer");
@@ -28,9 +32,11 @@ namespace MonoGame_Core.Scripts
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             ReauthData rad = (ReauthData)obj.ComponentHandler.AddComponent(new ReauthData(obj, "ReauthData", 60));
             FontRenderer fr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj,
-                "Server Disconnected: Select new server",
-                "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
-
+                "                 Error Code: 312\n" +
+                "Disconnected from Server.\n" +
+                "Please select new server with better connection.\n",
+                "TestFont", obj.Transform, new Vector2(0,-20), new Vector2(600, 50), 0, Color.White));
+            fr.TextScale = .75f;
             Random r = new Random();
             int[] goodServers = new int[] { r.Next(0, 16), r.Next(0, 16), r.Next(0, 16) };
             for (int y = 0; y < 4; ++y)
@@ -76,6 +82,8 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
+                SoundManager.PlaySoundEffect("Error");
+
                 fr.Text = "Unable to connect";
             }
         }
@@ -88,6 +96,9 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
+                Random r = new Random();
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ConnectToServer(fr), "Connect", 0, true);
             }
         }

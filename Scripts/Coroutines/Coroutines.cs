@@ -114,10 +114,10 @@ namespace MonoGame_Core.Scripts
         {
             float timeElapsed = 0;
 
-            while (timeElapsed < 30)
+            while (timeElapsed < 4)
             {
                 fr.Text = "Connecting";
-                for (int i = 0; i < timeElapsed / 10; ++i)
+                for (int i = 0; i < timeElapsed; ++i)
                     fr.Text += ".";
                 timeElapsed += TimeManager.DeltaTime;
                 yield return false;
