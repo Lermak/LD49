@@ -116,6 +116,7 @@ Object.defineProperty(Array.prototype, "random", {
       responses: [],
       id: People.length,
       inCustomChat: false,
+      queuedChats: [],
       isTyping: false,
       uniqueIds: {},
       messages: [],
@@ -136,11 +137,13 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   let currentCthulhuName = ""
-  function generateNameHTML(person, extraClass) {
+  function generateNameHTML(person, extraClass, time) {
+    if(time === undefined) time = ""
+
     let name = person.name
     if(person.cthulhu !== undefined) name = currentCthulhuName
     
-    return `<div class="${extraClass}"> <span ${person.cthulhu !== undefined ? `class="cthulhu" data-text="${currentCthulhuName}"` : ""}">${name}</span> </div>`
+    return `<div class="${extraClass}"> <span ${person.cthulhu !== undefined ? `class="cthulhu" data-text="${currentCthulhuName}"` : ""}">${name}</span> <span class="time-stamp">${time}</span> </div>`
   }
 
   function setTyping(person, isTyping) {
@@ -191,11 +194,6 @@ Object.defineProperty(Array.prototype, "random", {
   addPerson("Kailee")
   addPerson("Quinn")
 
-  //let stranger = addPerson("Stranger")
-  //stranger.cthulhu = true
-  //stranger.name = "?????"
-  //stranger.displayName = "?????"
-
   let SelectedPerson = People[0]
 
   /* For later
@@ -226,8 +224,7 @@ Object.defineProperty(Array.prototype, "random", {
     */
 
 
-  function createMessageHTML(fromPerson, message) {
-
+  function createMessageHTML(fromPerson, message, time) {
     return `
     <article class="feed">
       <section class="feeds-user-avatar">
@@ -235,7 +232,7 @@ Object.defineProperty(Array.prototype, "random", {
       </section>
       <section class="feed-content">
         <section class="feed-user-info">
-          <h4>${generateNameHTML(fromPerson)}</h4>
+          <h4>${generateNameHTML(fromPerson, "", time)}</h4>
         </section>
         <div>
           <p class="feed-text">
@@ -248,7 +245,7 @@ Object.defineProperty(Array.prototype, "random", {
   }
 
   function recieveMessage(person, text) {
-    let response_msg = addMessage(person, person, text, "now")
+    let response_msg = addMessage(person, person, text)
 
     if(person == jude) {
       you.messagesToJude.push({
@@ -297,6 +294,12 @@ Object.defineProperty(Array.prototype, "random", {
       person.uniqueIds[response.uniqueId] = true
     }
 
+    if(response.requiresId !== undefined) {
+      if(person.uniqueIds[response.requiresId] !== undefined) {
+        return
+      }
+    }
+
     if(response.typing !== undefined) {
       setTyping(person, response.typing)
     }
@@ -316,6 +319,10 @@ Object.defineProperty(Array.prototype, "random", {
       else {
         response.waitAfter = 0
       }
+    }
+
+    if(response.event !== undefined) {
+      game.sendEvent(response.event)
     }
 
     await waitTime(response.waitAfter)
@@ -354,11 +361,23 @@ Object.defineProperty(Array.prototype, "random", {
     let responseList = generateResponseObjects(person.responses)
 
     //Filter out unique responses that have already happened
-    responseList = responseList.filter((v) => v.uniqueId === undefined || person.uniqueIds[v.uniqueId] === undefined)
+    responseList = responseList.filter((v) => {
+      if(v.uniqueId !== undefined) {
+        return person.uniqueIds[v.uniqueId] === undefined
+      }
+
+      if(v.requiresId !== undefined) {
+        return person.uniqueIds[v.requiresId] === undefined
+      }
+
+      return true
+    })
 
     //First, check all our filters
     let matchedFilters = []
     for(let r of responseList) {
+      let forcedResponse = false
+
       if(r.filter !== undefined) {
         let filter = new RegExp(r.filter)
         if(filter.test(message.toLowerCase()) == true) {
@@ -372,6 +391,12 @@ Object.defineProperty(Array.prototype, "random", {
         if(conditionRet === true) {
           matchedFilters.push(r)
         }
+      }
+
+      if(matchedFilters.includes(r) && r.force === true) {
+        matchedFilters = []
+        matchedFilters.push(r)
+        break
       }
     }
 
@@ -394,7 +419,7 @@ Object.defineProperty(Array.prototype, "random", {
     let mainfeed = document.getElementById("mainfeed")
 
     let toPerson = SelectedPerson
-    let msg = addMessage(toPerson, you, text, "now")
+    let msg = addMessage(toPerson, you, text)
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
 
     if(toPerson == jude) {
@@ -460,7 +485,7 @@ Object.defineProperty(Array.prototype, "random", {
     }
 
     for(let msg of messages) {
-      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
+      mainfeed.innerHTML += createMessageHTML(msg.from, msg.text, msg.time)
     }
 
     if(!JUDE_MODE) {
@@ -505,8 +530,9 @@ Object.defineProperty(Array.prototype, "random", {
     for(let idx in People) {
       let person = People[idx]
 
-      if(JUDE_MODE && person == jude) {
-        continue
+      if(JUDE_MODE) {
+        if(person == jude) continue
+        if(person.idName == "Stranger") continue
       }
       else if(!JUDE_MODE && person == you) {
         continue
@@ -548,35 +574,48 @@ Object.defineProperty(Array.prototype, "random", {
   function runCustomChat(person, name, force) {
     if(force === undefined) { force = false }
 
+    
     person = getPerson(person)
+    if(person.inCustomChat) {
+      person.queuedChats.push([name, force])
+      return
+    }
+
+    
     if(force) {
       switchToPerson(person)
       lockSwitching = true
     }
+    person.inCustomChat = true
 
     let doing_slash = DOING_SLASH_COMMAND
-    game.readFile(`Content/Web/Chat/people/${person.idName}/${name}.json`).then(async (r) => {
+    return new Promise(resolve => { game.readFile(`Content/Web/Chat/people/${person.idName}/${name}.json`).then(async (r) => {
       if(r != "") {
         if(doing_slash) {
           recieveMessage(you, `Running Content/Web/Chat/people/${person.idName}/${name}.json`)
         }
 
         let customChat = JSON.parse(r)
-        person.inCustomChat = true
-
-        let person_is_typing = document.getElementById("person_is_typing")
         let responses = generateResponseObjects(customChat)
         for(let r of responses) {
           await handleResponseObject(person, r)
         }
-
-        if(force) {
-          lockSwitching = false
-          person.inCustomChat = false
-        }
-        game.sendEvent(`${person.idName}_${name}`)
       }
-    })
+
+      if(force) {
+        lockSwitching = false
+      }
+      person.inCustomChat = false
+
+      game.sendEvent(`${person.idName}_${name}`)
+
+      if(person.queuedChats.length > 0) {
+        let nextChat = person.queuedChats.shift()
+        runCustomChat(person, nextChat[0], nextChat[1])
+      }
+
+      resolve()
+    }) }) 
   }
 
   var zalgo_up = [
@@ -693,7 +732,7 @@ Object.defineProperty(Array.prototype, "random", {
       document.documentElement.style.setProperty("--slack-background-selected", "#5b355c")
       document.getElementById("textBox").setAttribute("contenteditable", "false")
 
-      if(SelectedPerson == jude) {
+      if(SelectedPerson == jude || SelectedPerson.idName == "Stranger") {
         SelectedPerson = you
       }
     }
@@ -723,6 +762,25 @@ Object.defineProperty(Array.prototype, "random", {
     global_data[v] = value
   }
 
+  window.recieveGameEvent = (ev) => {
+    if(ev == "meet_stranger") {
+        setTimeout(async () => {
+        let stranger = addPerson("Stranger")
+        stranger.cthulhu = true
+        stranger.name = "?????"
+        stranger.displayName = "?????"
+        generateContacts()
+
+        await waitTime(2)
+        await runCustomChat("Stranger", "first_contact")
+        
+        document.getElementById("jude_button").style.visibility = "visible"
+        game.sendEvent("met_stranger")
+
+      }, 0)
+    }
+  }
+
   game.readFile(`Content/Web/Chat/people/Jude/logs.json`).then((r) => {
     if(r != "") {
       let jude_logs = JSON.parse(r)
@@ -739,7 +797,7 @@ Object.defineProperty(Array.prototype, "random", {
             text = m.from_msg;
             fromPerson = p
           }
-          p.messagesToJude.push({from: fromPerson, text: text});
+          p.messagesToJude.push({from: fromPerson, text: text, time: m.time});
         }
       }
     }
@@ -752,7 +810,12 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
-  //runCustomChat("Delores", "intro_chat", true)
+  //runCustomChat("Delores", "salary_chat", true)
   //runCustomChat("Christopher", "security_check", true)
+  //runCustomChat("Christopher", "morse_code", false)
+  //runCustomChat("Christopher", "coworker_bot", true)
+
+  //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
+  //document.getElementById("jude_button").style.visibility = "visible"
 
 })();

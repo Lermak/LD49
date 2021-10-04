@@ -21,11 +21,22 @@ namespace MonoGame_Core.Scripts.Managers
 
         IEnumerator generalLockOutCo = null;
 
-        bool christopher_strange = false;
+        public bool christopher_strange = false;
         IEnumerator christopher_strangeCo = null;
 
-        bool digipet_initial = false;
+        public bool digipet_initial = false;
         IEnumerator digipet_initialCo = null;
+
+        public bool morse_code = false;
+        IEnumerator christopher_morsecode = null;
+
+        bool jude_money = false;
+
+        bool supervisor_angry = false;
+        IEnumerator supervisor_angryCo = null;
+
+        bool meet_stranger = false;
+        IEnumerator meetStrangerCo = null;
         //
 
         public PlotManager()
@@ -64,16 +75,40 @@ namespace MonoGame_Core.Scripts.Managers
                 coroutines.AddCoroutine(generalLockOutCo, "generalLockOutCo", 0, true);
             }
 
-            if(christopher_strangeCo == null)
+            if(christopher_strange == false && christopher_strangeCo == null)
             {
                 christopher_strangeCo = ChritopherStrangeCo();
                 coroutines.AddCoroutine(christopher_strangeCo, "christopher_strangeCo", 0, true);
             }
 
-            if (digipet_initialCo == null)
+            if (digipet_initial == false && digipet_initialCo == null)
             {
                 digipet_initialCo = DigipetInitialCo();
                 coroutines.AddCoroutine(digipet_initialCo, "digipet_initialCo", 0, true);
+            }
+
+            if(morse_code == false && christopher_morsecode == null)
+            {
+                christopher_morsecode = ChritopherMorseCodeCo();
+                coroutines.AddCoroutine(christopher_morsecode, "christopher_morsecode", 0, true);
+            }
+
+            if(morse_code)
+            {
+                coroutines.Stop("christopher_morsecode");
+                christopher_morsecode = null;
+            }
+
+            if(jude_money && supervisor_angry == false && supervisor_angryCo == null)
+            {
+                supervisor_angryCo = SupervisorAngryCo();
+                coroutines.AddCoroutine(supervisor_angryCo, "supervisor_angryCo", 0, true);
+            }
+
+            if(supervisor_angry && meet_stranger == false && meetStrangerCo == null)
+            {
+                meetStrangerCo = MeetStrangerCo();
+                coroutines.AddCoroutine(meetStrangerCo, "meetStrangerCo", 0, true);
             }
         }
 
@@ -92,6 +127,21 @@ namespace MonoGame_Core.Scripts.Managers
             if (ev == "Kailee_digipet_chat")
             {
                 digipet_initial = true;
+            }
+
+            if(ev == "jude_money")
+            {
+                jude_money = true;
+            }
+
+            if (ev == "Delores_salary_chat")
+            {
+                supervisor_angry = true;
+            }
+
+            if(ev == "met_stranger")
+            {
+                meet_stranger = true;
             }
         }
 
@@ -220,6 +270,72 @@ namespace MonoGame_Core.Scripts.Managers
                 percent += 0.05f;
                 yield return Coroutines.WaitTime(5);
             }
+        }
+
+        public IEnumerator ChritopherMorseCodeCo()
+        {
+            yield return Coroutines.WaitTime(13);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Christopher", "morse_code", false);
+
+            yield return true;
+        }
+
+        public IEnumerator SupervisorAngryCo()
+        {
+            yield return Coroutines.WaitTime(10);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Delores", "salary_chat", false);
+
+            yield return true;
+        }
+
+        public IEnumerator MeetStrangerCo()
+        {
+            yield return Coroutines.WaitTime(10);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.sendEvent("meet_stranger");
+
+            yield return true;
         }
     }
 }
