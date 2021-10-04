@@ -174,6 +174,10 @@ Object.defineProperty(Array.prototype, "random", {
 
   addPerson("Administrator")
   addPerson("Adrian")
+  let tim = addPerson("Tim")
+  tim.name = "Tim@IT"
+  tim.displayName = "Tim@IT"
+  
   addPerson("Aida")
   addPerson("Christopher")
   addPerson("Delores")
@@ -267,7 +271,7 @@ Object.defineProperty(Array.prototype, "random", {
 
   async function sendAsyncResponse(person, msg) {
     setTyping(person, true)
-    await waitTime(0.25 + msg.length * 0.005)
+    await waitTime(0.25 + msg.length * 0.01)
     setTyping(person, false)
     recieveMessage(person, msg)
   }
@@ -292,6 +296,12 @@ Object.defineProperty(Array.prototype, "random", {
     if(response.msg !== undefined) {
       await sendAsyncResponse(person, response.msg)
     }
+
+    if(response.waitAfter === undefined) {
+      response.waitAfter = response.msg.length * 0.024
+    }
+
+    await waitTime(response.waitAfter)
 
     if(response.sequence !== undefined) {
       for(let s of response.sequence) {
@@ -367,6 +377,8 @@ Object.defineProperty(Array.prototype, "random", {
     let toPerson = SelectedPerson
     let msg = addMessage(toPerson, you, text, "now")
     mainfeed.innerHTML += createMessageHTML(msg.from, msg.text)
+
+    game.playSound("MessagePopMe")
 
     if(toPerson == you && text.startsWith("/")) {
       if(text.startsWith("/test")) {
@@ -507,9 +519,6 @@ Object.defineProperty(Array.prototype, "random", {
         let responses = generateResponseObjects(customChat)
         for(let r of responses) {
           await handleResponseObject(person, r)
-          if(r.msg !== undefined) {
-            await waitTime(r.msg.length * 0.024)
-          }
         }
 
         if(force) {
@@ -631,7 +640,7 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
-  //runCustomChat("Delores", "intro_chat")
-  //runCustomChat("Christopher", "security_check")
+  //runCustomChat("Delores", "intro_chat", true)
+  //runCustomChat("Christopher", "security_check", true)
 
 })();
