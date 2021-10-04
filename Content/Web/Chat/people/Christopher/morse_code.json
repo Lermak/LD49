@@ -1,0 +1,6 @@
+[
+    "You around?",
+    { "wait": 5, "msg": "Check this out- you can input messages in Morse code by pressing the button. Dots are a quick press so tap it with your mouse. Dashes are a long press so tap and hold the button with your mouse for a second. You’ll hear a strange noise when you do it. Pretty weird, huh?"},
+    { "typing": true, "wait": 3, "msg": "Try putting in a word and see what happens." },
+    "Hit me up if you find anything interesting."
+]

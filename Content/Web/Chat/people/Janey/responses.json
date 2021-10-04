@@ -1,0 +1,60 @@
+[
+    "Hey newbie! Christopher mentioned you’d be coming on board. Any friend of Christopher’s and Kailee’s has got to be pretty cool.",
+    "Did you see they’re re-releasing Lucha or Lose It for consoles? I love that game! I’m gonna challenge you to a match when it comes out so you better get ready.",
+    "There’s this wicked cool game you’ve got to try. It’s called Crystallite and I can’t put it down. It’s free, too! Go here to get it: https://arcade.digipen.edu/games/crystallite  It’s made by some of the same people who made Lucha or Lose It. You’re gonna love it, I know it.",
+    "I'd love to chat with you, newbie, but I've got my heat level rising. See ya!",
+    "Hey newbie. Message me again later because I'm really busy right now. Soz!",
+	"Can't chat now, sorry!",
+	"(AFK) Feeding my frog. Back soon!",
+	"(AFK) Playing a quick game of Lucha or Lose It. Leave a message!",
+	"Kailee is really nice. I went out for drinks with her, Christopher, Tim, and Adrian. We have some really cool people here!",
+	"You know, Jude is kind of a jerk. I'd say this to his face, too. And how is he affording a YACHT? He thinks he's so much better than everyone else and I'm sick of it. We all are.",
+    {
+        "filter": "(aida.*\\?)|(aida.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I don’t really know her that well, sorry. She keeps to herself mostly."
+            }
+        ]
+    },
+	{
+        "filter": "(salary.*\\?)|(salary.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "msg": "All I know is I’m making just enough to keep my head above water. The job is really easy so I guess I shouldn’t really complain."
+            }
+        ]
+    },
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "You know, I have always thought there was something strange about this job. Just pressing a button all day? Cooling down a nuclear reactor by pressing a button? Now I’m not a nuclear scientist or anything but I’m pretty sure that’s not how this actually works."
+            }
+        ]
+    }
+]

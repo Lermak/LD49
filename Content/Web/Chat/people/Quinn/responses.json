@@ -1,0 +1,69 @@
+[
+    "Hey! It’s great to finally meet you. I heard a lot of great things about you from Christopher.",
+    "Do you like baseball? I am really into it. We could get drinks sometime and talk about the latest game.",
+    "Life is good. All you need are friends, family, and good vibes.",
+    "(AFK) Doing dad things. Be back later.",
+    "(OOF) Chillin' out with my friend Todd & spending that sweet PTO.",
+	"(BUSY) In a meeting. Be back later.",
+	"(AFK) Dad life. Back soon.",
+	"(AFK) Changing a diaper. Be back later.",
+	"(AFK) Helping feed the baby. Be back later.",
+	"(AFK) Whew- babies are a lot of work! Be back later.",
+	"(AFK) Putting baby down for a nap. Be back later.",
+    {
+        "filter": "(aida.*\\?)|(aida.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "I haven’t talked to her much, sorry."
+            }
+        ]
+    },
+	{
+        "filter": "(salary.*\\?)|(salary.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "It pays the bills, you know?  Plus the job’s dead easy and I can work from home. Though one day I’d love to help creators realize their dreams in an online marketplace. That would be my dream job."
+            }
+        ]
+    },
+	{
+        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "You might be onto something there. I would help but my beautiful wife and I just had a baby so I have that ‘dad brain’. Lol"
+            }
+        ]
+    }
+]
