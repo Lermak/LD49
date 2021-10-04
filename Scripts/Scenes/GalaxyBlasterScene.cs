@@ -44,7 +44,6 @@ namespace MonoGame_Core.Scripts
             FontRenderer fr = (FontRenderer)g.ComponentHandler.AddComponent(new FontRenderer(g, "Score: 0", "TestFont", t, new Vector2(), new Vector2(600, 100), 5, Color.White));
             g.BehaviorHandler.AddBehavior("ShowScore", GalaxyBlasterBehaviors.ShowScore, new Component[] { fr });
             SpawnHorde();
-            
             base.loadContent(c);
         }
 

@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
         string key = "";
         string message = "";
         bool error = false;
-        string[,] codes = new string[26, 10];
+        static string[,] codes = new string[26, 10];
 
         protected override void loadContent(List<Camera> c)
         {

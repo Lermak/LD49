@@ -93,9 +93,7 @@ namespace MonoGame_Core.Scripts
             ad.SpriteRenderer.Visible = false;
             yield return true;
         }
-
-        
-
+     
         public static IEnumerator<bool> UpdateLater()
         {
             float timeElapsed = 0;
@@ -139,6 +137,33 @@ namespace MonoGame_Core.Scripts
                 yield return false;
             }
 
+            yield return true;
+        }
+
+        public static IEnumerator<bool> BootUp(SpriteRenderer sr)
+        {
+            float timeElapsed = 0;
+            SoundManager.PlaySoundEffect("Boot");
+            Random r = new Random();
+            while (timeElapsed < 4)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                if (timeElapsed % 1f < .5f)
+                {
+                    if(r.Next(0,100) < 50)
+                    {
+                        if(sr.Texture == "DialBack")
+                            sr.Texture = "DialBackDark";
+                        else
+                            sr.Texture = "DialBack";
+
+                    }
+                }
+
+                yield return false;
+            }
+            sr.Texture = "DialBack";
+            NuclearLevel.started = true;
             yield return true;
         }
     }
