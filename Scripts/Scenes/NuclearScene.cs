@@ -29,6 +29,12 @@ namespace MonoGame_Core.Scripts
             
             // Textures
             ResourceManager.Textures = new Dictionary<string, Texture2D>();
+
+            ResourceManager.Textures["UprightChalk"] = Content.Load<Texture2D>("Images/Nuclear/chalk_held");
+            ResourceManager.Textures["SideChalk"] = Content.Load<Texture2D>("Images/Nuclear/chalk_laying");
+            ResourceManager.Textures["ChalkBox"] = Content.Load<Texture2D>("Images/Nuclear/chalk_box");
+            ResourceManager.Textures["Dust"] = Content.Load<Texture2D>("Images/Nuclear/chalk_smudge");
+
             ResourceManager.Textures["CoolantButton"] = Content.Load<Texture2D>("Images/Nuclear/button");
             ResourceManager.Textures["CoolantButtonHover"] = Content.Load<Texture2D>("Images/Nuclear/button_hover");
             ResourceManager.Textures["CoolantButtonPress"] = Content.Load<Texture2D>("Images/Nuclear/button_press");
@@ -63,7 +69,7 @@ namespace MonoGame_Core.Scripts
             updateSpinner.BehaviorHandler.AddBehavior("UpdateSpinner", Behaviors.UpdateSpinner, new Component[] { updateSpinner.SpriteRenderer });
             GameObjects.Add(updateSpinner);
 
-
+            GameObjects.Add(new Chalk(screenCenter + new Vector2(-100, -100)));
 
             GameObjects.Add(new WorldObject("HeatText", "HeatText", new Vector2(96, 32), screenCenter + new Vector2(0, 86), 1));
 

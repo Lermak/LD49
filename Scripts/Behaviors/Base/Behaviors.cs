@@ -277,11 +277,30 @@ namespace MonoGame_Core.Scripts
             Transform box = (Transform)c[3];
 
             Vector2 v = CurrentWindow.inputManager.MousePos;
-
+            if (CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton))
+            {
+                if (t.ContainsPoint(v) && !cd.Held)
+                {
+                    sr.Texture = "UprightChalk";
+                    cd.Held = true;
+                    cd.Draw = false;
+                }
+                else if (cd.Held && box.ContainsPoint(v))
+                {
+                    cd.Draw = false;
+                    t.Place(box.Position);
+                    sr.Texture = "SideChalk";
+                    cd.Held = false;
+                }
+                else
+                {
+                    cd.Draw = true;
+                }
+            }
             bool down = CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton);
             if (down)
             {
-                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 50)
+                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 20 && cd.Draw)
                 {
                     cd.LastDrawPos = v;
                     CurrentWindow.sceneManager.CurrentScene.ToAdd.Add(new Dust(v));
@@ -295,20 +314,7 @@ namespace MonoGame_Core.Scripts
                 }
 
             }
-            if(CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton);)
-            {
-                if (t.ContainsPoint(v) && !cd.Held)
-                {
-                    sr.Texture = "UprightChalk";
-                    cd.Held = true;
-                }
-                else if (cd.Held && box.ContainsPoint(v))
-                {
-                    t.Place(box.Position);
-                    sr.Texture = "SideChalk";
-                    cd.Held = false;
-                }
-            }
+
             if (cd.Held)
             {
                 t.Place(v);
