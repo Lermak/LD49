@@ -49,13 +49,13 @@ namespace MonoGame_Core.Scripts
 
         public static void PlaySong(string name)
         {
-            //Add logic to transition between songs
-            if(MediaPlayer.State == MediaState.Playing)
-            {
-                MediaPlayer.Play(Songs[name]);
-            }
+            ////Add logic to transition between songs
+            //if(MediaPlayer.State == MediaState.Playing)
+            //{
+            //    MediaPlayer.Play(ResourceManager.Songs[name]);
+            //}
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Songs[name]);
+            MediaPlayer.Play(ResourceManager.Songs[name]);
         }
 
         public static void PlaySoundEffect(string name)

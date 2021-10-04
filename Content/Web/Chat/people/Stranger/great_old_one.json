@@ -1,6 +1,8 @@
 [
     "It is time. It is time you knew. It is time you knew the truth. \n You have discovered much but much is yet to be discovered. \n The company known to you as Forward Thinking Energy is a front. It is a front for a cult dedicated to The Great Old One. Button Mashers such as yourself are sending souls off to be devoured by an ancient monster. This monster, this horror that surpasses the realm of human understanding, is The Great Old One. If the Great Old One devours enough souls, it will become strong enough to unleash its wrath. This wrath will spread far beyond our planet and consume the entire known and unknown universe.",
-    { "wait": 5, "msg": "We must stop this before the supervisor becomes aware of our interference. I cannot do this alone. There is another sleeper agent I have waiting to assist. We can, we must do this together. \n It is time. It is time to reverse. It is time to reverse the ritual. \n Resize your window and see the ritual circle."},
-    { "typing": true, "wait": 5, "msg": "Now you must draw A GIANT CIRCLE over the ritual circle to reverse its effects. \n Then you must wait to press the button on my count." },
+    { "wait": 5, "msg": "We must stop this before the supervisor becomes aware of our interference. I cannot do this alone. There is another sleeper agent I have waiting to assist. We can, we must do this together. \n It is time. It is time to reverse. It is time to reverse the ritual."},
+    { "typing": true, "wait": 5, "msg": "To reverse the effects, you need to draw THIS CIRCLE over the button." },
+    { "typing": true, "wait": 5, "msg": "<img src=\"images/ritual_circle.png\"></img>" },
+    "Then you must wait to press the button on my count.",
     "Remember, press the button on my count."
 ]
