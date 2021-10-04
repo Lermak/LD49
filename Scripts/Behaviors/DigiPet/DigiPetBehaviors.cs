@@ -184,12 +184,6 @@ namespace MonoGame_Core.Scripts
                 galaxyBlaster = false;
                 flag = false;
             }
-            if(galaxyBlaster && WindowManager.GalaxyBlasterWindow == null)
-            {
-                SoundManager.PlaySoundEffect("MysterySound");
-                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
-                WindowManager.AddWindow(new NoCloseForm(), "GalaxyBlasterWindow", new GalaxyBlasterScene(), new Vector2(600, 400));
-            }
             if (d.CodeAccessed == false && flag)
             {
                 WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
@@ -225,6 +219,7 @@ namespace MonoGame_Core.Scripts
                             "\n--------------------------" +
                             "\n  setsalary # - Set salary to given amount" +
                             "\n   soulcounts - Display soul count info" +
+                            "\n   galaxyblaster - Play Galaxy Blaster" +
                             "\nremoveoverlay - Remove fake overlay");
                     }
                 }
@@ -240,30 +235,40 @@ namespace MonoGame_Core.Scripts
                 if (d.CheckNeedsTimer > 7)
                 {
                     d.CheckNeedsTimer = 0;
-                    Random r = new Random();
-                    int i = r.Next(0, 100);
-                    if (i < 15)
-                    {
-                        d.Needs.SpriteRenderer.Animation = 1;
-                        d.NeedsFood = true;
-                    }
-                    else if (i < 25)
-                    {
-                        d.Needs.SpriteRenderer.Animation = 2;
-                        d.NeedsPlay = true;
-                    }
-                    else if (i < 35)
-                    {
-                        d.Needs.SpriteRenderer.Animation = 3;
-                        d.NeedsWash = true;
-                    }
-                    if(i < 30)
+                    if (Globals.DigipetFirstWant)
                     {
                         SoundManager.PlaySoundEffect("DigiPetWant");
                         SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
-
+                        d.Needs.SpriteRenderer.Animation = 3;
+                        d.NeedsWash = true;
+                        Globals.DigipetFirstWant = false;
                     }
+                    else
+                    {
+                        Random r = new Random();
+                        int i = r.Next(0, 100);
+                        if (i < 15)
+                        {
+                            d.Needs.SpriteRenderer.Animation = 1;
+                            d.NeedsFood = true;
+                        }
+                        else if (i < 25)
+                        {
+                            d.Needs.SpriteRenderer.Animation = 2;
+                            d.NeedsPlay = true;
+                        }
+                        else if (i < 35)
+                        {
+                            d.Needs.SpriteRenderer.Animation = 3;
+                            d.NeedsWash = true;
+                        }
+                        if (i < 30)
+                        {
+                            SoundManager.PlaySoundEffect("DigiPetWant");
+                            SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
 
+                        }
+                    }
                 }
             }
 

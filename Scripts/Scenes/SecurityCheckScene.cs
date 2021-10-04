@@ -119,7 +119,10 @@ namespace MonoGame_Core.Scripts
                 {
                     error = false;
                     if (Globals.FirstLockout)
+                    {
+                        Globals.FirstLockout = false;
                         Globals.FirstLocoutComplete = true;
+                    }
                     NuclearLevel.Locked = false;
                     SoundManager.PlaySoundEffect("Unlock");
                     SoundManager.SoundEffects["Unlock"].Volume = .5f;

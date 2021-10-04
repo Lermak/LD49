@@ -45,6 +45,7 @@ namespace MonoGame_Core.Scripts.Managers
         IEnumerator christopher_aida = null;
 
         public bool remove_overlay = false;
+        public bool create_galaxy_blaster = false;
 
         IEnumerator christopher_oldone = null;
         IEnumerator stranger_endgame = null;
@@ -155,7 +156,16 @@ namespace MonoGame_Core.Scripts.Managers
                 }
             }
 
-            if(Globals.FinalButtonPush)
+            if (create_galaxy_blaster)
+            {
+                if (WindowManager.GalaxyBlasterWindow == null)
+                {
+                    WindowManager.AddWindow(new NoCloseForm(), "GalaxyBlasterWindow", new GalaxyBlasterScene(), new Vector2(600, 400));
+                }
+                create_galaxy_blaster = false;
+            }
+
+            if (Globals.FinalButtonPush)
             {
                 if (ritual_co == null)
                 {
@@ -229,6 +239,11 @@ namespace MonoGame_Core.Scripts.Managers
             if (ev == "remove_overlay")
             {
                 remove_overlay = true;
+            }
+
+            if(ev == "galaxy_blaster")
+            {
+                create_galaxy_blaster = true;
             }
 
             if (ev == "Stranger_great_old_one")
