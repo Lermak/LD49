@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
 using MonoGame_Core.Scripts.Managers;
 using System.IO;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
@@ -67,9 +68,13 @@ namespace MonoGame_Core.Scripts
             //CollisionManager.Initilize();
             CameraManager.Initilize();
 
+            ResourceManager.Songs["MysteryContact"] = Content.Load<Song>("Music/mysterious_contact_music");
+
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
             ResourceManager.SoundEffects["MessagePopMe"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop_me");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
+            ResourceManager.SoundEffects["StrangerArrive"] = Content.Load<SoundEffect>("Sound/stranger_arrive");
+            ResourceManager.SoundEffects["Hack"] = Content.Load<SoundEffect>("Sound/hacking");
             chatWindow = new ChatForm();
             chatWindow.Show();
 
