@@ -184,6 +184,7 @@ namespace MonoGame_Core.Scripts.Managers
             if (!remove_overlay)
             {
                 SoundManager.PlaySong("MysteryContact");
+                SoundManager.volume = .5f;
             }
             yield return Coroutines.WaitTime(0.1f);
 
@@ -558,7 +559,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             coroutines.Stop("SongCo");
             SoundManager.PlaySong("Ritual");
-            SoundManager.SetVolume(1);
+            SoundManager.volume = .5f;
             MediaPlayer.IsRepeating = false;
 
             List<string> coworkers = new List<string>

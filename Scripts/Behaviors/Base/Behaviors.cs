@@ -376,7 +376,6 @@ namespace MonoGame_Core.Scripts
                 button.DeselectedTexID = "EvilButton";
                 button.SelectedTexID = "EvilButtonPress";
                 SoundManager.PlaySong("OminousMusic");
-                SoundManager.SetVolume(1);
             }
         }
 
