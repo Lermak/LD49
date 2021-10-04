@@ -193,6 +193,7 @@ namespace MonoGame_Core.Scripts
             }
 
             Globals.OverheatGameOver = true;
+            GameManager.Quit();
 
             yield return true;
         }
