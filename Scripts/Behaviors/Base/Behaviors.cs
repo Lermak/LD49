@@ -175,7 +175,7 @@ namespace MonoGame_Core.Scripts
                 SoundManager.PlaySoundEffect("alert");
                 SoundManager.SoundEffects["alert"].Volume = intensity * 0.15f;
             }
-                
+
             float r1 = intensity * intensityScale * ((float)r.NextDouble() - 0.5f);
             float r2 = intensity * intensityScale * ((float)r.NextDouble() - 0.5f);
             t.Place(new Vector2(r1, r2));
@@ -213,23 +213,23 @@ namespace MonoGame_Core.Scripts
                         List<char> str = NuclearLevel.MorseCode.ToList<char>();
                         for (int i = 0; i < 12; ++i)
                         {
-                            if(str[i] != code[i])
+                            if (str[i] != code[i])
                             {
                                 flag = false;
                                 break;
-                            }    
+                            }
                         }
-                        if(flag)
+                        if (flag)
                         {
                             SoundManager.PlaySoundEffect("MysterySound");
                             SoundManager.SoundEffects["MysterySound"].Volume = .1f;
                             Globals.CreateFile("PayLog", "    STAFF SALARIES FY22\n---------------------------\n    Delores H - $ 90,000\n      Danni B - $ 75,000\n        Tim G - $ 40,000\n      Quinn R - $ 40,000\n     Kailee M - $ 40,000\nChristopher C - $ 40,000\n      Janey L - $ 40,000\n       Jude N - $ 150,000\n       Aida F - $ 40,000\n     Adrian B - $ 60,000\n     Gerald B - $ 60,000\n      Jamie Z - $ 60,000");
                         }
-                            
+
                     }
                 }
                 NuclearLevel.ButtonHoldTime = 0.0f;
-            }           
+            }
         }
         public static void UpdateNuclear(float gt, Component[] c)
         {
@@ -248,14 +248,16 @@ namespace MonoGame_Core.Scripts
                 s.Visible = true;
                 s.Transform.Rotate(-gt);
             }
-            else {
+            else
+            {
                 SpriteRenderer s = (SpriteRenderer)c[0];
                 s.Visible = false;
             }
-            
+
         }
 
-        public static void LockoutUpdate(float gt, Component[] c) {
+        public static void LockoutUpdate(float gt, Component[] c)
+        {
             SpriteRenderer sd = (SpriteRenderer)c[0];
             if (NuclearLevel.Locked)
             {
@@ -264,6 +266,52 @@ namespace MonoGame_Core.Scripts
             else
             {
                 sd.Visible = false;
+            }
+        }
+
+        public static void ChalkControlls(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            ChalkData cd = (ChalkData)c[1];
+            SpriteRenderer sr = (SpriteRenderer)c[2];
+            Transform box = (Transform)c[3];
+
+            Vector2 v = CurrentWindow.inputManager.MousePos;
+
+            bool down = CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton);
+            if (down)
+            {
+                if (cd.Held && Vector2.Distance(cd.LastDrawPos, v) > 50)
+                {
+                    cd.LastDrawPos = v;
+                    CurrentWindow.sceneManager.CurrentScene.ToAdd.Add(new Dust(v));
+                    if(!Globals.ReadyForEndTimes)
+                    {
+                        if(CurrentWindow.sceneManager.CurrentScene.GameObjects.Where(t => t.Tag == "Dust").Count() > 5)
+                        {
+                            Globals.ReadyForEndTimes = true;
+                        }
+                    }
+                }
+
+            }
+            if(CurrentWindow.inputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton);)
+            {
+                if (t.ContainsPoint(v) && !cd.Held)
+                {
+                    sr.Texture = "UprightChalk";
+                    cd.Held = true;
+                }
+                else if (cd.Held && box.ContainsPoint(v))
+                {
+                    t.Place(box.Position);
+                    sr.Texture = "SideChalk";
+                    cd.Held = false;
+                }
+            }
+            if (cd.Held)
+            {
+                t.Place(v);
             }
         }
     }
