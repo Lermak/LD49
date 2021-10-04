@@ -164,6 +164,7 @@ namespace EventInput
         const int WM_IME_COMPOSITION = 0x10f;
         const int DLGC_WANTALLKEYS = 4;
         const int WM_WM_ACTIVATEAPP = 0x001C;
+        const int WM_CLOSE = 0x0010;
 
         //Win32 functions that we're using
         [DllImport("Imm32.dll", CharSet = CharSet.Unicode)]
@@ -213,6 +214,12 @@ namespace EventInput
 
             switch (msg)
             {
+                case WM_CLOSE:
+                    {
+                        WindowManager.DoingActications = 1000;
+                    }
+                    break;
+
                 case WM_WM_ACTIVATEAPP:
                     if(wParam.ToInt32() == 1 && hWnd == GameManager.Instance.Window.Handle)
                     {
