@@ -1,5 +1,7 @@
 let SUPER_SPEED = 1
 let JUDE_MODE = false
+let global_data = {}
+global_data.ask_it = true
 
 function waitTime(time) {
   return new Promise(resolve => {
@@ -309,7 +311,12 @@ Object.defineProperty(Array.prototype, "random", {
     }
 
     if(response.waitAfter === undefined) {
-      response.waitAfter = response.msg.length * 0.024
+      if(response.msg !== undefined) {
+        response.waitAfter = response.msg.length * 0.024
+      }
+      else {
+        response.waitAfter = 0
+      }
     }
 
     await waitTime(response.waitAfter)
@@ -361,8 +368,8 @@ Object.defineProperty(Array.prototype, "random", {
       }
 
       if(r.condition !== undefined) {
-        let conditionFn = new Function('msg', r.condition)
-        let conditionRet = conditionFn(message)
+        let conditionFn = new Function('msg', 'global_data', r.condition)
+        let conditionRet = conditionFn(message, global_data)
         if(conditionRet === true) {
           matchedFilters.push(r)
         }
@@ -711,6 +718,10 @@ Object.defineProperty(Array.prototype, "random", {
     document.body.classList.add("generic_glitch_oneshot")
 
     switchToChat(SelectedPerson.id)
+  }
+
+  window.setGlobalValue = (v, value) => {
+    global_data[v] = value
   }
 
   game.readFile(`Content/Web/Chat/people/Jude/logs.json`).then((r) => {
