@@ -283,6 +283,7 @@ namespace MonoGame_Core.Scripts.Managers
             GameManager.chatWindow.runChat("Delores", "intro_chat", true);
             while(deloresChat == false || NuclearLevel.started == false) yield return false;
             supervisorTutotial = true;
+            GameManager.chatWindow.sendEvent("game_start");
             yield return true;
         }
 

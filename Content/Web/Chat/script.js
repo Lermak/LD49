@@ -876,7 +876,25 @@ Object.defineProperty(Array.prototype, "random", {
     global_data[v] = value
   }
 
+  let first_contact_co = null
   window.recieveGameEvent = (ev) => {
+    if(ev == "game_start" && first_contact_co == null) {
+      let contactPeople = [
+        "Janey",
+        "Jude",
+        "Kailee",
+        "Quinn"
+      ]
+
+      first_contact_co = setInterval(() => {
+        if(Math.random() > 0.8) {
+          let person = getPerson(contactPeople.random())
+          if(person.messages.length == 0 && person.inCustomChat == false) {
+            runCustomChat(person, "first_contact")
+          }
+        }
+      }, 6000)
+    }
     if(ev == "meet_stranger") {
         setTimeout(async () => {
         let stranger = addPerson("Stranger")
@@ -930,6 +948,7 @@ Object.defineProperty(Array.prototype, "random", {
   //runCustomChat("Kailee", "digipal_chat", false)
 
   //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
+  //setTimeout(() => {recieveGameEvent("game_start")}, 2000)
   //document.getElementById("jude_button").style.visibility = "visible"
   //global_data.remove_overlay = true
   //global_data.ask_it = true
