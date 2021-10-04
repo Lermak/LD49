@@ -7,6 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class ChalkData : Component
     {
+        public bool FirstPickup = false;
         public bool Draw = false;
         public bool Held = false;
         public Vector2 LastDrawPos;

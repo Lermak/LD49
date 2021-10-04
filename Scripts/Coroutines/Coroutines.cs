@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
@@ -191,6 +192,19 @@ namespace MonoGame_Core.Scripts
             }
 
             Globals.OverheatGameOver = true;
+
+            yield return true;
+        }
+
+        public static IEnumerator EndTimeMusic()
+        {
+            SoundManager.PlaySong("EndTimesOpening");
+            MediaPlayer.IsRepeating = false;
+            while (MediaPlayer.State == MediaState.Playing)
+            {
+                yield return false;
+            }
+            SoundManager.PlaySong("EndTimes");
 
             yield return true;
         }

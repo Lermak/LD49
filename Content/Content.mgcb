@@ -884,6 +884,24 @@
 /processorParam:TextureFormat=Color
 /build:Images/UpdateRequired/UpdateNow.png
 
+#begin Music/final_ritual_loop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/final_ritual_loop.mp3
+
+#begin Music/final_ritual_opening.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/final_ritual_opening.mp3
+
+#begin Music/ominous_piano.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/ominous_piano.mp3
+
 #begin Music/TestSong.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
