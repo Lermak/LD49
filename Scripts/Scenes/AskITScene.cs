@@ -33,7 +33,7 @@ namespace MonoGame_Core.Scripts
                 "Contact Tim immediately.", 
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
             obj.BehaviorHandler.AddBehavior("UnlockButton", (float gt, Component[] c) => { 
-                if (NuclearLevel.ButtonHoldTime >= 5) { 
+                if (NuclearLevel.ButtonHoldTime >= 3) { 
                     NuclearLevel.Locked = false;
                     SoundManager.PlaySoundEffect("Unlock");
                     SoundManager.SoundEffects["Unlock"].Volume = .5f;
