@@ -1,5 +1,6 @@
 let SUPER_SPEED = 1
 let JUDE_MODE = false
+let SOULS = 165843
 let global_data = {}
 
 function waitTime(time) {
@@ -120,6 +121,7 @@ Object.defineProperty(Array.prototype, "random", {
       isTyping: false,
       uniqueIds: {},
       messages: [],
+      unread: 0,
       messagesToJude: []
     }
 
@@ -148,6 +150,12 @@ Object.defineProperty(Array.prototype, "random", {
 
   function setTyping(person, isTyping) {
     person.isTyping = isTyping
+
+    if(JUDE_MODE) {
+      document.getElementById("person_is_typing").style.visibility = "hidden"
+      return
+    }
+
     if(person == SelectedPerson) {
       document.getElementById("person_is_typing").style.visibility = isTyping ? "visible" : "hidden"
     }
@@ -244,7 +252,15 @@ Object.defineProperty(Array.prototype, "random", {
     `
   }
 
+  let delayed_messages = []
+  let process_delay = false
   function recieveMessage(person, text) {
+    if(JUDE_MODE) {
+      delayed_messages.push([person, text])
+      game.playSound("MessageNotification")
+      return
+    }
+
     let response_msg = addMessage(person, person, text)
 
     if(person == jude) {
@@ -263,18 +279,18 @@ Object.defineProperty(Array.prototype, "random", {
       mainfeed.scrollTop = mainfeed.scrollHeight - mainfeed.clientHeight;
     }
     else {
+      person.unread += 1
+
       let contactNode = document.getElementById(`dm_contact_${person.id}`).children[0]
       let notificationNode = contactNode.querySelector(".mention-badge")
       if(notificationNode == null) {
         notificationNode = document.createElement("span")
         notificationNode.classList.add("mention-badge")
-        notificationNode.textContent = "0"
         contactNode.appendChild(notificationNode)
-
       }
-      
-      game.playSound("MessageNotification")
-      notificationNode.textContent = parseInt(notificationNode.textContent) + 1
+
+      if(!process_delay) game.playSound("MessageNotification")
+      notificationNode.textContent = person.unread
     }
   }
 
@@ -348,6 +364,32 @@ Object.defineProperty(Array.prototype, "random", {
     return responseList
   }
 
+  function run_handler(ev, person, regexArray) {
+    if(ev == "aida_setsalary") {
+      let amount = parseInt(regexArray[1])
+      let response = ""
+      if(amount < 0) {
+        reponse = "Please enter a valid salary from $0 to $150,000."
+      }
+      else if(amount >= 0 && amount <= 150000) {
+        reponse = "Salary set."
+      }
+      else {
+        reponse = "Please enter a valid salary from $0 to $150,000."
+      }
+
+      setTimeout(async () => { await sendAsyncResponse(person, reponse) }, 0);
+    }
+    else if(ev == "aida_soulcounts") {
+      setTimeout(async () => { await sendAsyncResponse(person, `The Great Old One has aquired ${SOULS} souls.`) }, 0);
+    }
+    else if(ev == "aida_removeoverlay") {
+      game.sendEvent("remove_overlay")
+      global_data.remove_overlay = true
+      setTimeout(async () => { await sendAsyncResponse(person, `Overlay Removed.`) }, 0);
+    }
+  }
+
   function handleResponse(person, message) {
     if(person.responses.length == 0) {
       return
@@ -362,6 +404,12 @@ Object.defineProperty(Array.prototype, "random", {
 
     //Filter out unique responses that have already happened
     responseList = responseList.filter((v) => {
+      if(v.requires) {
+        let conditionFn = new Function('msg', 'global_data', v.requires)
+        let conditionRet = conditionFn(message, global_data)
+        return conditionRet
+      }
+
       if(v.uniqueId !== undefined) {
         return person.uniqueIds[v.uniqueId] === undefined
       }
@@ -381,6 +429,9 @@ Object.defineProperty(Array.prototype, "random", {
       if(r.filter !== undefined) {
         let filter = new RegExp(r.filter)
         if(filter.test(message.toLowerCase()) == true) {
+          if(r.handler !== undefined) {
+            run_handler(r.handler, person, message.toLowerCase().match(filter))
+          }
           matchedFilters.push(r)
         }
       }
@@ -508,6 +559,7 @@ Object.defineProperty(Array.prototype, "random", {
     if(notificationNode != null) {
       contactNode.children[0].removeChild(notificationNode)
     }
+    person.unread = 0;
 
     let textBox = document.getElementById(`textBox`)
     textBox.setAttribute("data-placeholder", `Message ${person.name}`)
@@ -541,7 +593,7 @@ Object.defineProperty(Array.prototype, "random", {
       dm_contacts.innerHTML += `
       <a style="cursor: pointer" id="dm_contact_${idx}" onclick='switchToChat(${idx})'>
           <li>
-              <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")}
+              <i class="fas fa-circle online"></i> ${generateNameHTML(person, "displayName")} ${ (person.unread != 0 && !JUDE_MODE) ? `<span class="mention-badge">${person.unread}</span>` : "" }
           </li>
       </a>
       `
@@ -717,6 +769,12 @@ Object.defineProperty(Array.prototype, "random", {
     }
   }, 666)
 
+  setInterval(() => {
+    if(Math.random() > 0.4) {
+      SOULS += Math.floor(Math.random() * 1000)
+    }
+  }, 666)
+
   window.runCustomChat = (person, chat, force) => {
     runCustomChat(person, chat, force)
   }
@@ -747,6 +805,13 @@ Object.defineProperty(Array.prototype, "random", {
       if(SelectedPerson == you) {
         SelectedPerson = jude
       }
+
+      process_delay = true
+      for(let a of delayed_messages) {
+        recieveMessage(a[0], a[1])
+      }
+      process_delay = false
+      delayed_messages = []
     }
 
     generateContacts()
@@ -775,6 +840,7 @@ Object.defineProperty(Array.prototype, "random", {
         await runCustomChat("Stranger", "first_contact")
         
         document.getElementById("jude_button").style.visibility = "visible"
+        global_data.met_stranger = true
         game.sendEvent("met_stranger")
 
       }, 0)
@@ -810,12 +876,13 @@ Object.defineProperty(Array.prototype, "random", {
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 2000)
   //setTimeout(() => {recieveMessage(getPerson("Delores"), "Yo!")}, 3000)
 
-  //runCustomChat("Delores", "salary_chat", true)
-  //runCustomChat("Christopher", "security_check", true)
+  //runCustomChat("Delores", "salary_chat", false)
+  //runCustomChat("Christopher", "security_check", false)
   //runCustomChat("Christopher", "morse_code", false)
-  //runCustomChat("Christopher", "coworker_bot", true)
+  //runCustomChat("Christopher", "coworker_bot", false)
 
   //setTimeout(() => {recieveGameEvent("meet_stranger")}, 2000)
   //document.getElementById("jude_button").style.visibility = "visible"
+  //global_data.remove_overlay = true
 
 })();

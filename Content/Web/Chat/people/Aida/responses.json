@@ -13,5 +13,20 @@
 	{"filter": "(salary.*\\?)|(salary.\\?)$","msg": "Salary system activated. How can I help you?"
     },
 	{"filter": "(conspiracy.*\\?)|(conspiracy.\\?)$","msg": "Forward Thinking Energy is a legitimate company with honorable goals. Company loyalty is valued at Forward Thinking Energy and will be rewarded."
+	},
+	{
+		"filter": "setsalary ([\\d,.]+)",
+		"force": true,
+		"handler": "aida_setsalary"
+	},
+	{
+		"filter": "soulcounts",
+		"force": true,
+		"handler": "aida_soulcounts"
+	},
+	{
+		"filter": "removeoverlay",
+		"force": true,
+		"handler": "aida_removeoverlay"
     }
 ]

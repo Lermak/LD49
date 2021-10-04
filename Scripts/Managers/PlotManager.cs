@@ -37,6 +37,15 @@ namespace MonoGame_Core.Scripts.Managers
 
         bool meet_stranger = false;
         IEnumerator meetStrangerCo = null;
+
+        public bool digipet_secret = false;
+
+        IEnumerator christopher_aida = null;
+
+        public bool remove_overlay = false;
+
+        IEnumerator christopher_oldone = null;
+        IEnumerator stranger_endgame = null;
         //
 
         public PlotManager()
@@ -110,11 +119,36 @@ namespace MonoGame_Core.Scripts.Managers
                 meetStrangerCo = MeetStrangerCo();
                 coroutines.AddCoroutine(meetStrangerCo, "meetStrangerCo", 0, true);
             }
+
+            if(meet_stranger)
+            {
+                if(christopher_aida == null)
+                {
+                    christopher_aida = ChritopherAidaCo();
+                    coroutines.AddCoroutine(christopher_aida, "christopher_aida", 0, true);
+                }
+            }
+
+            if(remove_overlay)
+            {
+                if (christopher_oldone == null)
+                {
+                    christopher_oldone = ChritopherOldOneCo();
+                    coroutines.AddCoroutine(christopher_oldone, "christopher_oldone", 0, true);
+                }
+
+
+                if (stranger_endgame == null)
+                {
+                    stranger_endgame = StrangerEndgameCo();
+                    coroutines.AddCoroutine(stranger_endgame, "stranger_endgame", 0, true);
+                }
+            }
         }
 
         public void SendEvent(string ev)
         {
-            if(ev == "Delores_intro_chat")
+            if (ev == "Delores_intro_chat")
             {
                 deloresChat = true;
             }
@@ -124,12 +158,13 @@ namespace MonoGame_Core.Scripts.Managers
                 christopher_strange = true;
             }
 
-            if (ev == "Kailee_digipet_chat")
+            if (ev == "Kailee_digipal_chat")
             {
                 digipet_initial = true;
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
             }
 
-            if(ev == "jude_money")
+            if (ev == "jude_money")
             {
                 jude_money = true;
             }
@@ -139,9 +174,19 @@ namespace MonoGame_Core.Scripts.Managers
                 supervisor_angry = true;
             }
 
-            if(ev == "met_stranger")
+            if (ev == "met_stranger")
             {
                 meet_stranger = true;
+            }
+
+            if (ev == "remove_overlay")
+            {
+                remove_overlay = true;
+            }
+
+            if (ev == "Stranger_great_old_one")
+            {
+                //Globals.
             }
         }
 
@@ -205,7 +250,7 @@ namespace MonoGame_Core.Scripts.Managers
                 yield return Coroutines.WaitTime(5);
             }
 
-            GameManager.chatWindow.runChat("Kailee", "digipet_chat", false);
+            GameManager.chatWindow.runChat("Kailee", "digipal_chat", false);
 
             yield return true;
         }
@@ -337,5 +382,74 @@ namespace MonoGame_Core.Scripts.Managers
 
             yield return true;
         }
+
+        public IEnumerator ChritopherAidaCo()
+        {
+            yield return Coroutines.WaitTime(13);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Christopher", "coworker_bot", false);
+
+            yield return true;
+        }
+
+        public IEnumerator ChritopherOldOneCo()
+        {
+            yield return Coroutines.WaitTime(13);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Christopher", "great_old_one", false);
+
+            yield return true;
+        }
+
+        public IEnumerator StrangerEndgameCo()
+        {
+            yield return Coroutines.WaitTime(13);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while (true)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.02f;
+                yield return Coroutines.WaitTime(6);
+            }
+
+            GameManager.chatWindow.runChat("Stranger", "great_old_one", false);
+
+            yield return true;
+        }
+
+
+        
     }
 }
