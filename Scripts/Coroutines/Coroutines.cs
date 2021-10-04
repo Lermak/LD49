@@ -215,7 +215,7 @@ namespace MonoGame_Core.Scripts
                 yield return false;
             }
             SoundManager.PlaySong("EndTimes");
-
+            SoundManager.SetVolume(0.5f);
             yield return true;
         }
 

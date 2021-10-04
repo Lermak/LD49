@@ -559,7 +559,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             coroutines.Stop("SongCo");
             SoundManager.PlaySong("Ritual");
-            SoundManager.volume = .5f;
+            SoundManager.SetVolume(0.5f);
             MediaPlayer.IsRepeating = false;
 
             List<string> coworkers = new List<string>
