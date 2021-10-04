@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Audio;
+using MonoGame_Core.Scripts.Managers;
 
 namespace MonoGame_Core.Scripts
 {
@@ -15,6 +16,8 @@ namespace MonoGame_Core.Scripts
         public static GameManager Instance;
         public static float WidthScale = 1;
         public static float HeightScale = 1;
+        public static PlotManager plotManager;
+        public static ChatForm chatWindow;
 
         private GraphicsDeviceManager _graphics;
         private static bool quit;
@@ -47,8 +50,8 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
-            var c = new ChatForm();
-            c.Show();
+            chatWindow = new ChatForm();
+            chatWindow.Show();
 
             WindowManager.Initilize(Content, new NuclearScene()); 
             WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480,330));
@@ -56,6 +59,8 @@ namespace MonoGame_Core.Scripts
             //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
             //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
             //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+
+            plotManager = new PlotManager();
 
             base.Initialize();
         }
@@ -73,6 +78,8 @@ namespace MonoGame_Core.Scripts
         {
             if (quit)
                 Exit();
+
+            plotManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
