@@ -96,6 +96,11 @@ namespace MonoGame_Core.Scripts.Managers
                 coroutines.AddCoroutine(digipet_initialCo, "digipet_initialCo", 0, true);
             }
 
+            if(digipet_initial && WindowManager.DigiPetWindow == null)
+            {
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
+            }
+
             if(morse_code == false && christopher_morsecode == null)
             {
                 christopher_morsecode = ChritopherMorseCodeCo();
@@ -161,7 +166,6 @@ namespace MonoGame_Core.Scripts.Managers
             if (ev == "Kailee_digipal_chat")
             {
                 digipet_initial = true;
-                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
             }
 
             if (ev == "jude_money")
