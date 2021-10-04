@@ -82,5 +82,59 @@
                 "msg": "I never thought between the two of us that I’d turn out to be the conspiracy theorist. Heh."
             }
         ]
+    },
+
+    {
+        "requires": "return global_data.remove_overlay",
+        "filter": "(feeding souls.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "THEY’RE DOING WHAT? Oh man oh man oh man, this can’t be good. What do we do?"},
+				{"wait": 5, "msg": "I’m pretty freaked-out right now, ngl. Though if we get through this, we’re gonna get some sick memes out of it."
+
+            }
+        ]
+    },
+	{
+        "requires": "return global_data.remove_overlay",
+        "filter": "(awaken.*)|(awakens.*)|(awakeness.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1
+            },
+            {
+                "typing": false,
+                "wait": 1.5
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "This sounds straight out of some kind of eldritch horror roleplaying game or something. I knew there was something more to all this button pressing. How do we stop it? You got a plan? None of this makes any sense whatsoever!"},
+				{"wait": 5, "msg": "This is really freaky. I totally didn’t have “employer turns out to be a cult feeding souls to an ancient evil to force the apocalypse” on my disaster bingo card."
+            }
+        ]
     }
 ]
