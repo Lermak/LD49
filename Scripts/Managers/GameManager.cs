@@ -70,6 +70,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
             ResourceManager.SoundEffects["MessagePopMe"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop_me");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
+            ResourceManager.SoundEffects["StrangerArrive"] = Content.Load<SoundEffect>("Sound/stranger_arrive");
             chatWindow = new ChatForm();
             chatWindow.Show();
 
