@@ -288,7 +288,7 @@ namespace MonoGame_Core.Scripts
                     if (!cd.FirstPickup)
                     {
                         cd.FirstPickup = true;
-                        SoundManager.PlaySong("EndTimes");
+                        WindowManager.MainWindow.coroutineManager.AddCoroutine(Coroutines.EndTimeMusic(), "EndTimeLoop", 0, true);//SoundManager.PlaySong("EndTimes");
                     }
 
                     sr.Texture = "UprightChalk";

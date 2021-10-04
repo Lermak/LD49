@@ -59,7 +59,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Shutdown"] = Content.Load<SoundEffect>("Sound/machine_stopping");
             ResourceManager.SoundEffects["Explosion"] = Content.Load<SoundEffect>("Sound/explosion");
             ResourceManager.Songs["OminousMusic"] = Content.Load<Song>("Music/ominous_piano");
-            ResourceManager.Songs["EndTimes"] = Content.Load<Song>("Music/explosion");
+            ResourceManager.Songs["EndTimes"] = Content.Load<Song>("Music/final_ritual_loop");
+            ResourceManager.Songs["EndTimesOpening"] = Content.Load<Song>("Music/final_ritual_opening");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();
