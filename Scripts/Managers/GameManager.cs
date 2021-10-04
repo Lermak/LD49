@@ -34,8 +34,13 @@ namespace MonoGame_Core.Scripts
             Instance = this;
 
             Screen screen = Screen.FromHandle(Window.Handle);
-            WidthScale = (screen.Bounds.Width / 1920.0f);
-            HeightScale = (screen.Bounds.Height / 1080.0f);
+            float widthScale = (screen.Bounds.Width / 1920.0f);
+            float heightScale = (screen.Bounds.Height / 1080.0f);
+
+            if(widthScale == heightScale)
+            {
+                WidthScale = HeightScale = widthScale;
+            }
         }
 
         protected override void Initialize()
@@ -55,6 +60,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Initilize();
 
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
+            ResourceManager.SoundEffects["MessagePopMe"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop_me");
             ResourceManager.SoundEffects["MessageNotification"] = Content.Load<SoundEffect>("Sound/Relaque/message_notification");
             chatWindow = new ChatForm();
             chatWindow.Show();
@@ -64,10 +70,10 @@ namespace MonoGame_Core.Scripts
             if (!DO_STORY)
             {
                 WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
-                WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
-                WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
-                //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
-                //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
+                //WindowManager.AddWindow(new NoCloseForm(), "ITHelp", new AskITScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
                 //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
             }
 
