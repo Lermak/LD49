@@ -3,6 +3,6 @@
    {"filter": "(how are you.*\\?)|(how are you.\\?)","msg": "I am very well, thank you."},
    {"filter": "\\!!!","msg": "Please do not yell at me. My apologies, I must get back to work. Goodbye."},
    {"filter": "(remove overlay.*)","msg": "Command accepted. Overlay removed."},
-   {"filter": "(boolProp testingCheatsEnabled true.*)","msg": "I also really enjoy The Sims franchise. I cannot change reality, however."},
-   {"filter": "(boolProp testingCheatsEnabled false.*)","msg": "This is reality. Real life does not come with cheat codes."}
+   {"filter": "(boolprop testingcheatsenabled true.*)","msg": "I also really enjoy The Sims franchise. I cannot change reality, however."},
+   {"filter": "(boolprop testingcheatsenabled false.*)","msg": "This is reality. Real life does not come with cheat codes."}
 ]
