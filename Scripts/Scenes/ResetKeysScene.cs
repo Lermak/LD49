@@ -55,8 +55,9 @@ namespace MonoGame_Core.Scripts
             WorldObject obj = (WorldObject)GameObjects[GameObjects.Count - 1];
             ReauthData rad = (ReauthData)obj.ComponentHandler.AddComponent(new ReauthData(obj, "ReauthData", 60));
             FontRenderer fr = (FontRenderer)obj.ComponentHandler.AddComponent(new FontRenderer(obj,
-                "Reset Data Keys\n" +
-                "Click and drag DataKeys.txt here",
+                "            Error Code: 257\n" +
+                "Data Keys need reset to defaults.\n" +
+                "Click and drag DataKeys.txt here.",
                 "TestFont", obj.Transform, new Vector2(), new Vector2(600, 50), 0, Color.White));
         }
     }
