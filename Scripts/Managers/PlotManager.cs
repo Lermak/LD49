@@ -181,7 +181,10 @@ namespace MonoGame_Core.Scripts.Managers
         public static float MysteryVolume = 0;
         public IEnumerator SongStartCo()
         {
-            SoundManager.PlaySong("MysteryContact");
+            if (SoundManager.CurrentSong != "MysteryContact")
+            {
+                SoundManager.PlaySong("MysteryContact");
+            }
             yield return Coroutines.WaitTime(0.1f);
 
             while (MysteryVolume < .3f)
@@ -202,6 +205,7 @@ namespace MonoGame_Core.Scripts.Managers
             }
 
             MediaPlayer.Stop();
+            SoundManager.CurrentSong = "";
         }
 
         public void SendEvent(string ev)
@@ -216,7 +220,7 @@ namespace MonoGame_Core.Scripts.Managers
                 christopher_strange = true;
             }
 
-            if (ev == "Kailee_digipal_chat")
+            if (ev == "spawn_digipet")
             {
                 digipet_initial = true;
             }

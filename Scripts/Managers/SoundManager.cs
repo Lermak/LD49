@@ -47,6 +47,7 @@ namespace MonoGame_Core.Scripts
             volume = v;
         }
 
+        public static string CurrentSong;
         public static void PlaySong(string name)
         {
             ////Add logic to transition between songs
@@ -54,6 +55,7 @@ namespace MonoGame_Core.Scripts
             //{
             //    MediaPlayer.Play(ResourceManager.Songs[name]);
             //}
+            CurrentSong = name;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(ResourceManager.Songs[name]);
         }
