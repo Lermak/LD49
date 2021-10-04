@@ -19,7 +19,18 @@
 	"I could really use one of Kailee's mind-blowing brownies right now, or maybe some gummies.",
 	"Gotta pee. Brb.",
 	"I wish more flowers were edible because then I could pretend to be one of those dinosaurs that only eat plants but the pretty kind",
-	"Someone's at my door. Brb.",
+    "Someone's at my door. Brb.",
+    {
+        "uniqueId": "aida_bot",
+        "requires": "return unique_id.wait_for_commands !== undefined",
+        "filter": "(command)",
+        "force": true,
+        "wait": 5,
+        "sequence": [
+            { "msg": "Interesting..." },
+            { "read_game_event": "adrian_aida", "wait": 1, "msg": "I messaged Aida and you’re never gonna believe this but I think she’s a robot. Seriously! She’s like an actual android or intelligent AI or something. Her responses don’t make a lot of sense most of the time. I’m gonna try sending some random commands to her, maybe you should too! Also maybe Adrian knows something. He’s been here forever." }
+        ]
+    },
     {
         "filter": "(aida.*\\?)|(aida.\\?)$",
         "sequence": [
