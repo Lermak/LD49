@@ -160,7 +160,10 @@ namespace MonoGame_Core.Scripts
 
             List<char> code = d.Code.ToList<char>();
             List<char> sequence = new List<char>() { 'w', 'f', 'f', 'p', 'f' };
+            List<char> gbSequence = new List<char>() { 'w', 'w', 'f', 'f', 'p' };
+
             bool flag = true;
+            bool galaxyBlaster = true;
             if (code.Count == 5)
             {
                 for (int i = 0; i < 5; ++i)
@@ -169,10 +172,24 @@ namespace MonoGame_Core.Scripts
                         flag = false;
                         break;
                     }
+                for (int i = 0; i < 5; ++i)
+                    if (code[i] != gbSequence[i])
+                    {
+                        galaxyBlaster = false;
+                        break;
+                    }
             }
             else
+            {
+                galaxyBlaster = false;
                 flag = false;
-
+            }
+            if(galaxyBlaster && WindowManager.GalaxyBlasterWindow == null)
+            {
+                SoundManager.PlaySoundEffect("MysterySound");
+                SoundManager.SoundEffects["MysterySound"].Volume = .1f;
+                WindowManager.AddWindow(new NoCloseForm(), "GalaxyBlasterWindow", new GalaxyBlasterScene(), new Vector2(600, 400));
+            }
             if (d.CodeAccessed == false && flag)
             {
                 WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
