@@ -69,6 +69,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Initilize();
 
             ResourceManager.Songs["MysteryContact"] = Content.Load<Song>("Music/mysterious_contact_music");
+            ResourceManager.Songs["Ritual"] = Content.Load<Song>("Music/ritual_active");
 
             ResourceManager.SoundEffects["MessagePop"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop");
             ResourceManager.SoundEffects["MessagePopMe"] = Content.Load<SoundEffect>("Sound/Relaque/message_pop_me");
@@ -111,6 +112,11 @@ namespace MonoGame_Core.Scripts
         {
             if (quit)
                 Exit();
+
+            //if(NuclearLevel.started)
+            //{
+            //    Globals.ExpectFinalButtonPush = true;
+            //}
 
             if (DO_STORY)
             {

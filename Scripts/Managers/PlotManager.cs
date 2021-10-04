@@ -7,9 +7,10 @@ using System.Text;
 
 namespace MonoGame_Core.Scripts.Managers
 {
-
     public class PlotManager
     {
+        private static Random rng = new Random();
+
         CoroutineManager coroutines = new CoroutineManager();
 
         // Plot flags (false is uncompleted, true is completed)
@@ -47,6 +48,9 @@ namespace MonoGame_Core.Scripts.Managers
 
         IEnumerator christopher_oldone = null;
         IEnumerator stranger_endgame = null;
+
+        IEnumerator ritual_co = null;
+        IEnumerator shake_co = null;
         //
 
         public PlotManager()
@@ -150,6 +154,18 @@ namespace MonoGame_Core.Scripts.Managers
                     coroutines.AddCoroutine(stranger_endgame, "stranger_endgame", 0, true);
                 }
             }
+
+            if(Globals.FinalButtonPush)
+            {
+                if (ritual_co == null)
+                {
+                    ritual_co = RitualCo();
+                    coroutines.AddCoroutine(ritual_co, "ritual_co", 0, true);
+
+                    shake_co = RitualShakeCo();
+                    coroutines.AddCoroutine(shake_co, "shake_co", 0, true);
+                }
+            }
         }
 
         public static float MysteryVolume = 0;
@@ -220,16 +236,19 @@ namespace MonoGame_Core.Scripts.Managers
                 Globals.CreateChalk = true;
             }
 
-            if(ev == "onStrangerScreen")
+            if (ritual_co == null)
             {
-                coroutines.Stop("SongCo");
-                coroutines.AddCoroutine(SongStartCo(), "SongCo", 0, true);
-            }
+                if (ev == "onStrangerScreen")
+                {
+                    coroutines.Stop("SongCo");
+                    coroutines.AddCoroutine(SongStartCo(), "SongCo", 0, true);
+                }
 
-            if (ev == "offStrangerScreen")
-            {
-                coroutines.Stop("SongCo");
-                coroutines.AddCoroutine(SongEndCo(), "SongCo", 0, true);
+                if (ev == "offStrangerScreen")
+                {
+                    coroutines.Stop("SongCo");
+                    coroutines.AddCoroutine(SongEndCo(), "SongCo", 0, true);
+                }
             }
 
             if (ev == "Stranger_press_the_button")
@@ -263,7 +282,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(7);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while(true)
@@ -285,7 +304,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(10);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -305,6 +324,8 @@ namespace MonoGame_Core.Scripts.Managers
 
         public void SpawnRandomLockOut()
         {
+            if (ritual_co != null) return;
+
             if(WindowManager.ResetKeysWindow != null ||
                WindowManager.SecurityCheckWindow != null ||
                WindowManager.ITHelp != null ||
@@ -314,7 +335,7 @@ namespace MonoGame_Core.Scripts.Managers
             }
 
             bool found = false;
-            Random r = new Random();
+            Random r = rng;
 
             int iter = 0;
             while (iter < 100 && !found)
@@ -351,7 +372,7 @@ namespace MonoGame_Core.Scripts.Managers
 
             float percent = 0.1f;
 
-            Random r = new Random();
+            Random r = rng;
             while (true)
             {
                 if (percent >= r.NextDouble())
@@ -369,7 +390,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(13);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -389,7 +410,7 @@ namespace MonoGame_Core.Scripts.Managers
 
         public IEnumerator SupervisorAngryCo()
         {
-            Random r = new Random();
+            Random r = rng;
             yield return Coroutines.WaitTime(r.Next(15, 30));
 
             GameManager.chatWindow.runChat("Delores", "salary_chat", false);
@@ -401,7 +422,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(10);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -423,7 +444,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(13);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -445,7 +466,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(13);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -467,7 +488,7 @@ namespace MonoGame_Core.Scripts.Managers
         {
             yield return Coroutines.WaitTime(13);
 
-            Random r = new Random();
+            Random r = rng;
 
             float percent = 0.1f;
             while (true)
@@ -485,7 +506,118 @@ namespace MonoGame_Core.Scripts.Managers
             yield return true;
         }
 
+        public static void Shuffle<T>(IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
 
-        
+        public float GetRandomNumber(float minimum, float maximum) 
+        {
+            return (float)rng.NextDouble() * (maximum - minimum) + minimum;
+        }
+
+        public IEnumerator RitualCo()
+        {
+            coroutines.Stop("SongCo");
+            SoundManager.PlaySong("Ritual");
+            SoundManager.SetVolume(1);
+            MediaPlayer.IsRepeating = false;
+
+            List<string> coworkers = new List<string>
+            {
+                "Administrator",
+                "Adrian",
+                "Aida",
+                "Christopher",
+                "Delores",
+                "Janey",
+                "Jude",
+                "Kailee",
+                "Quinn",
+                "Tim"
+            };
+
+            Shuffle(coworkers);
+
+            foreach(string s in coworkers)
+            {
+                GameManager.chatWindow.runChat(s, "ritual_finished", false);
+                yield return Coroutines.WaitTime(rng.Next(3,6));
+            }
+
+            while(MediaPlayer.PlayPosition.TotalSeconds < 40)
+            {
+                yield return false;
+            }
+
+            foreach (Window w in WindowManager.Windows)
+            {
+                if (w.form == null) continue;
+                w.form.Hide();
+                yield return Coroutines.WaitTime(1.5f);
+            }
+
+            GameManager.chatWindow.Hide();
+            yield return Coroutines.WaitTime(1.5f);
+
+            while (MediaPlayer.State == MediaState.Playing)
+            {
+                yield return false;
+            }
+
+            GameManager.Quit();
+
+            yield return true;
+        }
+
+        public IEnumerator RitualShakeCo()
+        {
+            var basePos = GameManager.Instance.Window.Position;
+            var baseChatPos = GameManager.chatWindow.Location;
+            Dictionary<Window, System.Drawing.Point> baseWindowPos = new Dictionary<Window, System.Drawing.Point>();
+
+            int intensity = 10;
+            int ramp = 66;
+            int currentRamp = 0;
+            int rampAmount = 1;
+
+            while(true)
+            {
+                ++currentRamp;
+                if(currentRamp > ramp)
+                {
+                    currentRamp = 0;
+                    intensity += rampAmount;
+                }
+
+                GameManager.Instance.Window.Position = new Point(basePos.X + rng.Next(-intensity, intensity), basePos.Y + rng.Next(-intensity, intensity));
+
+                foreach(Window w in WindowManager.Windows)
+                {
+                    if (w.form == null) continue;
+
+                    if(!baseWindowPos.ContainsKey(w))
+                    {
+                        baseWindowPos.Add(w, w.form.Location);
+                    }
+
+                    System.Drawing.Point baseWinPos = baseWindowPos[w];
+                    w.form.Location = new System.Drawing.Point(baseWinPos.X + rng.Next(-intensity, intensity), baseWinPos.Y + rng.Next(-intensity, intensity));
+                }
+
+                GameManager.chatWindow.Location = new System.Drawing.Point(baseChatPos.X + rng.Next(-intensity / 2, intensity / 2), baseChatPos.Y + rng.Next(-intensity / 2, intensity / 2));
+
+                yield return false;
+            }
+        }
+
     }
 }
