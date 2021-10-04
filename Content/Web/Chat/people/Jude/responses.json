@@ -7,7 +7,36 @@
 	"This chat is for company business only. I have no business with you.",
 	"Do you not have better things to do? Quit wasting my time.",
 	"Don’t you ever give up? Do not answer that. I need to work. Goodbye.",
-	"I need to work and so do you. Bye.",
+    "I need to work and so do you. Bye.",
+    {
+        "requiresId": "money",
+        "filter": "(salary)|(money)|\\$",
+        "event": "jude_money",
+        "msg": "I do not feel comfortable discussing exactly how much I make. You clearly know nothing."
+    },
+    {
+        "requiresId": "money",
+        "event": "jude_money",
+        "filter": "(salary)|(money)|\\$",
+        "msg": "If you are attempting to get me to divulge my salary, your efforts are in vain. I have nothing to explain to you."
+    },
+    {
+        "requiresId": "money",
+        "event": "jude_money",
+        "filter": "(salary)|(money)|\\$",
+        "msg": "How much I make is none of your business. I am certain your estimation would be wildly incorrect."
+    },
+    {
+        "uniqueId": "money",
+        "event": "jude_money",
+        "force": true,
+        "filter": "(150,000)",
+        "sequence": [
+            { "wait": 5, "msg": "Oh really? Where did you get that information?"},
+            { "typing": true, "wait": 3, "msg": "You really shouldn’t be spreading gossip like this." },
+            { "msg": "Whatever. You clearly have communication issues. I’m obviously not making that much money. I have work to do. Goodbye." }
+        ]
+    },
     {
         "filter": "\\?$",
         "msg": "I don't have time for your questions."

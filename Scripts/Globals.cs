@@ -7,6 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class Globals
     {
+        public static bool ReadyForEndTimes = false;
         public static bool DigiPetAlive = true;
         public static string[] ClickSounds = new string[] { "Click1", "Click2", "Click3" };
         public static void CreateFile(string name, string contents)

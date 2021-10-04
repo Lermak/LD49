@@ -48,7 +48,7 @@ namespace MonoGame_Core.Scripts
             List<Enemy> remove = new List<Enemy>();
             foreach (Enemy e in EnemyData.Enemies)
             {
-                if (Vector2.Distance(t.Position, e.Transform.Position) <= 10)
+                if (Vector2.Distance(t.Position, e.Transform.Position) <= 30)
                 {
                     remove.Add(e);
                     e.Destroy();
@@ -77,7 +77,15 @@ namespace MonoGame_Core.Scripts
                 }
             }
             rb.MoveVelocity = EnemyData.moveVelocity * TimeManager.DeltaTime * ShipData.Level * 24/EnemyData.Enemies.Count/4;
-
+            if(t.Position.Y < 210)
+            {
+                SoundManager.PlaySoundEffect("Error");
+                foreach (Enemy e in EnemyData.Enemies)
+                    e.Destroy();
+                ((GalaxyBlasterScene)WindowManager.GalaxyBlasterWindow.sceneManager.CurrentScene).SpawnHorde();
+                ShipData.Level = 1;
+                ShipData.Score = 0;
+            }
         }
 
         public static void NextLevel(float gt, Component[] c)
