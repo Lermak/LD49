@@ -585,8 +585,11 @@ namespace MonoGame_Core.Scripts.Managers
                 GameManager.chatWindow.runChat(s, "ritual_finished", false);
                 yield return Coroutines.WaitTime(rng.Next(3,6));
             }
-
-            while(MediaPlayer.PlayPosition.TotalSeconds < 40)
+            if(!Globals.HasUpdated)
+            {
+                WindowManager.AddWindow(new NoCloseForm(), "UpdateWindow", new UpdateRequiredScene(), new Vector2(600, 200));
+            }
+            while (MediaPlayer.PlayPosition.TotalSeconds < 40)
             {
                 yield return false;
             }

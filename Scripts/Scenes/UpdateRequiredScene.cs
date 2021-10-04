@@ -47,11 +47,8 @@ namespace MonoGame_Core.Scripts
             {
                 Random r = new Random();
                 SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 2)]);
-
-                if (!NuclearLevel.Updated)
-                {
-                    NuclearLevel.NeedsUpdate = true;
-                }
+                Globals.HasUpdated = true;
+                NuclearLevel.NeedsUpdate = true;
                 WindowManager.KillUpdate = true;//WindowManager.RemoveWindow(CurrentWindow.windowData);
             }
         }
