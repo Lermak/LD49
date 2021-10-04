@@ -21,6 +21,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
             SoundManager.PlaySoundEffect("Lockout");
             SoundManager.SoundEffects["Lockout"].Volume = .3f;
+            ResourceManager.SoundEffects["Error"] = Content.Load<SoundEffect>(@"Sound/error");
 
             ResourceManager.Textures["Capture1"] = Content.Load<Texture2D>(@"Images/RoboTestcha/capture1");
             ResourceManager.Textures["Capture2"] = Content.Load<Texture2D>(@"Images/RoboTestcha/capture2");

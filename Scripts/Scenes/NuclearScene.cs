@@ -41,6 +41,9 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["UpdateSpinner"] = Content.Load<Texture2D>("Images/Nuclear/update_arrows");
             ResourceManager.Textures["lock"] = Content.Load<Texture2D>("Images/Nuclear/lock_white");
             ResourceManager.SoundEffects["alert"] = Content.Load<SoundEffect>("Sound/alert");
+            ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
+            ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
+            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
 
             Vector2 dialSize = new Vector2(200, 200);
             GameObjects = new List<GameObject>();

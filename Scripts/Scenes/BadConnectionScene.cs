@@ -17,7 +17,11 @@ namespace MonoGame_Core.Scripts
             ResourceManager.SoundEffects["Lockout"] = Content.Load<SoundEffect>(@"Sound/lock_out");
             SoundManager.PlaySoundEffect("Lockout");
             SoundManager.SoundEffects["Lockout"].Volume = .3f;
+            ResourceManager.SoundEffects["Error"] = Content.Load<SoundEffect>(@"Sound/error");
 
+            ResourceManager.SoundEffects["Click1"] = Content.Load<SoundEffect>("Sound/click1");
+            ResourceManager.SoundEffects["Click2"] = Content.Load<SoundEffect>("Sound/click2");
+            ResourceManager.SoundEffects["Click3"] = Content.Load<SoundEffect>("Sound/click3");
             ResourceManager.Textures["MessageBox"] = Content.Load<Texture2D>(@"Images/BadConnection/MessageBox");
             ResourceManager.Textures["BadConnectionBG"] = Content.Load<Texture2D>(@"Images/BadConnection/BadConnectionBG");
             ResourceManager.Textures["BadServer"] = Content.Load<Texture2D>(@"Images/BadConnection/BadServer");
@@ -78,6 +82,8 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
+                SoundManager.PlaySoundEffect("Error");
+
                 fr.Text = "Unable to connect";
             }
         }
@@ -90,6 +96,9 @@ namespace MonoGame_Core.Scripts
             if (CurrentWindow.inputManager.IsMouseDown(InputManager.MouseKeys.LeftButton) &&
                 t.ContainsPoint(v))
             {
+                Random r = new Random();
+                SoundManager.PlaySoundEffect(Globals.ClickSounds[r.Next(0, 3)]);
+
                 CurrentWindow.coroutineManager.AddCoroutine(Coroutines.ConnectToServer(fr), "Connect", 0, true);
             }
         }
