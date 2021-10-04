@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
@@ -338,5 +339,27 @@ namespace MonoGame_Core.Scripts
                 Globals.PrepareForEndTimes = true;
             }
         }
+
+        public static void FadeFinaleMusic(float gt, Component[] c)
+        {
+            if(Globals.FinalButtonPush)
+            {
+                if(MediaPlayer.Volume > 0)
+                {
+                    SoundManager.volume -= 1 * gt;
+                }    
+                else
+                {
+                    MediaPlayer.Stop();
+                    SoundManager.volume = 1;
+                }
+            }
+        }
+        public static void ChangeOverlay(float gt, Component[] c)
+        {
+
+        }
+
+
     }
 }
