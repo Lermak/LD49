@@ -105,7 +105,7 @@
     },
 
     {
-        "requires": "return global_data.remove_overlay",
+        "requires": "return global_data.remove_overlay !== undefined",
         "filter": "(feeding souls.*)",
         "sequence": [
             {
@@ -132,7 +132,7 @@
         ]
     },
 	{
-        "requires": "return global_data.remove_overlay",
+        "requires": "return global_data.remove_overlay !== undefined",
         "filter": "(awaken.*)|(awakens.*)|(awakeness.*)",
         "sequence": [
             {
