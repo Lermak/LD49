@@ -11,6 +11,15 @@
 	"You should challenge Janey to a game of Lucha or Lose It. She will totally pwn you but it'll be worth it.",
 	"The other night when Kailee and I ate some gummies, she mentioned there was something hidden in her DigiPal. I wonder what that was about.",
 	"Did you see the latest episode of BAP: Criminal Intent? It was intense. Oh crap, gotta hit the button some more.",
+	"I wish this chat had games on it or something. I guess the devs didn't have time to implement it or something.",
+	"Sometimes when I wear turtlenecks I like to hide my face inside of them and pretend I'm an ostrich looking for grubs.",
+	"When I was a little kid, I definitely didn't say I wanted to be a professional button presser when I got older.",
+	"Have you ever hung upside down from your chair and wondered what it would be like if all the lights were on the floor? I think everyone has at some point.",
+	"I'm in the mood for some celery. Brb.",
+	"I could really use one of Kailee's mind-blowing brownies right now, or maybe some gummies.",
+	"Gotta pee. Brb.",
+	"I wish more flowers were edible because then I could pretend to be one of those dinosaurs that only eat plants but the pretty kind",
+	"Someone's at my door. Brb.",
     {
         "filter": "(aida.*\\?)|(aida.\\?)$",
         "sequence": [
