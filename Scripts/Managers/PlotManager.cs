@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,12 @@ namespace MonoGame_Core.Scripts.Managers
 
         bool firstLockout = false;
         IEnumerator firstLockoutCo = null;
+
+        bool christopher_strange = false;
+        IEnumerator christopher_strangeCo = null;
+
+        bool digipet_initial = false;
+        IEnumerator digipet_initialCo = null;
         //
 
         public PlotManager()
@@ -47,6 +54,18 @@ namespace MonoGame_Core.Scripts.Managers
                 }
                 return;
             }
+
+            if(christopher_strangeCo == null)
+            {
+                christopher_strangeCo = ChritopherStrangeCo();
+                coroutines.AddCoroutine(christopher_strangeCo, "christopher_strangeCo", 0, true);
+            }
+
+            if (digipet_initialCo == null)
+            {
+                digipet_initialCo = DigipenInitialCo();
+                coroutines.AddCoroutine(digipet_initialCo, "digipet_initialCo", 0, true);
+            }
         }
 
         public void SendEvent(string ev)
@@ -54,6 +73,16 @@ namespace MonoGame_Core.Scripts.Managers
             if(supervisorTutotial == false && ev == "Delores_intro_chat")
             {
                 supervisorTutotial = true;
+            }
+
+            if (ev == "Christopher_security_check")
+            {
+                christopher_strange = true;
+            }
+
+            if (ev == "Kailee_digipet_initial")
+            {
+                digipet_initial = true;
             }
         }
 
@@ -67,8 +96,57 @@ namespace MonoGame_Core.Scripts.Managers
 
         public IEnumerator FirstLockoutCo()
         {
-            yield return Coroutines.WaitTime(1);
-            while (firstLockout == false) yield return false;
+            yield return Coroutines.WaitTime(7);
+
+            WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
+
+            while (NuclearLevel.Locked == true) yield return false;
+            firstLockout = true;
+
+            yield return true;
+        }
+
+        public IEnumerator ChritopherStrangeCo()
+        {
+            yield return Coroutines.WaitTime(7);
+
+            Random r = new Random();
+
+            float percent = 0.1f;
+            while(false)
+            {
+                if(percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.1f;
+                Coroutines.WaitTime(5);
+            }
+
+            GameManager.chatWindow.runChat("Christopher", "security_check", false);
+
+            yield return true;
+        }
+
+        public IEnumerator DigipenInitialCo()
+        {
+            yield return Coroutines.WaitTime(10);
+
+            Random r = new Random();
+
+            float percent = 0.5f;
+            while (false)
+            {
+                if (percent >= r.NextDouble())
+                {
+                    break;
+                }
+                percent += 0.1f;
+                Coroutines.WaitTime(5);
+            }
+
+            GameManager.chatWindow.runChat("Kailee", "digipet_initial", false);
+
             yield return true;
         }
     }

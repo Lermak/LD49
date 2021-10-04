@@ -13,6 +13,8 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
+        public static bool DO_STORY = false;
+
         public static GameManager Instance;
         public static float WidthScale = 1;
         public static float HeightScale = 1;
@@ -53,13 +55,17 @@ namespace MonoGame_Core.Scripts
             chatWindow = new ChatForm();
             chatWindow.Show();
 
-            WindowManager.Initilize(Content, new NuclearScene()); 
-            WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480,330));
-            WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
-            WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
-            //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
-            //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
-            //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            WindowManager.Initilize(Content, new NuclearScene());
+
+            if (!DO_STORY)
+            {
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
+                WindowManager.AddWindow(new NoCloseForm(), "ResetKeysWindow", new ResetKeysScene(), new Vector2(600, 200));
+                WindowManager.AddWindow(new NoCloseForm(), "SecruityCheckScene", new SecurityCheckScene(), new Vector2(600, 240));
+                //WindowManager.AddWindow(new NoCloseForm(), new AskITScene(), new Vector2(600, 200));
+                //WindowManager.AddWindow(new NoCloseForm(), new UpdateRequiredScene(), new Vector2(600, 200));
+                //WindowManager.UpdateWindow = WindowManager.ToAdd[^1];//SceneManager.Initilize(Content, new TestScene());
+            }
 
             plotManager = new PlotManager();
 
