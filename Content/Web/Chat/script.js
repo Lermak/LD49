@@ -1,7 +1,6 @@
 let SUPER_SPEED = 1
 let JUDE_MODE = false
 let global_data = {}
-global_data.ask_it = true
 
 function waitTime(time) {
   return new Promise(resolve => {
