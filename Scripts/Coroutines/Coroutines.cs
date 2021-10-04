@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGame_Core.Scripts
 {
@@ -164,6 +165,33 @@ namespace MonoGame_Core.Scripts
             }
             sr.Texture = "DialBack";
             NuclearLevel.started = true;
+            yield return true;
+        }
+
+        public static IEnumerator GameOver(SpriteRenderer sr)
+        {
+            Globals.ButtonNotCool = true;
+            float timeElapsed = 0;
+            sr.Texture = "DialBackDark";
+            SoundManager.PlaySoundEffect("Shutdown");
+            while(SoundManager.SoundEffects["Shutdown"].State == SoundState.Playing)
+            {
+                yield return false;
+            }
+            while (timeElapsed <= .5f)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+
+                yield return false;
+            }
+            SoundManager.PlaySoundEffect("Explosion");
+            while (SoundManager.SoundEffects["Explosion"].State == SoundState.Playing)
+            {
+                yield return false;
+            }
+
+            Globals.OverheatGameOver = true;
+
             yield return true;
         }
     }
