@@ -208,5 +208,41 @@ namespace MonoGame_Core.Scripts
 
             yield return true;
         }
+
+        public static IEnumerator PaylogDownload()
+        {
+            float timeElapsed = 0;
+            GameObject go = new GameObject("Message");
+            Transform t = (Transform)go.ComponentHandler.AddComponent(new Transform(go, new Vector2(-835, 315), 250, 50, 0, 8));
+            FontRenderer fr = (FontRenderer)go.ComponentHandler.AddComponent(new FontRenderer(go, "Paylog.txt\nDownloaded", "TestFont", t, new Vector2(), new Vector2(250, 50), 0, Color.Black));
+            fr.TextScale = .5f;
+            WindowManager.MainWindow.sceneManager.CurrentScene.ToAdd.Add(go);
+            while (timeElapsed < 10)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            go.Destroy();
+
+            yield return true;
+        }
+
+        public static IEnumerator OverrideCommandsDownload()
+        {
+            float timeElapsed = 0;
+            GameObject go = new GameObject("Message");
+            Transform t = (Transform)go.ComponentHandler.AddComponent(new Transform(go, new Vector2(-740, 510), 250, 50, 0, 8));
+            FontRenderer fr = (FontRenderer)go.ComponentHandler.AddComponent(new FontRenderer(go, "OverrideCommands.txt\nDownloaded", "TestFont", t, new Vector2(), new Vector2(250, 50), 0, Color.Black));
+            fr.TextScale = .5f;
+            WindowManager.MainWindow.sceneManager.CurrentScene.ToAdd.Add(go);
+            while (timeElapsed < 10)
+            {
+                timeElapsed += TimeManager.DeltaTime;
+                yield return false;
+            }
+            go.Destroy();
+
+            yield return true;
+        }
     }
 }

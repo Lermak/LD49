@@ -175,6 +175,7 @@ namespace MonoGame_Core.Scripts
 
             if (d.CodeAccessed == false && flag)
             {
+                WindowManager.DigiPetWindow.coroutineManager.AddCoroutine(Coroutines.OverrideCommandsDownload(), "OverrideDownload", 0, true);
                 SoundManager.PlaySoundEffect("MysterySound");
                 SoundManager.SoundEffects["MysterySound"].Volume = .1f;
 
@@ -203,7 +204,11 @@ namespace MonoGame_Core.Scripts
                     // Create a new file     
                     using (StreamWriter sw = File.CreateText(fileName))
                     {
-                        sw.WriteLine("OVERRIDE CODE");
+                        sw.WriteLine("     OVERRIDE COMMANDS\n" + 
+                            "--------------------------\n" +
+                            "\n  setsalary # - Set salary to given amount" +
+                            "\n   soulcounts - Display soul count info" +
+                            "\nremoveoverlay - Remove fake overlay");
                     }
                 }
                 catch (Exception Ex)
