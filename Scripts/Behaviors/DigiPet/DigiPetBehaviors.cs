@@ -230,7 +230,7 @@ namespace MonoGame_Core.Scripts
                     if(i < 30)
                     {
                         SoundManager.PlaySoundEffect("DigiPetWant");
-                        SoundManager.SoundEffects["DigiPetWant"].Volume = .1f;
+                        SoundManager.SoundEffects["DigiPetWant"].Volume = .3f;
 
                     }
 
@@ -310,13 +310,14 @@ namespace MonoGame_Core.Scripts
                     {
                         d.TimeSinceLastSound = 0;
                         string[] sounds = { "DigiPetWalk1", "DigiPetWalk2", "DigiPetWalk3", "DigiPetWalk4" };
-                        Random r = new Random();
-                        int i = r.Next(0, 4);
-                        while (i == d.PrevWalkSound)
-                            i = r.Next(0, 4);
+                        int i = d.PrevWalkSound + 1;
+                        if (i >= 4)
+                        {
+                            i = 0;
+                        }
                         SoundManager.PlaySoundEffect(sounds[i]);
                         SoundManager.SoundEffects[sounds[i]].Volume = .1f;
-
+                        d.PrevWalkSound = i;
                     }
                 }
             }
