@@ -161,6 +161,7 @@ namespace MonoGame_Core.Scripts.Managers
             if (ev == "Kailee_digipal_chat")
             {
                 digipet_initial = true;
+                WindowManager.AddWindow(new NoCloseForm(), "DigiPetWindow", new DigiPetScene(), new Vector2(480, 330));
             }
 
             if (ev == "jude_money")
