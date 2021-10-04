@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts.Managers
 
         // Plot flags (false is uncompleted, true is completed)
         bool deloresChat = false;
-        bool supervisorTutotial = false;
+        bool supervisorTutotial = true;
         IEnumerator<bool> supervisorCo = null;
 
         bool firstLockout = false;
@@ -184,12 +184,14 @@ namespace MonoGame_Core.Scripts.Managers
             if (remove_overlay == false && SoundManager.CurrentSong != "MysteryContact")
             {
                 SoundManager.PlaySong("MysteryContact");
+                SoundManager.SetVolume(0);
+                MysteryVolume = 0;
             }
             yield return Coroutines.WaitTime(0.1f);
 
-            while (MysteryVolume < .3f)
+            while (MysteryVolume < .2f)
             {
-                MysteryVolume += 0.05f;
+                MysteryVolume += 0.01f;
                 SoundManager.SetVolume(MysteryVolume);
                 yield return Coroutines.WaitTime(0.5f);
             }
@@ -204,9 +206,9 @@ namespace MonoGame_Core.Scripts.Managers
 
             while (MysteryVolume > 0)
             {
-                MysteryVolume -= 0.1f;
+                MysteryVolume -= 0.01f;
                 SoundManager.SetVolume(MysteryVolume);
-                yield return Coroutines.WaitTime(0.3f);
+                yield return Coroutines.WaitTime(0.1f);
             }
 
             MediaPlayer.Stop();

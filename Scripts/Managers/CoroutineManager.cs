@@ -143,7 +143,7 @@ namespace MonoGame_Core.Scripts
             k.AddRange(coroutines.Keys);
             doingCoroutines = true;
 
-            for (int i = 0; i < coroutines.Count; ++i)
+            for (int i = 0; i < k.Count; ++i)
             {
                 Coroutine c = coroutines[k[i]];
                 
@@ -187,6 +187,7 @@ namespace MonoGame_Core.Scripts
             {
                 coroutines.Remove(toRemove[i]);
             }
+            toRemove.Clear();
         }
     }
 }
