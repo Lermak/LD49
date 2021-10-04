@@ -9,7 +9,23 @@
 		]
 	},
 	{
-        "filter": "(conspiracy.*\\?)|(conspiracy.\\?)$",
+        "filter": "(257.*)|(data keys need reset.*)|(data keys.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 2
+            },
+            {
+                "msg": "OWO GIB FIX DIRECTIONS PLZ UWU"
+            }
+        ]
+    },
+	{
+        "filter": "(security.*)|(security check.*)",
         "sequence": [
             {
                 "typing": false,
@@ -20,7 +36,71 @@
                 "wait": 3
             },
             {
-                "msg": "I… "
+                "msg": "Ah, yeah, that’s a nasty one. Did you try turning it off and back on again? Oh wait, you’re in the cooldown department. You can’t do that, I guess, so just ignore it for now. It’s probably nothing. No, I’m just kidding. Go ahead and follow the instructions on the error message. That is literally how you fix it."
+            }
+        ]
+    },
+	{
+        "filter": "(184.*)|(robotestcha.*)|(robo check.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 2
+            },
+            {
+                "msg": "HOW DO I DO THIS CAN HAZ SOLUTION PLOX"
+            }
+        ]
+    },
+	{
+        "filter": "(312.*)|(disconnected from server.*)|(server disconnect.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 2
+            },
+            {
+                "msg": "ALEX TELL ME HOW FIX DIS UWU"
+            }
+        ]
+    },
+	{
+        "filter": "(update.*)|(update required.*)|(require update.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 2.5
+            },
+            {
+                "msg": "You just press the button to update. It's right there. I thought you were an expert in button pushing. This should be right in your wheelhouse."
+            }
+        ]
+    },
+	{
+        "filter": "(reauthorization.*)|(reauthorisation.*)|(authorization.*)|(authorisation.*)",
+        "sequence": [
+            {
+                "typing": false,
+                "wait": 1
+            },
+            {
+                "typing": true,
+                "wait": 1.5
+            },
+            {
+                "msg": "As all-knowing as everyone believes IT to be, this is actually something outside of what I can do. Go talk to Administrator. Danni can fix it up for you. Just don't ask them about anything related to rocks. Trust me on this one."
             }
         ]
     },
