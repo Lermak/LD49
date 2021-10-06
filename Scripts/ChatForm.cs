@@ -12,6 +12,16 @@ using System.Windows.Forms;
 
 namespace MonoGame_Core.Scripts
 {
+
+    public class DontNavigate : CefSharp.Handler.RequestHandler
+    {
+        protected override bool OnBeforeBrowse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect)
+        {
+            //Don't browse anywhere
+            return true;
+        }
+    }
+
     public class CustomMenuHandler : CefSharp.IContextMenuHandler
     {
         public void OnBeforeContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model)
@@ -111,6 +121,7 @@ namespace MonoGame_Core.Scripts
             {
                 if (InvokeRequired)
                 {
+                    browser.RequestHandler = new DontNavigate();
                     this.Invoke(new Action(() =>
                     {
                         //Size = new System.Drawing.Size((int)(700 * GameManager.WidthScale), (int)(800 * GameManager.HeightScale));
