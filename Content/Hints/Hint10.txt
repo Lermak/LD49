@@ -1,0 +1,4 @@
+HINT 10
+
+Press in the DigiPet the following buttons in this order
+WASH - FEED - FEED - PLAY - FEED

@@ -1,0 +1,3 @@
+HINT 2
+
+Clicking on the button with Morse Code by tapping and holding might cause something to happen

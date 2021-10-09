@@ -1,0 +1,3 @@
+HINT 12
+
+Type the commands in OverrideCommands.txt to Aida

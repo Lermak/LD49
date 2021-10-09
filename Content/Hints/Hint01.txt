@@ -1,0 +1,3 @@
+HINT 1
+
+Look for words hidden in SecurityCheck.txt

@@ -1,0 +1,5 @@
+HINT 3
+
+Type VOID in morse code on the button
+
+...- --- .. -..
